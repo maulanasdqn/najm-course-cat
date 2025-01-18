@@ -1,9 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
 import { PREFIX } from "@/commons/constants/prefix";
 import { AppError } from "./_components/ui/app-error";
-import { ProtectedLayout } from "./(protected)/_components/ui/layout";
 import { DashboardRouter } from "./(protected)/dashboard/router";
 import { AuthRouter } from "./(public)/auth/router";
+import { ProtectedLayout } from "./(protected)/layout";
+import { ExamsRouter } from "./(protected)/exams/router";
 
 export const router = createBrowserRouter([
   {
@@ -17,12 +18,16 @@ export const router = createBrowserRouter([
       },
       {
         path: PREFIX.ROOT,
-        element: <ProtectedLayout />,
         errorElement: <AppError />,
+        element: <ProtectedLayout />,
         children: [
           {
             path: PREFIX.DASHBOARD,
             children: DashboardRouter,
+          },
+          {
+            path: PREFIX.EXAMS,
+            children: ExamsRouter,
           },
         ],
       },

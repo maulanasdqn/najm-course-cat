@@ -2,11 +2,7 @@ import { FC, ReactElement, ReactNode } from "react";
 import clsx from "clsx";
 import { DashboardIcon } from "../icons/ic-dashboard";
 import { SettingIcon } from "../icons/ic-setting";
-import { MessageIcon } from "../icons/ic-message";
-
-import { UserManagementIcon } from "../icons/ic-user-management";
 import { MyCourseIcon } from "../icons/ic-my-course";
-import { EarningIcon } from "../icons/ic-earning";
 import { ROUTES } from "@/commons/constants/routes";
 
 type TSidebarItem = {
@@ -24,24 +20,22 @@ export const Sidebar: FC = (): ReactElement => {
     {
       icon: <DashboardIcon />,
       label: "Dashboard",
-      active: pathname === ROUTES.ADMIN.DASHBOARD,
-      link: ROUTES.ADMIN.DASHBOARD,
+      active: pathname === ROUTES.DASHBOARD.URL,
+      link: ROUTES.DASHBOARD.URL,
     },
 
-    { icon: <MyCourseIcon />, label: "My Courses" },
-    { icon: <EarningIcon />, label: "Earning" },
-    { icon: <MessageIcon />, label: "Message", notification: 3 },
-    { icon: <UserManagementIcon />, label: "User Management" },
+    { icon: <MyCourseIcon />, label: "Kursus Saya" },
     {
       icon: <SettingIcon />,
-      label: "Settings",
-      link: ROUTES.ADMIN.SETTINGS,
-      active: pathname === ROUTES.ADMIN.SETTINGS,
+      label: "Pengaturan Akun",
+      link: ROUTES.SETTINGS.URL,
+      active: pathname === ROUTES.SETTINGS.URL,
     },
   ];
 
   return (
-    <div className="w-full max-w-72 min-h-screen bg-white flex flex-col h-full sticky top-0">
+    <div className="w-full max-w-72 min-h-screen bg-white flex flex-col h-full absolute left-0 top-0 z-10">
+      <img src="/logo.png" alt="logo" className="w-[160px] mb-10 mt-1 ml-4" />
       <nav className="flex flex-col flex-1">
         {sidebarItems.map((item, index) => (
           <a

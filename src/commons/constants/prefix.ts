@@ -13,4 +13,5 @@ export const PREFIX = {
   CATEGORIES: "/categories",
   AUTHORS: "/authors",
   DASHBOARD: "/dashboard",
+  EXAMS: "/exams",
 };

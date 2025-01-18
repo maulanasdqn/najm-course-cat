@@ -6,9 +6,12 @@ export const ROUTES = {
     URL: `${PREFIX.DASHBOARD}`,
     PERMISSIONS: [PERMISSIONS.DASHBOARD.READ_DASHBOARD],
   },
-  ADMIN: {
-    DASHBOARD: "/admin/dashboard",
-    SETTINGS: "/admin/settings",
+  SETTINGS: { URL: "/admin/settings", PERMISSIONS: [] },
+  EXAMS: {
+    DETAIL: {
+      URL: "/exams/:questionId/",
+      PERMISSIONS: [],
+    },
   },
   AUTH: {
     LOGIN: { URL: `${PREFIX.AUTH}/login`, PERMISSIONS: [] },

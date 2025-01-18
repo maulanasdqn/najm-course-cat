@@ -1,6 +1,4 @@
 import { FC, ReactElement } from "react";
-import Sidebar from "@/app/_components/sidebar";
-import Navbar from "@/app/_components/navbar";
 
 const testList = [
   { id: 1, title: "Tes Penalaran", status: "Belum Dikerjakan", score: null },
@@ -11,11 +9,9 @@ const testList = [
 
 export const Component: FC = (): ReactElement => {
   return (
-    <div className="flex flex-col min-h-screen bg-gray-100">
-      <Navbar />
-      <section className="flex flex-1">
-        <Sidebar />
-        <main className="col-span-2 bg-gray-100 w-full shadow rounded-lg p-6">
+    <div className="flex flex-col items-center justify-center w-full">
+      <section className="flex flex-1 w-full max-w-7xl">
+        <main className="col-span-2 w-full p-6">
           <h2 className="text-xl font-bold text-gray-700 mb-6">Daftar Tes</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {testList.map((test) => (
@@ -29,7 +25,7 @@ export const Component: FC = (): ReactElement => {
                   <p className="text-sm text-green-600 font-bold">Skor: {test.score}</p>
                 ) : (
                   <a
-                    href={`/cat/${test.id}`}
+                    href={`/exams/${test.id}`}
                     className="text-sm text-blue-600 font-bold hover:underline"
                   >
                     Kerjakan Tes →
