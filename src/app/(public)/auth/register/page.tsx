@@ -26,7 +26,7 @@ export const Component: FC = (): ReactElement => {
             Masuk
           </a>{" "}
           atau kembali ke{" "}
-          <a className="text-blue-600 font-bold hover:underline" href="/">
+          <a className="text-blue-600 font-bold hover:underline" href="https://najmcourse.com/">
             Beranda
           </a>
         </p>
