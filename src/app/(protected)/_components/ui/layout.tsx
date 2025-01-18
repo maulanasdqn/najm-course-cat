@@ -11,7 +11,7 @@ export const ProtectedLayout: FC = (): ReactElement => {
   console.log(userPermissions);
 
   return (
-    <section className="w-screen h-full p-12">
+    <section className="w-screen h-full ">
       <Outlet />
     </section>
   );

@@ -9,7 +9,7 @@ import { AuthRouter } from "./(public)/auth/router";
 export const router = createBrowserRouter([
   {
     path: "/",
-    loader: middleware,
+    // loader: middleware,
     shouldRevalidate: () => true,
     children: [
       {

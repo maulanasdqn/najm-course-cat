@@ -1,23 +1,47 @@
-import { ROUTES } from "@/commons/constants/routes";
-import { AccessTokenCookies, RefreshTokenCookies, UserCookies } from "@/libs/cookies";
-import { Button } from "antd";
 import { FC, ReactElement } from "react";
-import { useNavigate } from "react-router-dom";
+import Sidebar from "@/app/_components/sidebar";
+import Navbar from "@/app/_components/navbar";
+
+const testList = [
+  { id: 1, title: "Tes Penalaran", status: "Belum Dikerjakan", score: null },
+  { id: 2, title: "Tes Verbal", status: "Sudah Dikerjakan", score: 85 },
+  { id: 3, title: "Tes Numerik", status: "Belum Dikerjakan", score: null },
+  { id: 4, title: "Tes Kepribadian", status: "Sudah Dikerjakan", score: 90 },
+];
 
 export const Component: FC = (): ReactElement => {
-  const navigate = useNavigate();
-  const handleLogout = () => {
-    UserCookies.remove();
-    AccessTokenCookies.remove();
-    RefreshTokenCookies.remove();
-    navigate(ROUTES.AUTH.LOGIN.URL);
-  };
   return (
-    <>
-      <h1>Dashboard</h1>
-      <Button type="primary" onClick={handleLogout}>
-        Logout
-      </Button>
-    </>
+    <div className="flex flex-col min-h-screen bg-gray-100">
+      <Navbar />
+      <section className="flex flex-1">
+        <Sidebar />
+        <main className="col-span-2 bg-gray-100 w-full shadow rounded-lg p-6">
+          <h2 className="text-xl font-bold text-gray-700 mb-6">Daftar Tes</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {testList.map((test) => (
+              <div
+                key={test.id}
+                className="border bg-white rounded-lg p-4 hover:shadow-md transition"
+              >
+                <h3 className="text-lg font-bold text-gray-800">{test.title}</h3>
+                <p className="text-sm text-gray-600 mb-2">Status: {test.status}</p>
+                {test.score !== null ? (
+                  <p className="text-sm text-green-600 font-bold">Skor: {test.score}</p>
+                ) : (
+                  <a
+                    href={`/cat/${test.id}`}
+                    className="text-sm text-blue-600 font-bold hover:underline"
+                  >
+                    Kerjakan Tes →
+                  </a>
+                )}
+              </div>
+            ))}
+          </div>
+        </main>
+      </section>
+    </div>
   );
 };
+
+export default Component;
