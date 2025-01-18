@@ -1,5 +1,4 @@
 import { createBrowserRouter } from "react-router-dom";
-import { middleware } from "@/middleware";
 import { PREFIX } from "@/commons/constants/prefix";
 import { AppError } from "./_components/ui/app-error";
 import { ProtectedLayout } from "./(protected)/_components/ui/layout";
