@@ -1,55 +1,18 @@
 "use client";
 import type { FC, ReactElement } from "react";
-import { LayoutWithHeader } from "admiral";
 import { Outlet } from "react-router-dom";
 import { UserCookies } from "@/libs/cookies";
-import { SIDEBAR_ITEMS } from "@/commons/constants/sidebar";
-import { filterPermission } from "@/utils/permission";
-import { Flex, Grid, Typography } from "antd";
 
 export const ProtectedLayout: FC = (): ReactElement => {
   const userData = UserCookies.get();
   const userPermissions =
-    userData?.roles
-      ?.map((role) => role.permissions?.map((perm) => perm.name))
-      .flat() || [];
+    userData?.roles?.map((role) => role.permissions?.map((perm) => perm.name)).flat() || [];
 
-  const { md } = Grid.useBreakpoint();
-
-  const filteredItems = filterPermission(
-    SIDEBAR_ITEMS,
-    (item) =>
-      item.permissions === undefined ||
-      item.permissions.some((permission) =>
-        userPermissions.includes(permission),
-      ),
-  );
+  console.log(userPermissions);
 
   return (
-    <LayoutWithHeader
-      header={{
-        brandLogo: (
-          <Flex align="center" gap={8}>
-            <Typography.Title
-              level={4}
-              style={{
-                marginBottom: 0,
-                color: md ? "white" : "black",
-                whiteSpace: "nowrap",
-              }}
-            >
-              Vite Admiral
-            </Typography.Title>
-          </Flex>
-        ),
-      }}
-      sidebar={{
-        width: 250,
-        menu: filteredItems,
-        theme: "light",
-      }}
-    >
+    <section className="w-screen h-full p-12">
       <Outlet />
-    </LayoutWithHeader>
+    </section>
   );
 };

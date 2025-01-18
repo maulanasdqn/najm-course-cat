@@ -1,147 +1,77 @@
-import { Button, Flex, Form, Grid, Input, theme, Typography } from "antd";
-import { LockOutlined, MailOutlined } from "@ant-design/icons";
-import { TLoginParam } from "@/api/auth/type";
-import { ROUTES } from "@/commons/constants/routes";
-import { Link, useNavigate } from "react-router-dom";
-import { usePostLogin } from "./_hooks/use-post-login";
-import { useEffect } from "react";
-import { AccessTokenCookies } from "@/libs/cookies";
+import { FC, ReactElement } from "react";
+import { useLogin } from "./_hooks/use-login";
+import { GoogleButton } from "@/app/_components/ui/button/google-button";
+import { InputText } from "@/app/_components/ui/inputs/text";
+import { Button } from "@/app/_components/ui/button";
+import { InputCheckbox } from "@/app/_components/ui/inputs/checkbox";
 
-const { useToken } = theme;
-const { useBreakpoint } = Grid;
-const { Text, Title } = Typography;
-
-export function Component() {
-  const navigate = useNavigate();
-  const { token } = useToken();
-  const screens = useBreakpoint();
-  const [form] = Form.useForm<TLoginParam>();
-  const { mutate } = usePostLogin();
-
-  const redirectUrl = new URL(
-    "/auth/oauth-callback",
-    import.meta.env.VITE_BASE_URL,
-  );
-
-  const authFusionLoginUrl = new URL(
-    `/oauth2/authorize?client_id=${import.meta.env.VITE_AUTH_FUSION_ID}&redirect_uri=${redirectUrl.toString()}&response_type=code&tenantId=${import.meta.env.VITE_AUTH_FUSION_TENANT_ID}`,
-    import.meta.env.VITE_AUTH_FUSION_ISSUER_URL,
-  );
-
-  useEffect(() => {
-    const session = AccessTokenCookies.get();
-    if (session) navigate(ROUTES.DASHBOARD.URL);
-  }, [navigate]);
-
-  const onFinish = (values: TLoginParam) => {
-    mutate(values);
-  };
-
-  const styles = {
-    container: {
-      margin: "0 auto",
-      padding: screens.md ? `${token.paddingXL}px` : `${token.sizeXXL}px ${token.padding}px`,
-      width: "380px",
-    },
-    footer: {
-      marginTop: token.marginLG,
-      textAlign: "center",
-      width: "100%",
-    },
-    forgotPassword: {
-      float: "right",
-    },
-    header: {
-      marginBottom: token.marginXL,
-    },
-    section: {
-      alignItems: "center",
-      backgroundColor: token.colorBgContainer,
-      display: "flex",
-      height: screens.sm ? "100vh" : "auto",
-      padding: screens.md ? `${token.sizeXXL}px 0px` : "0px",
-    },
-    text: {
-      color: token.colorTextSecondary,
-    },
-    title: {
-      fontSize: screens.md ? token.fontSizeHeading2 : token.fontSizeHeading3,
-    },
-  } as const;
+export const Component: FC = (): ReactElement => {
+  const { form, handler } = useLogin();
+  const checkboxLabel = <span className="text-gray-500">Ingat Saya</span>;
 
   return (
-    <section style={styles.section}>
-      <div style={styles.container}>
-        <div style={styles.header}>
-          <svg
-            width="25"
-            height="24"
-            viewBox="0 0 25 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <rect x="0.464294" width="24" height="24" rx="4.8" fill="#1890FF" />
-            <path d="M14.8643 3.6001H20.8643V9.6001H14.8643V3.6001Z" fill="white" />
-            <path d="M10.0643 9.6001H14.8643V14.4001H10.0643V9.6001Z" fill="white" />
-            <path d="M4.06427 13.2001H11.2643V20.4001H4.06427V13.2001Z" fill="white" />
-          </svg>
-
-          <Title style={styles.title}>Login</Title>
-          <Text style={styles.text}>Login to your account to continue</Text>
-        </div>
-        <Form
-          form={form}
-          initialValues={{
-            email: "",
-            password: "",
-          }}
-          onFinish={onFinish}
-          layout="vertical"
-          requiredMark="optional"
-        >
-          <Form.Item
+    <section className="flex h-screen">
+      {/* Form Section */}
+      <div className="flex flex-col lg:w-1/2 w-full items-center justify-center gap-2 lg:p-16 p-8 bg-white">
+        <img src="/logo.png" alt="Logo" className="w-32 " />
+        <h1 className="text-3xl text-center font-bold text-blue-700">Masuk</h1>
+        <p className="text-center text-xs">
+          Jika kamu belum memiliki akun, silahkan{" "}
+          <a className="text-blue-600 font-bold px-1" href={"/auth/register"}>
+            Daftar
+          </a>
+          terlebih dahulu atau kembali ke{" "}
+          <a className="text-blue-600 font-bold" href={"https://www.najmcourse.com/"}>
+            Beranda
+          </a>
+        </p>
+        <form onSubmit={handler.onSubmit} className="w-full flex flex-col mt-6 gap-y-6">
+          <InputText
+            type="email"
+            label="Email"
+            control={form.control}
             name="email"
-            rules={[
-              {
-                type: "email",
-                required: true,
-                message: "Please input your Email!",
-              },
-            ]}
-          >
-            <Input prefix={<MailOutlined />} placeholder="Email" />
-          </Form.Item>
-          <Form.Item
+            placeholder="Email"
+          />
+          <InputText
+            type="password"
+            label="Password"
+            control={form.control}
             name="password"
-            rules={[
-              {
-                required: true,
-                message: "Please input your Password!",
-              },
-            ]}
+            placeholder="**********"
+          />
+          <div className="flex w-full justify-between items-center">
+            <InputCheckbox label={checkboxLabel} name={"remember"} control={form.control} />
+            <a href="/auth/forgot-password" className="text-sm text-blue-600 hover:underline">
+              Lupa Kata Sandi?
+            </a>
+          </div>
+          <Button
+            size="lg"
+            disabled={!form.formState.isValid}
+            type="submit"
+            className="w-full bg-blue-700 hover:bg-blue-600 text-white"
           >
-            <Input.Password prefix={<LockOutlined />} type="password" placeholder="Password" />
-          </Form.Item>
-          <Form.Item style={{ marginBottom: "0px" }}>
-            <Flex vertical gap={10}>
-              <Button block={true} type="primary" htmlType="submit">
-                Log in
-              </Button>
-              <Button
-                block={true}
-                type="primary"
-                href={authFusionLoginUrl.toString()}
-              >
-                Log in with SSO
-              </Button>
-            </Flex>
-            <div style={styles.footer}>
-              <Text style={styles.text}>Don't have an account?</Text>{" "}
-              <Link to={ROUTES.AUTH.REGISTER.URL}>Register now</Link>
-            </div>
-          </Form.Item>
-        </Form>
+            Masuk
+          </Button>
+        </form>
+        <p className="text-center text-sm text-gray-500 mt-4">Atau Login Dengan</p>
+        <div className="flex gap-4 mt-2">
+          <GoogleButton onClick={() => console.log("wauh")} />
+        </div>
+      </div>
+
+      {/* Banner Section */}
+      <div className="hidden lg:flex w-1/2 h-full bg-[url('/background-image.jpg')] bg-no-repeat bg-cover bg-center relative items-center justify-center">
+        <div className="absolute inset-0 bg-blue-500 bg-opacity-70"></div>
+
+        <div className="z-10 text-center text-white">
+          <h2 className="text-4xl font-bold">
+            <span className="text-yellow-400">NAJM</span> COURSE
+          </h2>
+          <p className="text-sm mt-2">Taruna Learning Center</p>
+        </div>
       </div>
     </section>
   );
-}
+};

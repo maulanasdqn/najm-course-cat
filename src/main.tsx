@@ -6,7 +6,7 @@ import { AppLoading } from "./app/_components/ui/app-loading";
 import { AppBoundary } from "./app/_components/ui/app-boundary";
 import { RouterProvider } from "react-router-dom";
 import { ReactQueryProvider } from "./libs/react-query/react-query-provider";
-import "antd/dist/reset.css";
+import "./index.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

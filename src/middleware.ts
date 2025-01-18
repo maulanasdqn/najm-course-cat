@@ -14,16 +14,14 @@ const mappingRoutePermissions = [
   },
 ];
 
-const mappingPublicRoutes = ["/auth/login", "/auth/oauth-callback"];
+const mappingPublicRoutes = ["/auth/login", "/auth/register"];
 
 export const middleware = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const session = AccessTokenCookies.get();
   const userData = UserCookies.get();
   const userPermissions =
-    userData?.roles
-      ?.map((role) => role.permissions.map((perm) => perm.name))
-      ?.flat() || [];
+    userData?.roles?.map((role) => role.permissions.map((perm) => perm.name))?.flat() || [];
 
   const pathname = url.pathname;
 
@@ -31,9 +29,7 @@ export const middleware = async ({ request }: LoaderFunctionArgs) => {
     mappingRoutePermissions,
     (route) =>
       (session && route.path === pathname && route.permissions
-        ? route.permissions.some(
-            (permission) => permission ?? userPermissions.some(permission),
-          )
+        ? route.permissions.some((permission) => permission ?? userPermissions.some(permission))
         : true) || false,
   );
 

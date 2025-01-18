@@ -1,10 +1,5 @@
 import { ROUTES } from "@/commons/constants/routes";
-import {
-  AccessTokenCookies,
-  RefreshTokenCookies,
-  UserCookies,
-} from "@/libs/cookies";
-import { Page } from "admiral";
+import { AccessTokenCookies, RefreshTokenCookies, UserCookies } from "@/libs/cookies";
 import { Button } from "antd";
 import { FC, ReactElement } from "react";
 import { useNavigate } from "react-router-dom";
@@ -18,11 +13,11 @@ export const Component: FC = (): ReactElement => {
     navigate(ROUTES.AUTH.LOGIN.URL);
   };
   return (
-    <Page title="Dashboard">
+    <>
       <h1>Dashboard</h1>
       <Button type="primary" onClick={handleLogout}>
         Logout
       </Button>
-    </Page>
+    </>
   );
 };
