@@ -2,10 +2,9 @@ import { z } from "zod";
 
 export const registerSchema = z
   .object({
-    firstName: z.string().min(1, { message: "First name is required" }),
-    lastName: z.string().min(1, { message: "Last name is required" }),
-    username: z.string().min(1, { message: "Username is required" }),
+    fullname: z.string().min(1, { message: "First name is required" }),
     interests: z.array(z.string()).min(1, { message: "At least one interest is required" }),
+    referralCode: z.string().min(1, { message: "Referral code is required" }),
     terms: z.boolean().refine((value) => value, {
       message: "You must agree to the terms and conditions",
     }),
@@ -19,6 +18,7 @@ export const registerSchema = z
       .min(1, { message: "Password is required" })
       .min(6, { message: "Password must be at least 6 characters" }),
     confirmPassword: z.string().min(1, { message: "Confirm password is required" }),
+    studentType: z.string().min(1, { message: "Student type is required" }),
   })
   .superRefine((data, ctx) => {
     if (data.password !== data.confirmPassword) {
