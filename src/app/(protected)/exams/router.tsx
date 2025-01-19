@@ -7,6 +7,10 @@ export const ExamsRouter = [
     lazy: () => import("./page"),
   },
   {
+    path: ROUTES.EXAMS.START.URL,
+    lazy: () => import("./start/page"),
+  },
+  {
     path: ROUTES.EXAMS.DETAIL.URL,
     lazy: () => import("./page"),
   },

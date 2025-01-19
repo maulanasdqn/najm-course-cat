@@ -13,9 +13,9 @@ export const ProtectedLayout: FC = (): ReactElement => {
   console.log(userPermissions);
 
   return (
-    <section className="w-full h-full min-h-screen flex flex-col relative items-center justify-start bg-gray-100 overflow-hidden">
-      <Navbar />
-      <div className="flex w-full justify-start items-center ml-72 mt-6">
+    <section>
+      <Navbar accountName="Akun Gue" />
+      <div className="flex ">
         <Sidebar />
         <Outlet />
       </div>

@@ -6,6 +6,7 @@ import { AuthRouter } from "./(public)/auth/router";
 import { ProtectedLayout } from "./(protected)/layout";
 import { ExamsRouter } from "./(protected)/exams/router";
 import { RootLayout } from "./_components/ui/layout/root";
+import { CourseRouter } from "./(protected)/course/router";
 
 export const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
           {
             path: PREFIX.EXAMS,
             children: ExamsRouter,
+          },
+          {
+            path: PREFIX.COURSE,
+            children: CourseRouter,
           },
         ],
       },
