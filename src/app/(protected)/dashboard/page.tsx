@@ -1,41 +1,52 @@
 import { FC, ReactElement } from "react";
 
-const testList = [
-  { id: 1, title: "Tes Penalaran", status: "Belum Dikerjakan", score: null },
-  { id: 2, title: "Tes Verbal", status: "Sudah Dikerjakan", score: 85 },
-  { id: 3, title: "Tes Numerik", status: "Belum Dikerjakan", score: null },
-  { id: 4, title: "Tes Kepribadian", status: "Sudah Dikerjakan", score: 90 },
-];
-
 export const Component: FC = (): ReactElement => {
   return (
-    <div className="flex flex-col items-center justify-center w-full">
-      <section className="flex flex-1 w-full max-w-7xl">
-        <main className="col-span-2 w-full p-6">
-          <h2 className="text-xl font-bold text-gray-700 mb-6">Daftar Tes</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {testList.map((test) => (
-              <div
-                key={test.id}
-                className="border bg-white rounded-lg p-4 hover:shadow-md transition"
-              >
-                <h3 className="text-lg font-bold text-gray-800">{test.title}</h3>
-                <p className="text-sm text-gray-600 mb-2">Status: {test.status}</p>
-                {test.score !== null ? (
-                  <p className="text-sm text-green-600 font-bold">Skor: {test.score}</p>
-                ) : (
-                  <a
-                    href={`/exams/${test.id}`}
-                    className="text-sm text-blue-600 font-bold hover:underline"
-                  >
-                    Kerjakan Tes →
-                  </a>
-                )}
-              </div>
-            ))}
+    <div className="min-h-screen w-full bg-gray-100">
+      {/* Main Content */}
+      <main className="flex flex-col w-full mx-auto px-4 py-6 gap-y-6">
+        {/* Card Progress */}
+        <div className="bg-white shadow rounded-lg p-6">
+          <h2 className="text-xl font-bold text-gray-700 mb-4">Progress Anda</h2>
+          <div className="w-full bg-gray-200 rounded-full h-6">
+            <div
+              className="bg-blue-600 h-6 rounded-full text-sm text-white text-center"
+              style={{ width: "75%" }} // Progress bar width
+            >
+              75%
+            </div>
           </div>
-        </main>
-      </section>
+          <p className="mt-4 text-gray-600">
+            Anda telah menyelesaikan 75% materi try out. Selesaikan materi berikutnya untuk hasil
+            terbaik!
+          </p>
+        </div>
+
+        {/* Informasi Try Out */}
+        <div className="bg-white shadow rounded-lg p-6 col-span-3">
+          <h2 className="text-xl font-bold text-gray-700 mb-4">Informasi Penting</h2>
+          <ul className="space-y-4">
+            <li className="border-l-4 border-blue-600 pl-4">
+              <h3 className="text-lg font-bold text-gray-700">Tanggal Try Out</h3>
+              <p className="text-gray-600">
+                Try out akan dilaksanakan pada <strong>10 Februari 2025</strong>.
+              </p>
+            </li>
+            <li className="border-l-4 border-blue-600 pl-4">
+              <h3 className="text-lg font-bold text-gray-700">Durasi Tes</h3>
+              <p className="text-gray-600">
+                Durasi tes adalah <strong>120 menit</strong>. Pastikan Anda siap sebelum memulai.
+              </p>
+            </li>
+            <li className="border-l-4 border-blue-600 pl-4">
+              <h3 className="text-lg font-bold text-gray-700">Materi Try Out</h3>
+              <p className="text-gray-600">
+                Tes mencakup penalaran, verbal, numerik, dan kepribadian.
+              </p>
+            </li>
+          </ul>
+        </div>
+      </main>
     </div>
   );
 };
