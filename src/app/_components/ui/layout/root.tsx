@@ -5,7 +5,7 @@ import { Toaster } from "react-hot-toast";
 
 export const RootLayout: FC = (): ReactElement => {
   const userData = UserCookies.get();
-  const userPermissions = userData?.role.permissions?.map((perm) => perm.name) || [];
+  const userPermissions = userData?.role?.permissions?.map((perm) => perm.name) || [];
 
   console.log(userPermissions);
 

@@ -7,7 +7,7 @@ import Sidebar from "@/app/_components/ui/sidebar";
 
 export const ProtectedLayout: FC = (): ReactElement => {
   const userData = UserCookies.get();
-  const userPermissions = userData?.role.permissions?.map((perm) => perm.name) || [];
+  const userPermissions = userData?.role?.permissions?.map((perm) => perm.name) || [];
 
   console.log(userPermissions);
 
