@@ -2,23 +2,22 @@ import { TResponseData, TResponsePaginate } from "@/commons/types/response";
 import { TRoleItem } from "../role/type";
 
 export type TUserItem = {
-  id: string;
-  name: string;
-  email: string;
+  avatar: string;
   created_at: string;
+  email: string;
+  fullname: string;
+  id: string;
+  password: string;
+  phone_number: string;
+  referral_code: string;
+  referred_by: string;
+  role: TRoleItem;
   updated_at: string;
-  roles: Array<TRoleItem>;
 };
 
-export type TUserCreateRequest = Omit<
-  TUserItem,
-  "id" | "created_at" | "updated_at" | "roles"
->;
+export type TUserCreateRequest = Omit<TUserItem, "id" | "created_at" | "updated_at" | "roles">;
 
-export type TUserUpdateRequest = Omit<
-  TUserItem,
-  "created_at" | "updated_at" | "roles"
->;
+export type TUserUpdateRequest = Omit<TUserItem, "created_at" | "updated_at" | "roles">;
 
 export type TGetUsersParams = {
   page?: number;

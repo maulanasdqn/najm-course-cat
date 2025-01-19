@@ -1,3 +1,4 @@
+import { PERMISSIONS } from "@/commons/constants/permissions";
 import {
   TRoleCreateRequest,
   TRoleDetailResponse,
@@ -6,49 +7,63 @@ import {
   TRoleUpdateRequest,
 } from "./type";
 
-export const getRoles = (
-  params: TRoleGetRequest,
-): Promise<TRoleListResponse> => {
+export const getRoles = (params: TRoleGetRequest): Promise<TRoleListResponse> => {
   console.log(params);
   return Promise.resolve({
     status_code: 200,
     data: {
       items: [
         {
+          created_at: new Date().toISOString(),
+          id: "1",
+          name: "Admin",
           permissions: [
             {
-              name: "View Role",
-              key: "view-role",
-              id: "145efcff-8ae5-4a6c-9900-05a855000622",
-              created_at: null,
-              updated_at: null,
-              deleted_at: null,
+              created_at: new Date().toISOString(),
+              id: "1",
+              name: PERMISSIONS.USERS.READ_USERS,
+              updated_at: new Date().toISOString(),
+            },
+            {
+              created_at: new Date().toISOString(),
+              id: "2",
+              name: PERMISSIONS.PERMISSIONS.READ_PERMISSIONS,
+              updated_at: new Date().toISOString(),
+            },
+            {
+              created_at: new Date().toISOString(),
+              id: "3",
+              name: PERMISSIONS.ROLES.READ_ROLES,
+              updated_at: new Date().toISOString(),
             },
           ],
-          name: "Admin",
-          key: "admin",
-          id: "9b89100c-fd49-4b87-b2fd-763832c59cc1",
-          created_at: "2023-10-01T00:00:00.000Z",
-          updated_at: "2023-10-01T00:00:00.000Z",
-          deleted_at: null,
+          updated_at: new Date().toISOString(),
         },
         {
+          created_at: new Date().toISOString(),
+          id: "2",
+          name: "Super Admin",
           permissions: [
             {
-              name: "View Role",
-              key: "view-role",
-              id: "145efcff-8ae5-4a6c-9900-05a855000622",
-              created_at: null,
-              updated_at: null,
-              deleted_at: null,
+              created_at: new Date().toISOString(),
+              id: "1",
+              name: PERMISSIONS.USERS.READ_USERS,
+              updated_at: new Date().toISOString(),
+            },
+            {
+              created_at: new Date().toISOString(),
+              id: "2",
+              name: PERMISSIONS.PERMISSIONS.READ_PERMISSIONS,
+              updated_at: new Date().toISOString(),
+            },
+            {
+              created_at: new Date().toISOString(),
+              id: "3",
+              name: PERMISSIONS.ROLES.READ_ROLES,
+              updated_at: new Date().toISOString(),
             },
           ],
-          name: "Super Admin",
-          key: "super-admin",
-          id: "410b4d3f-9ea1-4871-81ff-b091cf6c15fb",
-          created_at: "2023-10-01T00:00:00.000Z",
-          updated_at: "2023-10-01T00:00:00.000Z",
-          deleted_at: null,
+          updated_at: new Date().toISOString(),
         },
       ],
       meta: {
@@ -67,79 +82,98 @@ export const getRole = (id: string): Promise<TRoleDetailResponse> => {
   return Promise.resolve({
     status_code: 200,
     data: {
+      created_at: new Date().toISOString(),
+      id: "1",
+      name: "Admin",
       permissions: [
         {
-          name: "View Role",
-          key: "view-role",
-          id: "145efcff-8ae5-4a6c-9900-05a855000622",
-          created_at: null,
-          updated_at: null,
-          deleted_at: null,
+          created_at: new Date().toISOString(),
+          id: "1",
+          name: PERMISSIONS.USERS.READ_USERS,
+          updated_at: new Date().toISOString(),
+        },
+        {
+          created_at: new Date().toISOString(),
+          id: "2",
+          name: PERMISSIONS.PERMISSIONS.READ_PERMISSIONS,
+          updated_at: new Date().toISOString(),
+        },
+        {
+          created_at: new Date().toISOString(),
+          id: "3",
+          name: PERMISSIONS.ROLES.READ_ROLES,
+          updated_at: new Date().toISOString(),
         },
       ],
-      name: "Super Admin",
-      key: "super-admin",
-      id: "410b4d3f-9ea1-4871-81ff-b091cf6c15fb",
-      created_at: null,
-      updated_at: null,
-      deleted_at: null,
+      updated_at: new Date().toISOString(),
     },
     version: "1.0.0",
   });
 };
 
-export const createRole = (
-  data: TRoleCreateRequest,
-): Promise<TRoleDetailResponse> => {
+export const createRole = (data: TRoleCreateRequest): Promise<TRoleDetailResponse> => {
   console.log(data);
   return Promise.resolve({
     status_code: 200,
     data: {
+      created_at: new Date().toISOString(),
+      id: "1",
+      name: "Admin",
       permissions: [
         {
-          name: "View Role",
-          key: "view-role",
-          id: "145efcff-8ae5-4a6c-9900-05a855000622",
-          created_at: null,
-          updated_at: null,
-          deleted_at: null,
+          created_at: new Date().toISOString(),
+          id: "1",
+          name: PERMISSIONS.USERS.READ_USERS,
+          updated_at: new Date().toISOString(),
+        },
+        {
+          created_at: new Date().toISOString(),
+          id: "2",
+          name: PERMISSIONS.PERMISSIONS.READ_PERMISSIONS,
+          updated_at: new Date().toISOString(),
+        },
+        {
+          created_at: new Date().toISOString(),
+          id: "3",
+          name: PERMISSIONS.ROLES.READ_ROLES,
+          updated_at: new Date().toISOString(),
         },
       ],
-      name: "Admin HC",
-      key: "admin-hc",
-      id: "904a0805-ff4c-4513-9e6b-628089e23692",
-      created_at: null,
-      updated_at: null,
-      deleted_at: null,
+      updated_at: new Date().toISOString(),
     },
     version: "1.0.0",
   });
 };
 
-export const updateRole = (
-  id: string,
-  data: TRoleUpdateRequest,
-): Promise<TRoleDetailResponse> => {
+export const updateRole = (id: string, data: TRoleUpdateRequest): Promise<TRoleDetailResponse> => {
   console.log(id, data);
   return Promise.resolve({
     status_code: 200,
     data: {
+      created_at: new Date().toISOString(),
+      id: "1",
+      name: "Admin",
       permissions: [
         {
-          name: "View Role",
-          key: "view-role",
-          id: "145efcff-8ae5-4a6c-9900-05a855000622",
-          created_at: null,
-          updated_at: null,
-          deleted_at: null,
+          created_at: new Date().toISOString(),
+          id: "1",
+          name: PERMISSIONS.USERS.READ_USERS,
+          updated_at: new Date().toISOString(),
+        },
+        {
+          created_at: new Date().toISOString(),
+          id: "2",
+          name: PERMISSIONS.PERMISSIONS.READ_PERMISSIONS,
+          updated_at: new Date().toISOString(),
+        },
+        {
+          created_at: new Date().toISOString(),
+          id: "3",
+          name: PERMISSIONS.ROLES.READ_ROLES,
+          updated_at: new Date().toISOString(),
         },
       ],
-      name: "Admin HC",
-      key: "admin-hc",
-      id: "904a0805-ff4c-4513-9e6b-628089e23692",
-      created_at: null,
-      updated_at: null,
-      deleted_at: null,
+      updated_at: new Date().toISOString(),
     },
     version: "1.0.0",
   });
@@ -150,13 +184,30 @@ export const deleteRole = (id: string): Promise<TRoleDetailResponse> => {
   return Promise.resolve({
     status_code: 200,
     data: {
-      permissions: [],
-      name: "Super Admin",
-      key: "super-admin",
-      id: "410b4d3f-9ea1-4871-81ff-b091cf6c15fb",
-      created_at: null,
-      updated_at: null,
-      deleted_at: null,
+      created_at: new Date().toISOString(),
+      id: "1",
+      name: "Admin",
+      permissions: [
+        {
+          created_at: new Date().toISOString(),
+          id: "1",
+          name: PERMISSIONS.USERS.READ_USERS,
+          updated_at: new Date().toISOString(),
+        },
+        {
+          created_at: new Date().toISOString(),
+          id: "2",
+          name: PERMISSIONS.PERMISSIONS.READ_PERMISSIONS,
+          updated_at: new Date().toISOString(),
+        },
+        {
+          created_at: new Date().toISOString(),
+          id: "3",
+          name: PERMISSIONS.ROLES.READ_ROLES,
+          updated_at: new Date().toISOString(),
+        },
+      ],
+      updated_at: new Date().toISOString(),
     },
     version: "1.0.0",
   });

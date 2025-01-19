@@ -8,8 +8,10 @@ export type TLoginParam = {
 
 export type TLoginResponse = {
   data: {
-    access_token: string;
-    refresh_token: string;
+    token: {
+      access_token: string;
+      refresh_token: string;
+    };
     user: TUserItem;
   };
 };

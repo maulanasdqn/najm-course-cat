@@ -15,8 +15,8 @@ export const usePostLogin = (): UseMutationResult<
     mutationKey: ["post-login"],
     mutationFn: (payload) => postLogin(payload),
     onSuccess: (res) => {
-      AccessTokenCookies.set(res.data.access_token);
-      RefreshTokenCookies.set(res.data.refresh_token);
+      AccessTokenCookies.set(res.data.token.access_token);
+      RefreshTokenCookies.set(res.data.token.refresh_token);
       UserCookies.set(res.data.user);
       navigate("/dashboard");
     },
