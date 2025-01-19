@@ -4,6 +4,14 @@ import { InputText } from "@/app/_components/ui/inputs/text";
 import { InputTag } from "@/app/_components/ui/inputs/tag";
 import { InputCheckbox } from "@/app/_components/ui/inputs/checkbox";
 import { GoogleButton } from "@/app/_components/ui/button/google-button";
+import { Select } from "@/app/_components/ui/inputs/select";
+
+const studentTypeOption = [
+  { value: "polri", label: "Polri" },
+  { value: "tni", label: "TNI" },
+  { value: "cpns", label: "CPNS" },
+  { value: "kedinasan", label: "Kedinasan" },
+];
 
 export const Component: FC = (): ReactElement => {
   const { form, handler } = useRegister();
@@ -38,7 +46,7 @@ export const Component: FC = (): ReactElement => {
             <InputText
               label="Nama"
               control={form.control}
-              name="firstName"
+              name="fullname"
               placeholder="Masukan Nama Lengkap"
             />
           </div>
@@ -72,18 +80,24 @@ export const Component: FC = (): ReactElement => {
               placeholder="**********"
             />
           </div>
-          <InputTag label="Rekomendasi" name="interests" control={form.control} />
+          <InputTag label="Tau dari mana?" name="interests" control={form.control} />
           <InputText
             label="Kode Referal"
             control={form.control}
-            name="interests"
+            name="referralCode"
             placeholder="Masukan Kode Referal"
+          />
+          <Select
+            label="Kategori"
+            control={form.control}
+            name="studentType"
+            placeholder="Pilih Kategori"
+            options={studentTypeOption}
           />
           <div className="flex w-full justify-between gap-x-4 items-center">
             <InputCheckbox label={checkboxLabel} name="terms" control={form.control} />
             <button
               className="w-auto text-sm flex bg-blue-900 text-white px-6 py-2 rounded-full font-medium items-center justify-center hover:bg-blue-800"
-              disabled={!form.formState.isValid}
               type="submit"
             >
               <div className="flex items-center gap-x-2">Daftar</div>

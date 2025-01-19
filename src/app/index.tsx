@@ -5,12 +5,14 @@ import { DashboardRouter } from "./(protected)/dashboard/router";
 import { AuthRouter } from "./(public)/auth/router";
 import { ProtectedLayout } from "./(protected)/layout";
 import { ExamsRouter } from "./(protected)/exams/router";
+import { RootLayout } from "./_components/ui/layout/root";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     // loader: middleware,
     shouldRevalidate: () => true,
+    element: <RootLayout />,
     children: [
       {
         path: PREFIX.AUTH,
