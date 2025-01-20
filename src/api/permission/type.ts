@@ -1,12 +1,10 @@
 import { TResponseData, TResponsePaginate } from "@/commons/types/response";
 
 export type TPermissionItem = {
+  created_at: string;
   id: string;
   name: string;
-  key: string;
-  created_at?: string | null;
-  updated_at?: string | null;
-  deleted_at?: string | null;
+  updated_at: string;
 };
 
 export type TPermissionCreateRequest = Omit<

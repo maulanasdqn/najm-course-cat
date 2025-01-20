@@ -12,38 +12,47 @@ import { PERMISSIONS } from "@/commons/constants/permissions";
 export const postLogin = async (payload: TLoginParam): Promise<TLoginResponse> => {
   return {
     data: {
-      access_token: "access_token",
-      refresh_token: "refresh_token",
+      token: {
+        access_token: "access_token",
+        refresh_token: "refresh_token",
+      },
       user: {
-        id: "1",
-        name: "Admin",
-        email: "admin@mail.com",
+        avatar: "https://i.pravatar.cc/150?img=1",
         created_at: new Date().toISOString(),
+        email: "admin@mail.com",
+        fullname: "Admin",
+        id: "1",
+        password: "password",
+        phone_number: "08123456789",
+        referral_code: "123456789",
+        referred_by: "1",
+        role: {
+          created_at: new Date().toISOString(),
+          id: "1",
+          name: "Admin",
+          permissions: [
+            {
+              created_at: new Date().toISOString(),
+              id: "1",
+              name: PERMISSIONS.USERS.READ_USERS,
+              updated_at: new Date().toISOString(),
+            },
+            {
+              created_at: new Date().toISOString(),
+              id: "2",
+              name: PERMISSIONS.PERMISSIONS.READ_PERMISSIONS,
+              updated_at: new Date().toISOString(),
+            },
+            {
+              created_at: new Date().toISOString(),
+              id: "3",
+              name: PERMISSIONS.ROLES.READ_ROLES,
+              updated_at: new Date().toISOString(),
+            },
+          ],
+          updated_at: new Date().toISOString(),
+        },
         updated_at: new Date().toISOString(),
-        roles: [
-          {
-            id: "1",
-            key: "admin",
-            name: "Admin",
-            permissions: [
-              {
-                id: "1",
-                key: PERMISSIONS.USERS.READ_USERS,
-                name: PERMISSIONS.USERS.READ_USERS,
-              },
-              {
-                id: "2",
-                key: PERMISSIONS.PERMISSIONS.READ_PERMISSIONS,
-                name: PERMISSIONS.PERMISSIONS.READ_PERMISSIONS,
-              },
-              {
-                id: "3",
-                key: PERMISSIONS.ROLES.READ_ROLES,
-                name: PERMISSIONS.ROLES.READ_ROLES,
-              },
-            ],
-          },
-        ],
       },
     },
   };
@@ -58,38 +67,47 @@ export const postLogin = async (payload: TLoginParam): Promise<TLoginResponse> =
 export const postLoginOidc = async (payload: TLoginOidcParam): Promise<TLoginResponse> => {
   return {
     data: {
-      access_token: "access_token",
-      refresh_token: "refresh_token",
+      token: {
+        access_token: "access_token",
+        refresh_token: "refresh_token",
+      },
       user: {
-        id: "1",
-        name: "Admin",
-        email: "admin@mail.com",
+        avatar: "https://i.pravatar.cc/150?img=1",
         created_at: new Date().toISOString(),
+        email: "admin@mail.com",
+        fullname: "Admin",
+        id: "1",
+        password: "password",
+        phone_number: "08123456789",
+        referral_code: "123456789",
+        referred_by: "1",
+        role: {
+          created_at: new Date().toISOString(),
+          id: "1",
+          name: "Admin",
+          permissions: [
+            {
+              created_at: new Date().toISOString(),
+              id: "1",
+              name: PERMISSIONS.USERS.READ_USERS,
+              updated_at: new Date().toISOString(),
+            },
+            {
+              created_at: new Date().toISOString(),
+              id: "2",
+              name: PERMISSIONS.PERMISSIONS.READ_PERMISSIONS,
+              updated_at: new Date().toISOString(),
+            },
+            {
+              created_at: new Date().toISOString(),
+              id: "3",
+              name: PERMISSIONS.ROLES.READ_ROLES,
+              updated_at: new Date().toISOString(),
+            },
+          ],
+          updated_at: new Date().toISOString(),
+        },
         updated_at: new Date().toISOString(),
-        roles: [
-          {
-            id: "1",
-            key: "admin",
-            name: "Admin",
-            permissions: [
-              {
-                id: "1",
-                key: PERMISSIONS.USERS.READ_USERS,
-                name: PERMISSIONS.USERS.READ_USERS,
-              },
-              {
-                id: "2",
-                key: PERMISSIONS.PERMISSIONS.READ_PERMISSIONS,
-                name: PERMISSIONS.PERMISSIONS.READ_PERMISSIONS,
-              },
-              {
-                id: "3",
-                key: PERMISSIONS.ROLES.READ_ROLES,
-                name: PERMISSIONS.ROLES.READ_ROLES,
-              },
-            ],
-          },
-        ],
       },
     },
   };

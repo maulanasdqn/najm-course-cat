@@ -6,51 +6,50 @@ import {
   TUserCreateRequest,
   TUserPaginateResponse,
 } from "./type";
+import { PERMISSIONS } from "@/commons/constants/permissions";
 
-export const getUsers = (
-  params: TGetUsersParams,
-): Promise<TUserPaginateResponse> => {
+export const getUsers = (params: TGetUsersParams): Promise<TUserPaginateResponse> => {
   console.log(params);
   return Promise.resolve({
     data: {
       items: [
         {
+          avatar: "https://i.pravatar.cc/150?img=1",
+          created_at: new Date().toISOString(),
+          email: "admin@mail.com",
+          fullname: "Admin",
           id: "1",
-          name: "John Doe",
-          email: "john@example.com",
-          phone: "123-456-7890",
-          address: "123 Main St, Anytown, USA",
-          is_active: true,
-          created_at: "2023-01-01T00:00:00.000Z",
-          updated_at: "2023-01-01T00:00:00.000Z",
-          roles: [
-            {
-              id: "1",
-              key: "admin",
-              name: "Admin",
-              description: "Administrator role",
-              created_at: "2023-01-01T00:00:00.000Z",
-              updated_at: "2023-01-01T00:00:00.000Z",
-              permissions: [
-                {
-                  id: "1",
-                  key: "read",
-                  name: "read",
-                  description: "Read permission",
-                  created_at: "2023-01-01T00:00:00.000Z",
-                  updated_at: "2023-01-01T00:00:00.000Z",
-                },
-                {
-                  id: "2",
-                  key: "write",
-                  name: "write",
-                  description: "Write permission",
-                  created_at: "2023-01-01T00:00:00.000Z",
-                  updated_at: "2023-01-01T00:00:00.000Z",
-                },
-              ],
-            },
-          ],
+          password: "password",
+          phone_number: "08123456789",
+          referral_code: "123456789",
+          referred_by: "1",
+          role: {
+            created_at: new Date().toISOString(),
+            id: "1",
+            name: "Admin",
+            permissions: [
+              {
+                created_at: new Date().toISOString(),
+                id: "1",
+                name: PERMISSIONS.USERS.READ_USERS,
+                updated_at: new Date().toISOString(),
+              },
+              {
+                created_at: new Date().toISOString(),
+                id: "2",
+                name: PERMISSIONS.PERMISSIONS.READ_PERMISSIONS,
+                updated_at: new Date().toISOString(),
+              },
+              {
+                created_at: new Date().toISOString(),
+                id: "3",
+                name: PERMISSIONS.ROLES.READ_ROLES,
+                updated_at: new Date().toISOString(),
+              },
+            ],
+            updated_at: new Date().toISOString(),
+          },
+          updated_at: new Date().toISOString(),
         },
       ],
       meta: {
@@ -69,53 +68,51 @@ export const getUser = (id: string): Promise<TUserDetailResponse> => {
   console.log(id);
   return Promise.resolve({
     data: {
+      avatar: "https://i.pravatar.cc/150?img=1",
+      created_at: new Date().toISOString(),
+      email: "admin@mail.com",
+      fullname: "Admin",
       id: "1",
-      name: "John Doe",
-      email: "john@example.com",
-      phone: "123-456-7890",
-      address: "123 Main St, Anytown, USA",
-      is_active: true,
-      created_at: "2023-01-01T00:00:00.000Z",
-      updated_at: "2023-01-01T00:00:00.000Z",
-      roles: [
-        {
-          id: "1",
-          key: "admin",
-          name: "Admin",
-          description: "Administrator role",
-          created_at: "2023-01-01T00:00:00.000Z",
-          updated_at: "2023-01-01T00:00:00.000Z",
-          permissions: [
-            {
-              id: "1",
-              key: "read",
-              name: "read",
-              description: "Read permission",
-              created_at: "2023-01-01T00:00:00.000Z",
-              updated_at: "2023-01-01T00:00:00.000Z",
-            },
-            {
-              id: "2",
-              key: "write",
-              name: "write",
-              description: "Write permission",
-              created_at: "2023-01-01T00:00:00.000Z",
-              updated_at: "2023-01-01T00:00:00.000Z",
-            },
-          ],
-        },
-      ],
+      password: "password",
+      phone_number: "08123456789",
+      referral_code: "123456789",
+      referred_by: "1",
+      role: {
+        created_at: new Date().toISOString(),
+        id: "1",
+        name: "Admin",
+        permissions: [
+          {
+            created_at: new Date().toISOString(),
+            id: "1",
+            name: PERMISSIONS.USERS.READ_USERS,
+            updated_at: new Date().toISOString(),
+          },
+          {
+            created_at: new Date().toISOString(),
+            id: "2",
+            name: PERMISSIONS.PERMISSIONS.READ_PERMISSIONS,
+            updated_at: new Date().toISOString(),
+          },
+          {
+            created_at: new Date().toISOString(),
+            id: "3",
+            name: PERMISSIONS.ROLES.READ_ROLES,
+            updated_at: new Date().toISOString(),
+          },
+        ],
+        updated_at: new Date().toISOString(),
+      },
+      updated_at: new Date().toISOString(),
     },
     status_code: 200,
     version: "1.0.0",
   });
 };
 
-export const createUser = (
-  data: TUserCreateRequest,
-): Promise<TResponseData<null>> => {
+export const createUser = (data: TUserCreateRequest): Promise<TResponseData<null>> => {
   console.log(data);
-  if (!data.name.includes("bagus")) {
+  if (!data.fullname.includes("bagus")) {
     throw {
       status_code: 400,
       error_message: "Validation failed",
@@ -140,10 +137,7 @@ export const createUser = (
   });
 };
 
-export const updateUser = (
-  id: string,
-  data: TUserUpdateRequest,
-): Promise<TResponseData<null>> => {
+export const updateUser = (id: string, data: TUserUpdateRequest): Promise<TResponseData<null>> => {
   console.log(id, data);
   return Promise.resolve({
     data: null,
