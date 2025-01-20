@@ -7,11 +7,12 @@ import { ProtectedLayout } from "./(protected)/layout";
 import { ExamsRouter } from "./(protected)/exams/router";
 import { RootLayout } from "./_components/ui/layout/root";
 import { CourseRouter } from "./(protected)/course/router";
+import { middleware } from "@/middleware";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    // loader: middleware,
+    loader: middleware,
     shouldRevalidate: () => true,
     element: <RootLayout />,
     children: [
