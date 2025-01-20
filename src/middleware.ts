@@ -20,7 +20,7 @@ export const middleware = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const session = AccessTokenCookies.get();
   const userData = UserCookies.get();
-  const userPermissions = userData?.role.permissions.map((perm) => perm.name) || [];
+  const userPermissions = userData?.role?.permissions?.map((perm) => perm.name) || [];
 
   const pathname = url.pathname;
 
