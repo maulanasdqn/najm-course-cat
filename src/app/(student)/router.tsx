@@ -1,11 +1,11 @@
-import StudentsLayout from "./layout";
+import StudentLayout from "./layout";
 import DashboardPage from "./dashboard/page";
 import { ExamsRouter } from "./exams/router";
 import { CourseRouter } from "./course/router";
 
-export const StudentsRouter = [
+export const StudentRouter = [
     {
-        element: <StudentsLayout />,
+        element: <StudentLayout />,
         children: [
             {
                 path: "dashboard",

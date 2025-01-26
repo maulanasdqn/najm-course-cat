@@ -5,7 +5,7 @@ import { AuthRouter } from "./(public)/auth/router";
 import { RootLayout } from "./_components/ui/layout/root";
 import { middleware } from "@/middleware";
 import { AdminRouter } from "./(admin)/router";
-import { StudentsRouter } from "./(students)/router";
+import { StudentRouter } from "./(student)/router";
 
 export const router = createBrowserRouter([
   {
@@ -24,9 +24,9 @@ export const router = createBrowserRouter([
         children: AdminRouter,
       },
       {
-        path: "students",
+        path: "student",
         errorElement: <AppError />,
-        children: StudentsRouter,
+        children: StudentRouter,
       },
     ],
   },

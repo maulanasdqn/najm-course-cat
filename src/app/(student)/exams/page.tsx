@@ -31,18 +31,18 @@ export const Component: FC = (): ReactElement => {
 
   const nextQuestion = () => {
     if (currentQuestion < questions.length - 1) {
-      navigate(`/students/exams/${currentQuestion + 2}?page=${currentQuestion + 2}`);
+      navigate(`/student/exams/${currentQuestion + 2}?page=${currentQuestion + 2}`);
     }
   };
 
   const prevQuestion = () => {
     if (currentQuestion > 0) {
-      navigate(`/students/exams/${currentQuestion}?page=${currentQuestion}`);
+      navigate(`/student/exams/${currentQuestion}?page=${currentQuestion}`);
     }
   };
 
   const goToQuestion = (index: number) => {
-    navigate(`/students/exams/${index + 1}?page=${index + 1}`);
+    navigate(`/student/exams/${index + 1}?page=${index + 1}`);
   };
 
   const handleAnswer = (answer: string) => {
@@ -53,7 +53,7 @@ export const Component: FC = (): ReactElement => {
 
   const finishExam = () => {
     alert("Ujian telah selesai. Jawaban Anda telah disimpan.");
-    navigate("/students/exam-summary");
+    navigate("/student/exam-summary");
   };
 
   const formatTime = (time: number) => {

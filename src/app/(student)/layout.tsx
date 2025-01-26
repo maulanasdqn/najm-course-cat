@@ -5,7 +5,7 @@ import { UserCookies } from "@/libs/cookies";
 import Navbar from "@/app/_components/ui/navbar";
 import Sidebar from "@/app/_components/ui/sidebar";
 
-const StudentsLayout: FC = (): ReactElement => {
+const StudentLayout: FC = (): ReactElement => {
     const userData = UserCookies.get();
     const userPermissions = userData?.role?.permissions?.map((perm) => perm.name) || [];
 
@@ -22,4 +22,4 @@ const StudentsLayout: FC = (): ReactElement => {
     );
 };
 
-export default StudentsLayout
+export default StudentLayout

@@ -76,26 +76,26 @@ export const ROUTES = {
       },
     },
   },
-  STUDENTS: {
+  STUDENT: {
     DASHBOARD: {
-      URL: PREFIX.STUDENTS.DASHBOARD,
+      URL: PREFIX.STUDENT.DASHBOARD,
       PERMISSIONS: [PERMISSIONS.DASHBOARD.READ_DASHBOARD],
     },
     COURSE: { 
-      URL: `${PREFIX.STUDENTS.ROOT}${PREFIX.COURSE}`, 
+      URL: `${PREFIX.STUDENT.ROOT}${PREFIX.COURSE}`, 
       PERMISSIONS: [] 
     },
     EXAMS: {
       START: {
-        URL: `${PREFIX.STUDENTS.ROOT}${PREFIX.EXAMS}/start`,
+        URL: `${PREFIX.STUDENT.ROOT}${PREFIX.EXAMS}/start`,
         PERMISSIONS: [],
       },
       END: {
-        URL: `${PREFIX.STUDENTS.ROOT}${PREFIX.EXAMS}/end`,
+        URL: `${PREFIX.STUDENT.ROOT}${PREFIX.EXAMS}/end`,
         PERMISSIONS: [],
       },
       DETAIL: {
-        URL: `${PREFIX.STUDENTS.ROOT}${PREFIX.EXAMS}/:questionId`,
+        URL: `${PREFIX.STUDENT.ROOT}${PREFIX.EXAMS}/:questionId`,
         PERMISSIONS: [],
       },
     },

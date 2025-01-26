@@ -22,7 +22,7 @@ const mappingPublicRoutes = [
 ];
 
 const isAdminRoute = (pathname: string) => pathname.startsWith("/admin");
-const isStudentRoute = (pathname: string) => pathname.startsWith("/students");
+const isStudentRoute = (pathname: string) => pathname.startsWith("/student");
 
 export const middleware = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
@@ -50,7 +50,7 @@ export const middleware = async ({ request }: LoaderFunctionArgs) => {
   }
 
   if (!isAdmin && !isStudentRoute(pathname)) {
-    return redirect(ROUTES.STUDENTS.DASHBOARD.URL); // Redirect non-admins to student dashboard
+    return redirect(ROUTES.STUDENT.DASHBOARD.URL); // Redirect non-admins to student dashboard
   }
 
   // Check route permissions
@@ -63,7 +63,7 @@ export const middleware = async ({ request }: LoaderFunctionArgs) => {
   );
 
   if (allowedPermissions.length === 0) {
-    return redirect(isAdmin ? ROUTES.ADMIN.DASHBOARD.URL : ROUTES.STUDENTS.DASHBOARD.URL);
+    return redirect(isAdmin ? ROUTES.ADMIN.DASHBOARD.URL : ROUTES.STUDENT.DASHBOARD.URL);
   }
 
   return null;

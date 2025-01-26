@@ -21,14 +21,14 @@ export const Sidebar: FC = (): ReactElement => {
     {
       icon: <DashboardIcon />,
       label: "Dashboard",
-      active: pathname === ROUTES.STUDENTS.DASHBOARD.URL,
-      link: ROUTES.STUDENTS.DASHBOARD.URL,
+      active: pathname === ROUTES.STUDENT.DASHBOARD.URL,
+      link: ROUTES.STUDENT.DASHBOARD.URL,
     },
     {
       icon: <MyCourseIcon />,
       label: "Kursus Saya",
-      active: pathname === ROUTES.STUDENTS.COURSE.URL,
-      link: ROUTES.STUDENTS.COURSE.URL,
+      active: pathname === ROUTES.STUDENT.COURSE.URL,
+      link: ROUTES.STUDENT.COURSE.URL,
     },
     {
       icon: <SettingIcon />,

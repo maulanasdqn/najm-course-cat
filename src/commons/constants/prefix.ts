@@ -11,9 +11,9 @@ export const PREFIX = {
       PERMISSIONS: "/admin/iam/permissions",
     },
   },
-  STUDENTS: {
-    ROOT: "/students",
-    DASHBOARD: "/students/dashboard",
+  STUDENT: {
+    ROOT: "/student",
+    DASHBOARD: "/student/dashboard",
   },
   USERS: "/users",
   ROLES: "/roles",
