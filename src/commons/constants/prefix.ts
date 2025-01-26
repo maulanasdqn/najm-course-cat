@@ -1,14 +1,23 @@
 export const PREFIX = {
   ROOT: "/",
   AUTH: "/auth",
+  ADMIN: {
+    ROOT: "/admin",
+    DASHBOARD: "/admin/dashboard",
+    IAM: {
+      ROOT: "/admin/iam",
+      USERS: "/admin/iam/users",
+      ROLES: "/admin/iam/roles",
+      PERMISSIONS: "/admin/iam/permissions",
+    },
+  },
+  STUDENTS: {
+    ROOT: "/students",
+    DASHBOARD: "/students/dashboard",
+  },
   USERS: "/users",
   ROLES: "/roles",
-  IAM: {
-    ROOT: "/iam",
-    USERS: "/iam/users",
-    ROLES: "/iam/roles",
-    PERMISSIONS: "/iam/permissions",
-  },
+
   BOOKS: "/books",
   CATEGORIES: "/categories",
   AUTHORS: "/authors",

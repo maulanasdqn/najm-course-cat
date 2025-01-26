@@ -21,20 +21,21 @@ export const Sidebar: FC = (): ReactElement => {
     {
       icon: <DashboardIcon />,
       label: "Dashboard",
-      active: pathname === ROUTES.DASHBOARD.URL,
-      link: ROUTES.DASHBOARD.URL,
+      active: pathname === ROUTES.STUDENTS.DASHBOARD.URL,
+      link: ROUTES.STUDENTS.DASHBOARD.URL,
     },
     {
       icon: <MyCourseIcon />,
       label: "Kursus Saya",
-      active: pathname === ROUTES.COURSE.URL,
-      link: ROUTES.COURSE.URL,
+      active: pathname === ROUTES.STUDENTS.COURSE.URL,
+      link: ROUTES.STUDENTS.COURSE.URL,
     },
     {
       icon: <SettingIcon />,
       label: "Pengaturan Akun",
-      link: ROUTES.SETTINGS.URL,
-      active: pathname === ROUTES.SETTINGS.URL,
+      // TODO: Add link to setting page
+      link: '',
+      active: false,
     },
   ];
 

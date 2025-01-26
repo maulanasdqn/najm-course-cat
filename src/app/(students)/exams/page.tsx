@@ -31,18 +31,18 @@ export const Component: FC = (): ReactElement => {
 
   const nextQuestion = () => {
     if (currentQuestion < questions.length - 1) {
-      navigate(`/exams/${currentQuestion + 2}?page=${currentQuestion + 2}`);
+      navigate(`/students/exams/${currentQuestion + 2}?page=${currentQuestion + 2}`);
     }
   };
 
   const prevQuestion = () => {
     if (currentQuestion > 0) {
-      navigate(`/exams/${currentQuestion}?page=${currentQuestion}`);
+      navigate(`/students/exams/${currentQuestion}?page=${currentQuestion}`);
     }
   };
 
   const goToQuestion = (index: number) => {
-    navigate(`/exams/${index + 1}?page=${index + 1}`);
+    navigate(`/students/exams/${index + 1}?page=${index + 1}`);
   };
 
   const handleAnswer = (answer: string) => {
@@ -53,7 +53,7 @@ export const Component: FC = (): ReactElement => {
 
   const finishExam = () => {
     alert("Ujian telah selesai. Jawaban Anda telah disimpan.");
-    navigate("/exam-summary");
+    navigate("/students/exam-summary");
   };
 
   const formatTime = (time: number) => {
@@ -75,9 +75,8 @@ export const Component: FC = (): ReactElement => {
               <button
                 key={index}
                 onClick={() => goToQuestion(index)}
-                className={`w-10 h-10 rounded-md ${
-                  currentQuestion === index ? "bg-blue-500 text-white" : "bg-gray-300"
-                }`}
+                className={`w-10 h-10 rounded-md ${currentQuestion === index ? "bg-blue-500 text-white" : "bg-gray-300"
+                  }`}
               >
                 {index + 1}
               </button>
