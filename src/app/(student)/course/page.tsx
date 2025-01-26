@@ -25,7 +25,7 @@ export const Component: FC = (): ReactElement => {
                   <p className="text-sm text-green-600 font-bold">Skor: {test.score}</p>
                 ) : (
                   <a
-                    href={`/exams/${test.id}`}
+                    href={`/student/exams/${test.id}`}
                     className="text-sm text-blue-600 font-bold hover:underline"
                   >
                     Kerjakan Tes →

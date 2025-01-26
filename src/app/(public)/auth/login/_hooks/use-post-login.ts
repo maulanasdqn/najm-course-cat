@@ -16,7 +16,7 @@ export const usePostLogin = () => {
       AccessTokenCookies.set(res.data.token.access_token);
       RefreshTokenCookies.set(res.data.token.refresh_token);
       UserCookies.set(res.data.user);
-      navigate("/dashboard");
+      navigate(0);
     },
     onError: (err) => {
       if (err.response?.data.message === "Your Account is not active, please contact admin") {

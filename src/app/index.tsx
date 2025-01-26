@@ -1,13 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
 import { PREFIX } from "@/commons/constants/prefix";
 import { AppError } from "./_components/ui/app-error";
-import { DashboardRouter } from "./(protected)/dashboard/router";
 import { AuthRouter } from "./(public)/auth/router";
-import { ProtectedLayout } from "./(protected)/layout";
-import { ExamsRouter } from "./(protected)/exams/router";
 import { RootLayout } from "./_components/ui/layout/root";
-import { CourseRouter } from "./(protected)/course/router";
 import { middleware } from "@/middleware";
+import { AdminRouter } from "./(admin)/router";
+import { StudentRouter } from "./(student)/router";
 
 export const router = createBrowserRouter([
   {
@@ -21,23 +19,14 @@ export const router = createBrowserRouter([
         children: AuthRouter,
       },
       {
-        path: PREFIX.ROOT,
+        path: "admin",
         errorElement: <AppError />,
-        element: <ProtectedLayout />,
-        children: [
-          {
-            path: PREFIX.DASHBOARD,
-            children: DashboardRouter,
-          },
-          {
-            path: PREFIX.EXAMS,
-            children: ExamsRouter,
-          },
-          {
-            path: PREFIX.COURSE,
-            children: CourseRouter,
-          },
-        ],
+        children: AdminRouter,
+      },
+      {
+        path: "student",
+        errorElement: <AppError />,
+        children: StudentRouter,
       },
     ],
   },
