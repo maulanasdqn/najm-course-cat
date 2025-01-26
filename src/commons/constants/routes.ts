@@ -28,6 +28,7 @@ export const ROUTES = {
     CALLBACK: { URL: `${PREFIX.AUTH}/oauth-callback`, PERMISSIONS: [] },
     FORGOT_PASSWORD: { URL: `${PREFIX.AUTH}/forgot-password`, PERMISSIONS: [] },
     RESET_PASSWORD: { URL: `${PREFIX.AUTH}/reset-password`, PERMISSIONS: [] },
+    VERIFY_EMAIL: { URL: `${PREFIX.AUTH}/verify-email`, PERMISSIONS: [] },
   },
   IAM: {
     USERS: {

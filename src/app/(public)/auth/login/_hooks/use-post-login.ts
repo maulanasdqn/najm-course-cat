@@ -1,24 +1,28 @@
 import { postLogin } from "@/api/auth/api";
-import { TLoginParam, TLoginResponse } from "@/api/auth/type";
+import { TLoginParam } from "@/api/auth/type";
+import { useMutation } from "@/app/_hooks/request/use-mutation";
 import { AccessTokenCookies, RefreshTokenCookies, UserCookies } from "@/libs/cookies";
-import { useMutation, UseMutationResult } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
-export const usePostLogin = (): UseMutationResult<
-  TLoginResponse,
-  unknown,
-  TLoginParam,
-  unknown
-> => {
+export const POST_LOGIN_MUTATION_KEY = ["post-login"];
+
+export const usePostLogin = () => {
   const navigate = useNavigate();
   return useMutation({
-    mutationKey: ["post-login"],
-    mutationFn: (payload) => postLogin(payload),
+    mutationKey: POST_LOGIN_MUTATION_KEY,
+    mutationFn: (payload: TLoginParam) => postLogin(payload),
     onSuccess: (res) => {
       AccessTokenCookies.set(res.data.token.access_token);
       RefreshTokenCookies.set(res.data.token.refresh_token);
       UserCookies.set(res.data.user);
       navigate("/dashboard");
+    },
+    onError: (err) => {
+      if (err.response?.data.message === "Your Account is not active, please contact admin") {
+        return navigate("/auth/verify-email");
+      }
+      toast.error(err.response?.data.message || "Terjadi Kesalahan");
     },
   });
 };

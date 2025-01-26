@@ -1,13 +1,24 @@
-import { FC, ReactElement } from "react";
+import { FC, ReactElement, useEffect } from "react";
 import { useLogin } from "./_hooks/use-login";
 import { GoogleButton } from "@/app/_components/ui/button/google-button";
 import { InputText } from "@/app/_components/ui/inputs/text";
 import { Button } from "@/app/_components/ui/button";
 import { InputCheckbox } from "@/app/_components/ui/inputs/checkbox";
+import { queryClient } from "@/libs/react-query/react-query-client";
+import { POST_LOGIN_MUTATION_KEY } from "./_hooks/use-post-login";
 
 export const Component: FC = (): ReactElement => {
   const { form, handler } = useLogin();
   const checkboxLabel = <span className="text-gray-500">Ingat Saya</span>;
+
+  useEffect(() => {
+    queryClient
+      .getMutationCache()
+      .find({
+        mutationKey: POST_LOGIN_MUTATION_KEY,
+      })
+      ?.destroy();
+  }, []);
 
   return (
     <section className="flex h-screen">
