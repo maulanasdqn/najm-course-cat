@@ -13,4 +13,8 @@ export const AuthRouter = [
     path: ROUTES.AUTH.VERIFY_EMAIL.URL,
     lazy: () => import("./verify-email/page"),
   },
+  {
+    path: ROUTES.AUTH.CONFIRM_PAYMENT.URL,
+    lazy: () => import("./confirm-payment/page"),
+  },
 ];
