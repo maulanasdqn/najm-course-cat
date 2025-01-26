@@ -3,13 +3,16 @@ import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
+export const POST_REGISTER_MUTATION_KEY = ["post-register"];
+
 export const usePostRegister = () => {
   const navigate = useNavigate();
   return useMutation({
+    mutationKey: POST_REGISTER_MUTATION_KEY,
     mutationFn: postRegister,
     onSuccess: (res) => {
       toast.success(res.message);
-      navigate("/auth/login");
+      navigate("/auth/verify-email");
     },
     onError: () => {
       toast.error("Terjadi Kesalahan");

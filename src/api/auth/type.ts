@@ -43,4 +43,22 @@ export type TRegisterParam = {
 
 export type TRegisterResponse = {
   message: string;
+  version: string;
+};
+
+export type TVerifyEmailParam = {
+  otp: string;
+  email: string;
+};
+
+export type TVerifyEmailResponse = {
+  message: string;
+};
+
+export type TSendOtpParam = {
+  email: string;
+};
+
+export type TSendOtpResponse = {
+  message: string;
 };

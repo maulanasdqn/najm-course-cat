@@ -1,10 +1,12 @@
-import { FC, ReactElement } from "react";
+import { FC, ReactElement, useEffect } from "react";
 import { useRegister } from "./hooks/use-register";
 import { InputText } from "@/app/_components/ui/inputs/text";
 import { InputTag } from "@/app/_components/ui/inputs/tag";
 import { InputCheckbox } from "@/app/_components/ui/inputs/checkbox";
 import { GoogleButton } from "@/app/_components/ui/button/google-button";
 import { Select } from "@/app/_components/ui/inputs/select";
+import { queryClient } from "@/libs/react-query/react-query-client";
+import { POST_REGISTER_MUTATION_KEY } from "./hooks/use-post-register";
 
 const studentTypeOption = [
   { value: "polri", label: "Polri" },
@@ -15,6 +17,15 @@ const studentTypeOption = [
 
 export const Component: FC = (): ReactElement => {
   const { form, handler } = useRegister();
+
+  useEffect(() => {
+    queryClient
+      .getMutationCache()
+      .find({
+        mutationKey: POST_REGISTER_MUTATION_KEY,
+      })
+      ?.destroy();
+  }, []);
 
   const checkboxLabel = (
     <span className="text-sm text-gray-500">

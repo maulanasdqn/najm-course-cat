@@ -14,7 +14,7 @@ const mappingRoutePermissions = [
   },
 ];
 
-const mappingPublicRoutes = ["/auth/login", "/auth/register"];
+const mappingPublicRoutes = ["/auth/login", "/auth/register", "/auth/verify-email"];
 
 export const middleware = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
