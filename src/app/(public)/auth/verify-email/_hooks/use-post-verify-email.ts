@@ -12,7 +12,7 @@ export const usePostVerifyEmail = () => {
     mutationFn: (payload: TVerifyEmailParam) => postVerifyEmail(payload),
     onSuccess: (res) => {
       toast.success(res.message);
-      navigate(ROUTES.AUTH.LOGIN.URL);
+      navigate(ROUTES.AUTH.CONFIRM_PAYMENT.URL);
     },
     onError: (err) => {
       toast.error(err.response?.data.message || "Terjadi Kesalahan");

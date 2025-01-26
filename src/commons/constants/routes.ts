@@ -29,6 +29,7 @@ export const ROUTES = {
     FORGOT_PASSWORD: { URL: `${PREFIX.AUTH}/forgot-password`, PERMISSIONS: [] },
     RESET_PASSWORD: { URL: `${PREFIX.AUTH}/reset-password`, PERMISSIONS: [] },
     VERIFY_EMAIL: { URL: `${PREFIX.AUTH}/verify-email`, PERMISSIONS: [] },
+    CONFIRM_PAYMENT: { URL: `${PREFIX.AUTH}/confirm-payment`, PERMISSIONS: [] },
   },
   IAM: {
     USERS: {
