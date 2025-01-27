@@ -1,9 +1,10 @@
 import { FC, ReactElement, ReactNode, useState } from "react";
 import clsx from "clsx";
 import { DashboardIcon } from "../icons/ic-dashboard";
-import { SettingIcon } from "../icons/ic-setting";
 import { MyCourseIcon } from "../icons/ic-my-course";
 import { ROUTES } from "@/commons/constants/routes";
+import { UserIcon } from "../icons/ic-user";
+import { LogoutIcon } from "../icons/ic-logout";
 
 type TSidebarItem = {
   icon: ReactNode;
@@ -31,11 +32,16 @@ export const Sidebar: FC = (): ReactElement => {
       link: ROUTES.STUDENT.COURSE.URL,
     },
     {
-      icon: <SettingIcon />,
-      label: "Pengaturan Akun",
-      // TODO: Add link to setting page
-      link: '',
+      icon: <UserIcon />,
+      label: "Data Pengguna",
+      active: pathname === ROUTES.STUDENT.PROFILE.URL,
+      link: ROUTES.STUDENT.PROFILE.URL,
+    },
+    {
+      icon: <LogoutIcon />,
+      label: "Logout",
       active: false,
+      link: "",
     },
   ];
 

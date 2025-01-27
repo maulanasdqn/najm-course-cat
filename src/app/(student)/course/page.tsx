@@ -1,10 +1,10 @@
 import { FC, ReactElement } from "react";
 
 const testList = [
-  { id: 1, title: "Tes Penalaran", status: "Belum Dikerjakan", score: null },
+  { id: 1, title: "Tes Kepribadian", status: "Belum Dikerjakan", score: null },
   { id: 2, title: "Tes Verbal", status: "Sudah Dikerjakan", score: 85 },
-  { id: 3, title: "Tes Numerik", status: "Belum Dikerjakan", score: null },
-  { id: 4, title: "Tes Kepribadian", status: "Sudah Dikerjakan", score: 90 },
+  { id: 3, title: "Tes Intelegensi", status: "Belum Dikerjakan", score: null },
+  { id: 4, title: "Tes Penalaran", status: "Sudah Dikerjakan", score: 90 },
 ];
 
 export const Component: FC = (): ReactElement => {
@@ -25,7 +25,7 @@ export const Component: FC = (): ReactElement => {
                   <p className="text-sm text-green-600 font-bold">Skor: {test.score}</p>
                 ) : (
                   <a
-                    href={`/student/exams/${test.id}`}
+                    href={`/student/exams/start`}
                     className="text-sm text-blue-600 font-bold hover:underline"
                   >
                     Kerjakan Tes →
