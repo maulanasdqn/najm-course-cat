@@ -4,7 +4,8 @@ import { getUser, updateUser } from "../../../../../api/user";
 import { TUserUpdateRequest } from "../../../../../api/user/type";
 import { QUERY_KEY } from "../../../../../commons/constants/query-key";
 import { ROUTES } from "../../../../../commons/constants/routes";
-import { UserForm, UserFormData } from "../../components/user-form";
+import { UserForm } from "../../components/user-form";
+import { UpdateUserFormData } from "../../_schemas/user-form.schema";
 
 export default function EditUserPage() {
     const { id } = useParams<{ id: string }>();
@@ -23,13 +24,9 @@ export default function EditUserPage() {
         },
     });
 
-    const handleSubmit = (formData: UserFormData) => {
+    const handleSubmit = (formData: UpdateUserFormData) => {
         if (!id) return;
-        // Add id to the form data for update
-        mutate({
-            ...formData,
-            id,
-        } as TUserUpdateRequest);
+        mutate(formData);
     };
 
     if (isLoadingUser) {
@@ -40,6 +37,13 @@ export default function EditUserPage() {
         return <div>User not found</div>;
     }
 
+    const initialData: Partial<UpdateUserFormData> = {
+        fullname: userData.data.fullname,
+        email: userData.data.email,
+        phone_number: userData.data.phone_number,
+        role_id: userData.data.role.id,
+    };
+
     return (
         <div className="p-6">
             <div className="mb-6">
@@ -47,10 +51,10 @@ export default function EditUserPage() {
             </div>
             <div className="max-w-2xl rounded-lg border bg-white p-6">
                 <UserForm
-                    initialData={userData.data}
+                    initialData={initialData}
                     onSubmit={handleSubmit}
                     isLoading={isPending}
-                    isEditMode
+                    isEditMode={true}
                 />
             </div>
         </div>
