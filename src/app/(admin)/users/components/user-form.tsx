@@ -1,11 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { getRoles } from "../../../../api/role";
-import { QUERY_KEY } from "../../../../commons/constants/query-key";
 import { createUserSchema, updateUserSchema, CreateUserFormData, UpdateUserFormData } from "../_schemas/user-form.schema";
 import { InputText } from "@/app/_components/ui/inputs/text";
 import { Select } from "@/app/_components/ui/inputs/select";
+import { useRoleOptions } from "../_hooks/use-role-options";
 
 // Create Form Component
 interface CreateFormProps {
@@ -20,15 +18,7 @@ function CreateUserForm({ initialData, onSubmit, isLoading }: CreateFormProps) {
         defaultValues: initialData,
     });
 
-    const { data: rolesData } = useQuery({
-        queryKey: [QUERY_KEY.ROLES.LIST],
-        queryFn: () => getRoles({ page: 1, limit: 100 }),
-    });
-
-    const roleOptions = rolesData?.data.map(role => ({
-        value: role.id,
-        label: role.name
-    })) ?? [];
+    const { options: roleOptions } = useRoleOptions();
 
     return (
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -97,15 +87,7 @@ function EditUserForm({ initialData, onSubmit, isLoading }: EditFormProps) {
         defaultValues: initialData,
     });
 
-    const { data: rolesData } = useQuery({
-        queryKey: [QUERY_KEY.ROLES.LIST],
-        queryFn: () => getRoles({ page: 1, limit: 100 }),
-    });
-
-    const roleOptions = rolesData?.data.map(role => ({
-        value: role.id,
-        label: role.name
-    })) ?? [];
+    const { options: roleOptions } = useRoleOptions();
 
     return (
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
