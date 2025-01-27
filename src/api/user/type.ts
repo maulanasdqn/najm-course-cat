@@ -11,6 +11,9 @@ export type TUserItem = {
   phone_number: string;
   role: TRoleItem;
   updated_at: string;
+  student_type: string;
+  referral_code?: string;
+  referred_by?: string;
 };
 
 export type TUserCreateRequest = CreateUserFormData;
@@ -26,3 +29,11 @@ export type TGetUsersParams = {
 
 export type TUserPaginateResponse = TResponsePaginate<TUserItem>;
 export type TUserDetailResponse = TResponseData<TUserItem>;
+
+export type ApiError = {
+  response?: {
+    data?: {
+      message?: string;
+    };
+  };
+};

@@ -22,6 +22,9 @@ export const getUser = async (id: string): Promise<TUserDetailResponse> => {
       email: "johndoe@example.com",
       phone_number: "1234567890",
       avatar: "https://example.com/avatar.png",
+      student_type: "fulltime",
+      referral_code: "ABC123",
+      referred_by: "XYZ789",
       role: {
         id: "1",
         name: "Admin",

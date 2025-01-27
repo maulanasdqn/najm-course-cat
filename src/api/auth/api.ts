@@ -36,6 +36,9 @@ export const postLoginOidc = async (payload: TLoginOidcParam): Promise<TLoginRes
         fullname: "Admin",
         id: "1",
         phone_number: "08123456789",
+        student_type: "student_type",
+        referral_code: "referral_code",
+        referred_by: "referred_by",
         role: {
           created_at: new Date().toISOString(),
           id: "1",
