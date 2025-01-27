@@ -36,17 +36,24 @@ export default function UsersPage() {
       id: "actions",
       header: "Actions",
       cell: ({ row }) => {
+        const id = row.original.id;
         return (
           <div className="flex gap-2">
             <Link
-              to={ROUTES.ADMIN.IAM.USERS.UPDATE.URL.replace(":id", row.original.id)}
+              to={ROUTES.ADMIN.IAM.USERS.DETAIL.URL.replace(":id", id)}
+              className="text-blue-600 hover:underline"
+            >
+              Detail
+            </Link>
+            <Link
+              to={ROUTES.ADMIN.IAM.USERS.UPDATE.URL.replace(":id", id)}
               className="text-blue-600 hover:underline"
             >
               Edit
             </Link>
             <Link
               to="#"
-              onClick={() => handleDelete(row.original.id)}
+              onClick={() => handleDelete(id)}
               className="text-red-600 hover:underline"
             >
               Delete
