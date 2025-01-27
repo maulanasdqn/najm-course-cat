@@ -5,7 +5,14 @@ import { TGetUsersParams } from "@/api/user/type";
 
 export const useGetUsers = (params: TGetUsersParams) => {
     return useQuery({
-        queryKey: [QUERY_KEY.USERS.LIST, params.page, params.limit, params.search],
+        queryKey: [
+            QUERY_KEY.USERS.LIST,
+            params.page,
+            params.limit,
+            params.search,
+            params.sort,
+            params.order
+        ],
         queryFn: () => getUsers(params),
     });
 };

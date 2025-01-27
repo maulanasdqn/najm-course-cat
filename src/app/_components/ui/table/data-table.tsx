@@ -7,7 +7,8 @@ import {
     SortingState,
     useReactTable,
 } from "@tanstack/react-table";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDebounce } from "@/app/_hooks/use-debounce";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
@@ -16,6 +17,7 @@ interface DataTableProps<TData, TValue> {
     onSearch?: (query: string) => void;
     onSort?: (field: string, direction: "asc" | "desc") => void;
     onPageChange?: (page: number) => void;
+    initialSearch?: string;
     pagination?: {
         currentPage: number;
         pageSize: number;
@@ -31,9 +33,12 @@ export function DataTable<TData, TValue>({
     onSearch,
     onSort,
     onPageChange,
+    initialSearch = "",
     pagination,
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = useState<SortingState>([]);
+    const [searchValue, setSearchValue] = useState(initialSearch);
+    const debouncedSearch = useDebounce(searchValue, 500);
 
     const handleSortingChange = (updater: SortingState | ((old: SortingState) => SortingState)) => {
         const newSorting = typeof updater === 'function' ? updater(sorting) : updater;
@@ -42,6 +47,20 @@ export function DataTable<TData, TValue>({
             onSort(newSorting[0].id, newSorting[0].desc ? "desc" : "asc");
         }
     };
+
+    // Effect to handle debounced search
+    useEffect(() => {
+        if (debouncedSearch !== initialSearch) {
+            onSearch?.(debouncedSearch);
+        }
+    }, [debouncedSearch, onSearch, initialSearch]);
+
+    // Effect to sync with external search value
+    useEffect(() => {
+        if (searchValue !== initialSearch) {
+            setSearchValue(initialSearch);
+        }
+    }, [initialSearch]);
 
     const table = useReactTable({
         data,
@@ -59,7 +78,7 @@ export function DataTable<TData, TValue>({
         <div className="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
             <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
                 <div className="w-full md:w-1/2">
-                    <form className="flex items-center">
+                    <form className="flex items-center" onSubmit={(e) => e.preventDefault()}>
                         <label htmlFor="simple-search" className="sr-only">Search</label>
                         <div className="relative w-full">
                             <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -72,7 +91,8 @@ export function DataTable<TData, TValue>({
                                 id="simple-search"
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2"
                                 placeholder="Search"
-                                onChange={(e) => onSearch?.(e.target.value)}
+                                value={searchValue}
+                                onChange={(e) => setSearchValue(e.target.value)}
                             />
                         </div>
                     </form>

@@ -1,24 +1,30 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
 import { ROUTES } from "../../../commons/constants/routes";
 import { DataTable } from "../../_components/ui/table/data-table";
 import { columns } from "./columns";
 import { useGetUsers } from "./_hooks/use-get-users";
+import { useTableParams } from "../../_hooks/use-table-params";
 
 export default function UsersPage() {
-  const [page, setPage] = useState(1);
-  const [limit] = useState(10);
-  const [search, setSearch] = useState("");
-
-  const { data, isLoading } = useGetUsers({ page, limit, search });
+  const { params, setParams } = useTableParams();
+  const { data, isLoading } = useGetUsers(params);
 
   const handleSearch = (query: string) => {
-    setSearch(query);
-    setPage(1); // Reset to first page on new search
+    setParams({
+      search: query,
+      page: 1, // Reset to first page on new search
+    });
   };
 
-  const handlePageChange = (newPage: number) => {
-    setPage(newPage);
+  const handleSort = (field: string, direction: "asc" | "desc") => {
+    setParams({
+      sort: field,
+      order: direction,
+    });
+  };
+
+  const handlePageChange = (page: number) => {
+    setParams({ page });
   };
 
   return (
@@ -37,11 +43,13 @@ export default function UsersPage() {
         data={data?.data ?? []}
         isLoading={isLoading}
         onSearch={handleSearch}
+        onSort={handleSort}
+        initialSearch={params.search}
         pagination={{
-          currentPage: page,
-          pageSize: limit,
+          currentPage: params.page,
+          pageSize: params.limit,
           totalItems: data?.meta.total ?? 0,
-          totalPages: data?.meta.total_page ?? 0
+          totalPages: data ? Math.ceil(data.meta.total / data.meta.per_page) : 0
         }}
         onPageChange={handlePageChange}
       />
