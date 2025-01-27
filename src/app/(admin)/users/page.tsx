@@ -1,20 +1,25 @@
-import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import { getUsers } from "../../../api/user";
-import { QUERY_KEY } from "../../../commons/constants/query-key";
+import { useState } from "react";
 import { ROUTES } from "../../../commons/constants/routes";
 import { DataTable } from "../../_components/ui/table/data-table";
 import { columns } from "./columns";
+import { useGetUsers } from "./_hooks/use-get-users";
 
 export default function UsersPage() {
-  const { data, isLoading } = useQuery({
-    queryKey: [QUERY_KEY.USERS.LIST],
-    queryFn: () => getUsers({ page: 1, limit: 10 }),
-  });
+  const [page, setPage] = useState(1);
+  const [limit] = useState(10);
+  const [search, setSearch] = useState("");
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  const { data, isLoading } = useGetUsers({ page, limit, search });
+
+  const handleSearch = (query: string) => {
+    setSearch(query);
+    setPage(1); // Reset to first page on new search
+  };
+
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+  };
 
   return (
     <div className="p-6">
@@ -27,7 +32,19 @@ export default function UsersPage() {
           Add User
         </Link>
       </div>
-      <DataTable columns={columns} data={data?.data ?? []} />
+      <DataTable
+        columns={columns}
+        data={data?.data ?? []}
+        isLoading={isLoading}
+        onSearch={handleSearch}
+        pagination={{
+          currentPage: page,
+          pageSize: limit,
+          totalItems: data?.meta.total ?? 0,
+          totalPages: data?.meta.total_page ?? 0
+        }}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 }
