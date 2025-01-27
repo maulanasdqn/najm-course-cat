@@ -1,13 +1,68 @@
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../../commons/constants/routes";
 import { DataTable } from "../../_components/ui/table/data-table";
-import { columns } from "./columns";
 import { useGetUsers } from "./_hooks/use-get-users";
 import { useTableParams } from "../../_hooks/use-table-params";
+import { useDeleteUser } from "./_hooks/use-delete-user";
+import { ColumnDef } from "@tanstack/react-table";
+import { TUserItem } from "../../../api/user/type";
 
 export default function UsersPage() {
   const { params, setParams } = useTableParams();
   const { data, isLoading } = useGetUsers(params);
+  const { handleDelete } = useDeleteUser()
+
+  const columns: ColumnDef<TUserItem>[] = [
+    {
+      accessorKey: "fullname",
+      header: "Name",
+    },
+    {
+      accessorKey: "email",
+      header: "Email",
+    },
+    {
+      accessorKey: "role.name",
+      header: "Role",
+    },
+    {
+      accessorKey: "created_at",
+      header: "Created At",
+      cell: ({ row }) => {
+        return new Date(row.getValue("created_at")).toLocaleDateString();
+      },
+    },
+    {
+      id: "actions",
+      header: "Actions",
+      cell: ({ row }) => {
+        const id = row.original.id;
+        return (
+          <div className="flex gap-2">
+            <Link
+              to={ROUTES.ADMIN.IAM.USERS.DETAIL.URL.replace(":id", id)}
+              className="text-blue-600 hover:underline"
+            >
+              Detail
+            </Link>
+            <Link
+              to={ROUTES.ADMIN.IAM.USERS.UPDATE.URL.replace(":id", id)}
+              className="text-blue-600 hover:underline"
+            >
+              Edit
+            </Link>
+            <Link
+              to="#"
+              onClick={() => handleDelete(id)}
+              className="text-red-600 hover:underline"
+            >
+              Delete
+            </Link>
+          </div>
+        );
+      },
+    },
+  ];
 
   const handleSearch = (query: string) => {
     setParams({

@@ -1,19 +1,23 @@
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { createUser } from "../../../../api/user";
-import { TUserCreateRequest } from "../../../../api/user/type";
 import { ROUTES } from "../../../../commons/constants/routes";
 import { UserForm } from "../components/user-form";
+import { CreateUserFormData } from "../_schemas/user-form.schema";
 
 export default function CreateUserPage() {
     const navigate = useNavigate();
 
     const { mutate, isPending } = useMutation({
-        mutationFn: (data: TUserCreateRequest) => createUser(data),
+        mutationFn: createUser,
         onSuccess: () => {
             navigate(ROUTES.ADMIN.IAM.USERS.LIST.URL);
         },
     });
+
+    const handleSubmit = (data: CreateUserFormData) => {
+        mutate(data);
+    };
 
     return (
         <div className="p-6">
@@ -21,7 +25,11 @@ export default function CreateUserPage() {
                 <h1 className="text-2xl font-bold">Create User</h1>
             </div>
             <div className="max-w-2xl rounded-lg border bg-white p-6">
-                <UserForm onSubmit={mutate} isLoading={isPending} />
+                <UserForm
+                    onSubmit={handleSubmit}
+                    isLoading={isPending}
+                    isEditMode={false}
+                />
             </div>
         </div>
     );

@@ -1,100 +1,121 @@
-import { useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import { getRoles } from "../../../../api/role";
-import { TUserCreateRequest } from "../../../../api/user/type";
-import { QUERY_KEY } from "../../../../commons/constants/query-key";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createUserSchema, updateUserSchema, CreateUserFormData, UpdateUserFormData } from "../_schemas/user-form.schema";
+import { InputText } from "@/app/_components/ui/inputs/text";
+import { Select } from "@/app/_components/ui/inputs/select";
+import { useRoleOptions } from "../_hooks/use-role-options";
 
-export type UserFormData = TUserCreateRequest;
+const studentTypeOptions = [
+    { value: "polri", label: "Polri" },
+    { value: "tni", label: "TNI" },
+    { value: "cpns", label: "CPNS" },
+    { value: "kedinasan", label: "Kedinasan" },
+];
 
-interface UserFormProps {
-    initialData?: Partial<UserFormData>;
-    onSubmit: (data: UserFormData) => void;
+interface CreateFormProps {
+    isEditMode: false;
+    initialData?: Partial<CreateUserFormData>;
+    onSubmit: (data: CreateUserFormData) => void;
     isLoading?: boolean;
-    isEditMode?: boolean;
 }
 
-export function UserForm({ initialData, onSubmit, isLoading, isEditMode }: UserFormProps) {
-    const { register, handleSubmit } = useForm<UserFormData>({
-        defaultValues: initialData,
+interface EditFormProps {
+    isEditMode: true;
+    initialData?: Partial<UpdateUserFormData>;
+    onSubmit: (data: UpdateUserFormData) => void;
+    isLoading?: boolean;
+}
+
+type UserFormProps = CreateFormProps | EditFormProps;
+
+type FormData = CreateUserFormData & UpdateUserFormData;
+
+export function UserForm(props: UserFormProps) {
+    const form = useForm<FormData>({
+        resolver: zodResolver(props.isEditMode ? updateUserSchema : createUserSchema),
+        defaultValues: props.initialData,
     });
 
-    const { data: rolesData } = useQuery({
-        queryKey: [QUERY_KEY.ROLES.LIST],
-        queryFn: () => getRoles({ page: 1, limit: 100 }),
-    });
+    const { options: roleOptions } = useRoleOptions();
+
+    const onSubmit = (data: FormData) => {
+        if (props.isEditMode) {
+            props.onSubmit(data as UpdateUserFormData);
+        } else {
+            props.onSubmit(data as CreateUserFormData);
+        }
+    };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div>
-                <label className="block text-sm font-medium text-gray-700">
-                    Full Name
-                </label>
-                <input
-                    type="text"
-                    {...register("fullname")}
-                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500"
-                />
-            </div>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <InputText
+                name="fullname"
+                control={form.control}
+                label="Nama"
+                placeholder="Masukan Nama Lengkap"
+            />
 
-            <div>
-                <label className="block text-sm font-medium text-gray-700">
-                    Email
-                </label>
-                <input
-                    type="email"
-                    {...register("email")}
-                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500"
-                />
-            </div>
+            <InputText
+                name="email"
+                control={form.control}
+                label="Email"
+                type="email"
+                placeholder="Masukan Email Aktif"
+            />
 
-            <div>
-                <label className="block text-sm font-medium text-gray-700">
-                    Phone Number
-                </label>
-                <input
-                    type="tel"
-                    {...register("phone_number")}
-                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500"
-                />
-            </div>
+            <InputText
+                name="phone_number"
+                control={form.control}
+                label="Nomor Telp."
+                type="number"
+                placeholder="08xxxxxxxxxx"
+            />
 
-            {!isEditMode && (
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                        Password
-                    </label>
-                    <input
-                        type="password"
-                        {...register("password")}
-                        className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500"
-                    />
-                </div>
-            )}
+            <InputText
+                name="password"
+                control={form.control}
+                label="Password"
+                type="password"
+                placeholder="**********"
+            />
 
-            <div>
-                <label className="block text-sm font-medium text-gray-700">
-                    Role
-                </label>
-                <select
-                    {...register("role_id")}
-                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500"
-                >
-                    <option value="">Select a role</option>
-                    {rolesData?.data.map((role) => (
-                        <option key={role.id} value={role.id}>
-                            {role.name}
-                        </option>
-                    ))}
-                </select>
-            </div>
+            <Select
+                name="role_id"
+                control={form.control}
+                label="Role"
+                placeholder="Pilih Role"
+                options={roleOptions}
+            />
+
+            <Select
+                name="student_type"
+                control={form.control}
+                label="Kategori"
+                placeholder="Pilih Kategori"
+                options={studentTypeOptions}
+            />
+
+            <InputText
+                name="referral_code"
+                control={form.control}
+                label="Kode Referal"
+                placeholder="Masukan Kode Referal"
+            />
+
+            <InputText
+                name="referred_by"
+                control={form.control}
+                label="Kode Referal Pemberi"
+                placeholder="Masukan Kode Referal Pemberi"
+            />
 
             <div>
                 <button
                     type="submit"
-                    disabled={isLoading}
+                    disabled={props.isLoading}
                     className="inline-flex justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
                 >
-                    {isLoading ? "Saving..." : "Save"}
+                    {props.isLoading ? "Saving..." : "Save"}
                 </button>
             </div>
         </form>
