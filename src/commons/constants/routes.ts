@@ -83,7 +83,11 @@ export const ROUTES = {
     },
     COURSE: {
       URL: `${PREFIX.STUDENT.ROOT}${PREFIX.COURSE}`,
-      PERMISSIONS: []
+      PERMISSIONS: [],
+    },
+    PROFILE: {
+      URL: `${PREFIX.STUDENT.ROOT}${PREFIX.PROFILE}`,
+      PERMISSIONS: [],
     },
     EXAMS: {
       START: {
@@ -103,31 +107,31 @@ export const ROUTES = {
   AUTH: {
     LOGIN: {
       URL: `${PREFIX.AUTH}/login`,
-      PERMISSIONS: []
+      PERMISSIONS: [],
     },
     REGISTER: {
       URL: `${PREFIX.AUTH}/register`,
-      PERMISSIONS: []
+      PERMISSIONS: [],
     },
     CALLBACK: {
       URL: `${PREFIX.AUTH}/oauth-callback`,
-      PERMISSIONS: []
+      PERMISSIONS: [],
     },
     FORGOT_PASSWORD: {
       URL: `${PREFIX.AUTH}/forgot-password`,
-      PERMISSIONS: []
+      PERMISSIONS: [],
     },
     RESET_PASSWORD: {
       URL: `${PREFIX.AUTH}/reset-password`,
-      PERMISSIONS: []
+      PERMISSIONS: [],
     },
     VERIFY_EMAIL: {
       URL: `${PREFIX.AUTH}/verify-email`,
-      PERMISSIONS: []
+      PERMISSIONS: [],
     },
     CONFIRM_PAYMENT: {
       URL: `${PREFIX.AUTH}/confirm-payment`,
-      PERMISSIONS: []
+      PERMISSIONS: [],
     },
   },
 };
