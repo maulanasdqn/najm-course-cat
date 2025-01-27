@@ -1,21 +1,9 @@
 import { FC, ReactElement, useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import questions from "./questions.json";
 
 export const Component: FC = (): ReactElement => {
-  const questions = [
-    "Apa yang Anda rasakan saat bangun pagi?",
-    "Apakah Anda merasa cemas secara berlebihan?",
-    "Seberapa sering Anda merasa lelah tanpa alasan?",
-    "Apakah Anda mengalami kesulitan tidur?",
-    "Apakah Anda merasa bahagia dengan diri sendiri?",
-    "Seberapa sering Anda merasa kesepian?",
-    "Apakah Anda merasa mudah marah atau frustrasi?",
-    "Apakah Anda sering khawatir tentang masa depan?",
-    "Seberapa sering Anda merasa tidak termotivasi?",
-    "Apakah Anda merasa puas dengan hubungan sosial Anda?",
-  ];
-
-  const options = ["Tidak Pernah", "Jarang", "Kadang-kadang", "Sering", "Selalu"];
+  const options = ["Sangat Setuju", "Setuju", "Rata-rata", "Tidak Setuju", "Sangat Tidak Setuju"];
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const currentQuestion = parseInt(searchParams.get("page") || "1", 10) - 1;
@@ -53,7 +41,7 @@ export const Component: FC = (): ReactElement => {
 
   const finishExam = () => {
     alert("Ujian telah selesai. Jawaban Anda telah disimpan.");
-    navigate("/student/exam-summary");
+    navigate("/student/exams/summary");
   };
 
   const formatTime = (time: number) => {
@@ -75,8 +63,9 @@ export const Component: FC = (): ReactElement => {
               <button
                 key={index}
                 onClick={() => goToQuestion(index)}
-                className={`w-10 h-10 rounded-md ${currentQuestion === index ? "bg-blue-500 text-white" : "bg-gray-300"
-                  }`}
+                className={`w-10 h-10 rounded-md ${
+                  currentQuestion === index ? "bg-blue-500 text-white" : "bg-gray-300"
+                }`}
               >
                 {index + 1}
               </button>
@@ -101,9 +90,10 @@ export const Component: FC = (): ReactElement => {
             </div>
           </div>
           <div className="bg-white shadow rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">
-              Soal Nomor {currentQuestion + 1}: {questions[currentQuestion]}
+            <h3 className="text-lg text-gray-800 mb-2">
+              Soal Nomor {currentQuestion + 1} dari {questions.length} :
             </h3>
+            <h2 className="text-lg font-semibold  mb-4">{questions[currentQuestion]}</h2>
             <div className="flex flex-col gap-2">
               {options.map((option, optIndex) => (
                 <label key={optIndex} className="flex items-center gap-2">

@@ -11,4 +11,8 @@ export const ExamsRouter = [
     path: ":questionId",
     lazy: () => import("./page"),
   },
+  {
+    path: "summary",
+    lazy: () => import("./summary/page"),
+  },
 ];
