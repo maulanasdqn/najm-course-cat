@@ -17,6 +17,15 @@ const baseUserSchema = z.object({
     role_id: z
         .string()
         .min(1, "Role is required"),
+    referral_code: z
+        .string()
+        .optional(),
+    referred_by: z
+        .string()
+        .optional(),
+    student_type: z
+        .string()
+        .min(1, "Student type is required"),
 });
 
 const passwordSchema = z

@@ -5,28 +5,54 @@ import { InputText } from "@/app/_components/ui/inputs/text";
 import { Select } from "@/app/_components/ui/inputs/select";
 import { useRoleOptions } from "../_hooks/use-role-options";
 
-// Create Form Component
+const studentTypeOptions = [
+    { value: "polri", label: "Polri" },
+    { value: "tni", label: "TNI" },
+    { value: "cpns", label: "CPNS" },
+    { value: "kedinasan", label: "Kedinasan" },
+];
+
 interface CreateFormProps {
+    isEditMode: false;
     initialData?: Partial<CreateUserFormData>;
     onSubmit: (data: CreateUserFormData) => void;
     isLoading?: boolean;
 }
 
-function CreateUserForm({ initialData, onSubmit, isLoading }: CreateFormProps) {
-    const form = useForm<CreateUserFormData>({
-        resolver: zodResolver(createUserSchema),
-        defaultValues: initialData,
+interface EditFormProps {
+    isEditMode: true;
+    initialData?: Partial<UpdateUserFormData>;
+    onSubmit: (data: UpdateUserFormData) => void;
+    isLoading?: boolean;
+}
+
+type UserFormProps = CreateFormProps | EditFormProps;
+
+type FormData = CreateUserFormData & UpdateUserFormData;
+
+export function UserForm(props: UserFormProps) {
+    const form = useForm<FormData>({
+        resolver: zodResolver(props.isEditMode ? updateUserSchema : createUserSchema),
+        defaultValues: props.initialData,
     });
 
     const { options: roleOptions } = useRoleOptions();
+
+    const onSubmit = (data: FormData) => {
+        if (props.isEditMode) {
+            props.onSubmit(data as UpdateUserFormData);
+        } else {
+            props.onSubmit(data as CreateUserFormData);
+        }
+    };
 
     return (
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <InputText
                 name="fullname"
                 control={form.control}
-                label="Full Name"
-                placeholder="Enter full name"
+                label="Nama"
+                placeholder="Masukan Nama Lengkap"
             />
 
             <InputText
@@ -34,15 +60,15 @@ function CreateUserForm({ initialData, onSubmit, isLoading }: CreateFormProps) {
                 control={form.control}
                 label="Email"
                 type="email"
-                placeholder="Enter email address"
+                placeholder="Masukan Email Aktif"
             />
 
             <InputText
                 name="phone_number"
                 control={form.control}
-                label="Phone Number"
-                type="tel"
-                placeholder="Enter phone number"
+                label="Nomor Telp."
+                type="number"
+                placeholder="08xxxxxxxxxx"
             />
 
             <InputText
@@ -50,106 +76,48 @@ function CreateUserForm({ initialData, onSubmit, isLoading }: CreateFormProps) {
                 control={form.control}
                 label="Password"
                 type="password"
-                placeholder="Enter password"
+                placeholder="**********"
             />
 
             <Select
                 name="role_id"
                 control={form.control}
                 label="Role"
-                placeholder="Select a role"
+                placeholder="Pilih Role"
                 options={roleOptions}
-            />
-
-            <div>
-                <button
-                    type="submit"
-                    disabled={isLoading}
-                    className="inline-flex justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
-                >
-                    {isLoading ? "Saving..." : "Save"}
-                </button>
-            </div>
-        </form>
-    );
-}
-
-// Edit Form Component
-interface EditFormProps {
-    initialData?: Partial<UpdateUserFormData>;
-    onSubmit: (data: UpdateUserFormData) => void;
-    isLoading?: boolean;
-}
-
-function EditUserForm({ initialData, onSubmit, isLoading }: EditFormProps) {
-    const form = useForm<UpdateUserFormData>({
-        resolver: zodResolver(updateUserSchema),
-        defaultValues: initialData,
-    });
-
-    const { options: roleOptions } = useRoleOptions();
-
-    return (
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <InputText
-                name="fullname"
-                control={form.control}
-                label="Full Name"
-                placeholder="Enter full name"
-            />
-
-            <InputText
-                name="email"
-                control={form.control}
-                label="Email"
-                type="email"
-                placeholder="Enter email address"
-            />
-
-            <InputText
-                name="phone_number"
-                control={form.control}
-                label="Phone Number"
-                type="tel"
-                placeholder="Enter phone number"
             />
 
             <Select
-                name="role_id"
+                name="student_type"
                 control={form.control}
-                label="Role"
-                placeholder="Select a role"
-                options={roleOptions}
+                label="Kategori"
+                placeholder="Pilih Kategori"
+                options={studentTypeOptions}
+            />
+
+            <InputText
+                name="referral_code"
+                control={form.control}
+                label="Kode Referal"
+                placeholder="Masukan Kode Referal"
+            />
+
+            <InputText
+                name="referred_by"
+                control={form.control}
+                label="Kode Referal Pemberi"
+                placeholder="Masukan Kode Referal Pemberi"
             />
 
             <div>
                 <button
                     type="submit"
-                    disabled={isLoading}
+                    disabled={props.isLoading}
                     className="inline-flex justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
                 >
-                    {isLoading ? "Saving..." : "Save"}
+                    {props.isLoading ? "Saving..." : "Save"}
                 </button>
             </div>
         </form>
     );
-}
-
-type UserFormProps = {
-    isEditMode: true;
-    initialData?: Partial<UpdateUserFormData>;
-    onSubmit: (data: UpdateUserFormData) => void;
-    isLoading?: boolean;
-} | {
-    isEditMode: false;
-    initialData?: Partial<CreateUserFormData>;
-    onSubmit: (data: CreateUserFormData) => void;
-    isLoading?: boolean;
-};
-
-export function UserForm(props: UserFormProps) {
-    if (props.isEditMode) {
-        return <EditUserForm {...props} />;
-    }
-    return <CreateUserForm {...props} />;
 }
