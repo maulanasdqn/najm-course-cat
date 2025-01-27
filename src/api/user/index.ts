@@ -14,7 +14,7 @@ export const getUsers = async (params: TGetUsersParams): Promise<TUserPaginateRe
 };
 
 export const getUser = async (id: string): Promise<TUserDetailResponse> => {
-  const { data } = await api.get(`/v1/users/${id}`);
+  const { data } = await api.get(`/v1/users/detail/${id}`);
   return data;
 };
 
@@ -23,12 +23,15 @@ export const createUser = async (data: TUserCreateRequest): Promise<TResponseDat
   return response.data;
 };
 
-export const updateUser = async (id: string, data: TUserUpdateRequest): Promise<TResponseData<null>> => {
-  const response = await api.put(`/v1/users/${id}`, data);
+export const updateUser = async (
+  id: string,
+  data: TUserUpdateRequest,
+): Promise<TResponseData<null>> => {
+  const response = await api.put(`/v1/users/update/${id}`, data);
   return response.data;
 };
 
 export const deleteUser = async (id: string): Promise<TResponseData<null>> => {
-  const response = await api.delete(`/v1/users/${id}`);
+  const response = await api.delete(`/v1/users/delete/${id}`);
   return response.data;
 };
