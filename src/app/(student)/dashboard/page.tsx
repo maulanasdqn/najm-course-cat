@@ -11,13 +11,13 @@ export const Component: FC = (): ReactElement => {
           <div className="w-full bg-gray-200 rounded-full h-6">
             <div
               className="bg-blue-600 h-6 rounded-full text-sm text-white text-center"
-              style={{ width: "75%" }} // Progress bar width
+              style={{ width: "50%" }} // Progress bar width
             >
-              75%
+              50%
             </div>
           </div>
           <p className="mt-4 text-gray-600">
-            Anda telah menyelesaikan 75% materi try out. Selesaikan materi berikutnya untuk hasil
+            Anda telah menyelesaikan 50% materi try out. Selesaikan materi berikutnya untuk hasil
             terbaik!
           </p>
         </div>

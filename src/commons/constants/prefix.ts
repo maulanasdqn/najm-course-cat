@@ -23,5 +23,6 @@ export const PREFIX = {
   AUTHORS: "/authors",
   DASHBOARD: "/dashboard",
   COURSE: "/course",
+  PROFILE: "/profile",
   EXAMS: "/exams",
 };
