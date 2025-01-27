@@ -11,33 +11,31 @@ export const getPermissions = (params: TGetPermissionsParams): Promise<TPermissi
   console.log(params);
   return Promise.resolve({
     status_code: 200,
-    data: {
-      items: [
-        {
-          created_at: new Date().toISOString(),
-          id: "1",
-          name: PERMISSIONS.USERS.READ_USERS,
-          updated_at: new Date().toISOString(),
-        },
-        {
-          created_at: new Date().toISOString(),
-          id: "2",
-          name: PERMISSIONS.PERMISSIONS.READ_PERMISSIONS,
-          updated_at: new Date().toISOString(),
-        },
-        {
-          created_at: new Date().toISOString(),
-          id: "3",
-          name: PERMISSIONS.ROLES.READ_ROLES,
-          updated_at: new Date().toISOString(),
-        },
-      ],
-      meta: {
-        total_page: 2,
-        total: 12,
-        page: 1,
-        per_page: 10,
+    data: [
+      {
+        created_at: new Date().toISOString(),
+        id: "1",
+        name: PERMISSIONS.USERS.READ_USERS,
+        updated_at: new Date().toISOString(),
       },
+      {
+        created_at: new Date().toISOString(),
+        id: "2",
+        name: PERMISSIONS.PERMISSIONS.READ_PERMISSIONS,
+        updated_at: new Date().toISOString(),
+      },
+      {
+        created_at: new Date().toISOString(),
+        id: "3",
+        name: PERMISSIONS.ROLES.READ_ROLES,
+        updated_at: new Date().toISOString(),
+      },
+    ],
+    meta: {
+      total_page: 2,
+      total: 12,
+      page: 1,
+      per_page: 10,
     },
     version: "1.0.0",
   });

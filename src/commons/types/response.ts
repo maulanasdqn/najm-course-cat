@@ -1,13 +1,11 @@
 export type TResponsePaginate<T> = {
   status_code: number;
-  data: {
-    items: T[];
-    meta: {
-      page: number;
-      per_page: number;
-      total: number;
-      total_page: number;
-    };
+  data: T[];
+  meta: {
+    page: number;
+    per_page: number;
+    total: number;
+    total_page: number;
   };
   version: string;
 };
