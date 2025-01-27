@@ -13,4 +13,11 @@ export const QUERY_KEY = {
     UPDATE: "put-update-user",
     DELETE: "delete-delete-user",
   },
+  ROLES: {
+    LIST: "get-roles-list",
+    DETAIL: "get-roles-detail",
+    CREATE: "post-create-role",
+    UPDATE: "put-update-role",
+    DELETE: "delete-delete-role",
+  },
 } as const;

@@ -1,3 +1,4 @@
+import { api } from "@/libs/axios/api";
 import { TResponseData } from "@/commons/types/response";
 import {
   TGetUsersParams,
@@ -6,151 +7,31 @@ import {
   TUserCreateRequest,
   TUserPaginateResponse,
 } from "./type";
-import { PERMISSIONS } from "@/commons/constants/permissions";
 
-export const getUsers = (params: TGetUsersParams): Promise<TUserPaginateResponse> => {
-  console.log(params);
-  return Promise.resolve({
-    data: {
-      items: [
-        {
-          avatar: "https://i.pravatar.cc/150?img=1",
-          created_at: new Date().toISOString(),
-          email: "admin@mail.com",
-          fullname: "Admin",
-          id: "1",
-          password: "password",
-          phone_number: "08123456789",
-          referral_code: "123456789",
-          referred_by: "1",
-          role: {
-            created_at: new Date().toISOString(),
-            id: "1",
-            name: "Admin",
-            permissions: [
-              {
-                created_at: new Date().toISOString(),
-                id: "1",
-                name: PERMISSIONS.USERS.READ_USERS,
-                updated_at: new Date().toISOString(),
-              },
-              {
-                created_at: new Date().toISOString(),
-                id: "2",
-                name: PERMISSIONS.PERMISSIONS.READ_PERMISSIONS,
-                updated_at: new Date().toISOString(),
-              },
-              {
-                created_at: new Date().toISOString(),
-                id: "3",
-                name: PERMISSIONS.ROLES.READ_ROLES,
-                updated_at: new Date().toISOString(),
-              },
-            ],
-            updated_at: new Date().toISOString(),
-          },
-          updated_at: new Date().toISOString(),
-        },
-      ],
-      meta: {
-        page: 1,
-        per_page: 10,
-        total: 0,
-        total_page: 0,
-      },
-    },
-    status_code: 200,
-    version: "1.0.0",
-  });
+export const getUsers = async (params: TGetUsersParams): Promise<TUserPaginateResponse> => {
+  const { data } = await api.get("/v1/users", { params });
+  return data;
 };
 
-export const getUser = (id: string): Promise<TUserDetailResponse> => {
-  console.log(id);
-  return Promise.resolve({
-    data: {
-      avatar: "https://i.pravatar.cc/150?img=1",
-      created_at: new Date().toISOString(),
-      email: "admin@mail.com",
-      fullname: "Admin",
-      id: "1",
-      password: "password",
-      phone_number: "08123456789",
-      referral_code: "123456789",
-      referred_by: "1",
-      role: {
-        created_at: new Date().toISOString(),
-        id: "1",
-        name: "Admin",
-        permissions: [
-          {
-            created_at: new Date().toISOString(),
-            id: "1",
-            name: PERMISSIONS.USERS.READ_USERS,
-            updated_at: new Date().toISOString(),
-          },
-          {
-            created_at: new Date().toISOString(),
-            id: "2",
-            name: PERMISSIONS.PERMISSIONS.READ_PERMISSIONS,
-            updated_at: new Date().toISOString(),
-          },
-          {
-            created_at: new Date().toISOString(),
-            id: "3",
-            name: PERMISSIONS.ROLES.READ_ROLES,
-            updated_at: new Date().toISOString(),
-          },
-        ],
-        updated_at: new Date().toISOString(),
-      },
-      updated_at: new Date().toISOString(),
-    },
-    status_code: 200,
-    version: "1.0.0",
-  });
+export const getUser = async (id: string): Promise<TUserDetailResponse> => {
+  const { data } = await api.get(`/v1/users/detail/${id}`);
+  return data;
 };
 
-export const createUser = (data: TUserCreateRequest): Promise<TResponseData<null>> => {
-  console.log(data);
-  if (!data.fullname.includes("bagus")) {
-    throw {
-      status_code: 400,
-      error_message: "Validation failed",
-      stack_trace: "Validation failed",
-      errors: [
-        {
-          key: "fullname",
-          message: "Name harus mangandung 'bagus'",
-        },
-        {
-          key: "email",
-          message: "Email harus DOT",
-        },
-      ],
-      version: "test",
-    };
-  }
-  return Promise.resolve({
-    data: null,
-    status_code: 200,
-    version: "1.0.0",
-  });
+export const createUser = async (data: TUserCreateRequest): Promise<TResponseData<null>> => {
+  const response = await api.post("/v1/users", data);
+  return response.data;
 };
 
-export const updateUser = (id: string, data: TUserUpdateRequest): Promise<TResponseData<null>> => {
-  console.log(id, data);
-  return Promise.resolve({
-    data: null,
-    status_code: 200,
-    version: "1.0.0",
-  });
+export const updateUser = async (
+  id: string,
+  data: TUserUpdateRequest,
+): Promise<TResponseData<null>> => {
+  const response = await api.put(`/v1/users/update/${id}`, data);
+  return response.data;
 };
 
-export const deleteUser = (id: string): Promise<TResponseData<null>> => {
-  console.log(id);
-  return Promise.resolve({
-    data: null,
-    status_code: 200,
-    version: "1.0.0",
-  });
+export const deleteUser = async (id: string): Promise<TResponseData<null>> => {
+  const response = await api.delete(`/v1/users/delete/${id}`);
+  return response.data;
 };

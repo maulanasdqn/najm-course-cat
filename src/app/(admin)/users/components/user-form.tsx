@@ -4,7 +4,7 @@ import { getRoles } from "../../../../api/role";
 import { TUserCreateRequest } from "../../../../api/user/type";
 import { QUERY_KEY } from "../../../../commons/constants/query-key";
 
-export type UserFormData = Omit<TUserCreateRequest, "id">;
+export type UserFormData = TUserCreateRequest;
 
 interface UserFormProps {
     initialData?: Partial<UserFormData>;
@@ -19,7 +19,7 @@ export function UserForm({ initialData, onSubmit, isLoading, isEditMode }: UserF
     });
 
     const { data: rolesData } = useQuery({
-        queryKey: [QUERY_KEY.USERS.LIST],
+        queryKey: [QUERY_KEY.ROLES.LIST],
         queryFn: () => getRoles({ page: 1, limit: 100 }),
     });
 
@@ -76,11 +76,11 @@ export function UserForm({ initialData, onSubmit, isLoading, isEditMode }: UserF
                     Role
                 </label>
                 <select
-                    {...register("role")}
+                    {...register("role_id")}
                     className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500"
                 >
                     <option value="">Select a role</option>
-                    {rolesData?.data.items.map((role) => (
+                    {rolesData?.data.map((role) => (
                         <option key={role.id} value={role.id}>
                             {role.name}
                         </option>
