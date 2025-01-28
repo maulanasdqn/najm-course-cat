@@ -42,6 +42,9 @@ export default function EditUserPage() {
         email: userData.data.email,
         phone_number: userData.data.phone_number,
         role_id: userData.data.role.id,
+        student_type: userData.data.student_type,
+        referral_code: userData.data.referral_code,
+        referred_by: userData.data.referred_by,
     };
 
     return (
