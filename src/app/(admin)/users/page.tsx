@@ -4,13 +4,16 @@ import { DataTable } from "../../_components/ui/table/data-table";
 import { useGetUsers } from "./_hooks/use-get-users";
 import { useTableParams } from "../../_hooks/use-table-params";
 import { useDeleteUser } from "./_hooks/use-delete-user";
+import { useActivateUser } from "./_hooks/use-activate-user";
 import { ColumnDef } from "@tanstack/react-table";
 import { TUserItem } from "../../../api/user/type";
+import { Switch } from "../../_components/ui/inputs/switch";
 
 export default function UsersPage() {
   const { params, setParams } = useTableParams();
   const { data, isLoading } = useGetUsers(params);
-  const { handleDelete } = useDeleteUser()
+  const { handleDelete } = useDeleteUser();
+  const { handleActivate } = useActivateUser();
 
   const columns: ColumnDef<TUserItem>[] = [
     {
@@ -24,6 +27,19 @@ export default function UsersPage() {
     {
       accessorKey: "role.name",
       header: "Role",
+    },
+    {
+      accessorKey: "is_active",
+      header: "Status",
+      cell: ({ row }) => {
+        const user = row.original;
+        return (
+          <Switch
+            checked={user.is_active ?? false}
+            onChange={(checked) => handleActivate({ id: user.id, is_active: checked })}
+          />
+        );
+      },
     },
     {
       accessorKey: "created_at",

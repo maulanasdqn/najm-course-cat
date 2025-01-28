@@ -14,6 +14,7 @@ export type TUserItem = {
   student_type: string;
   referral_code?: string;
   referred_by?: string;
+  is_active?: boolean;
 };
 
 export type TUserCreateRequest = CreateUserFormData;
@@ -36,4 +37,9 @@ export type ApiError = {
       message?: string;
     };
   };
+};
+
+export type TUserActivateRequest = {
+  id: string;
+  is_active: boolean;
 };
