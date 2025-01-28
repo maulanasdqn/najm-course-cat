@@ -28,3 +28,11 @@ export type TGetPermissionsParams = {
 export type TPermissionListResponse = TResponsePaginate<TPermissionItem>;
 
 export type TPermissionDetailResponse = TResponseData<TPermissionItem>;
+
+export type ApiError = {
+  response?: {
+    data?: {
+      message?: string;
+    };
+  };
+};

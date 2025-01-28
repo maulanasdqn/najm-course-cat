@@ -3,13 +3,14 @@ import toast from 'react-hot-toast';
 
 interface DeleteConfirmationProps {
     onConfirm: () => void;
+    message: string;
     toastId: string;
 }
 
-export const DeleteConfirmation: React.FC<DeleteConfirmationProps> = ({ onConfirm, toastId }) => {
+export const DeleteConfirmation: React.FC<DeleteConfirmationProps> = ({ message, onConfirm, toastId }) => {
     return (
         <div className="bg-white p-4 rounded-lg shadow-lg">
-            <p className="text-gray-800 mb-4">Apakah Anda yakin ingin menghapus pengguna ini?</p>
+            <p className="text-gray-800 mb-4">{message}</p>
             <div className="flex justify-end space-x-2">
                 <button
                     onClick={() => toast.dismiss(toastId)}
