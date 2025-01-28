@@ -1,212 +1,37 @@
-import { PERMISSIONS } from "@/commons/constants/permissions";
+import { api } from "@/libs/axios/api";
+import { TResponseData } from "@/commons/types/response";
 import {
   TRoleCreateRequest,
   TRoleDetailResponse,
-  TRoleGetRequest,
-  TRoleListResponse,
+  TGetRolesParams,
+  TRolePaginateResponse,
   TRoleUpdateRequest,
 } from "./type";
 
-export const getRoles = (params: TRoleGetRequest): Promise<TRoleListResponse> => {
-  console.log(params);
-  return Promise.resolve({
-    status_code: 200,
-    data: [
-      {
-        created_at: new Date().toISOString(),
-        id: "1",
-        name: "Admin",
-        permissions: [
-          {
-            created_at: new Date().toISOString(),
-            id: "1",
-            name: PERMISSIONS.USERS.READ_USERS,
-            updated_at: new Date().toISOString(),
-          },
-          {
-            created_at: new Date().toISOString(),
-            id: "2",
-            name: PERMISSIONS.PERMISSIONS.READ_PERMISSIONS,
-            updated_at: new Date().toISOString(),
-          },
-          {
-            created_at: new Date().toISOString(),
-            id: "3",
-            name: PERMISSIONS.ROLES.READ_ROLES,
-            updated_at: new Date().toISOString(),
-          },
-        ],
-        updated_at: new Date().toISOString(),
-      },
-      {
-        created_at: new Date().toISOString(),
-        id: "2",
-        name: "Super Admin",
-        permissions: [
-          {
-            created_at: new Date().toISOString(),
-            id: "1",
-            name: PERMISSIONS.USERS.READ_USERS,
-            updated_at: new Date().toISOString(),
-          },
-          {
-            created_at: new Date().toISOString(),
-            id: "2",
-            name: PERMISSIONS.PERMISSIONS.READ_PERMISSIONS,
-            updated_at: new Date().toISOString(),
-          },
-          {
-            created_at: new Date().toISOString(),
-            id: "3",
-            name: PERMISSIONS.ROLES.READ_ROLES,
-            updated_at: new Date().toISOString(),
-          },
-        ],
-        updated_at: new Date().toISOString(),
-      },
-    ],
-    meta: {
-      total_page: 1,
-      total: 2,
-      page: 1,
-      per_page: 10,
-    },
-    version: "1.0.0",
-  });
+export const getRoles = async (params: TGetRolesParams): Promise<TRolePaginateResponse> => {
+  const { data } = await api.get("/v1/roles", { params });
+  return data;
 };
 
-export const getRole = (id: string): Promise<TRoleDetailResponse> => {
-  console.log(id);
-  return Promise.resolve({
-    status_code: 200,
-    data: {
-      created_at: new Date().toISOString(),
-      id: "1",
-      name: "Admin",
-      permissions: [
-        {
-          created_at: new Date().toISOString(),
-          id: "1",
-          name: PERMISSIONS.USERS.READ_USERS,
-          updated_at: new Date().toISOString(),
-        },
-        {
-          created_at: new Date().toISOString(),
-          id: "2",
-          name: PERMISSIONS.PERMISSIONS.READ_PERMISSIONS,
-          updated_at: new Date().toISOString(),
-        },
-        {
-          created_at: new Date().toISOString(),
-          id: "3",
-          name: PERMISSIONS.ROLES.READ_ROLES,
-          updated_at: new Date().toISOString(),
-        },
-      ],
-      updated_at: new Date().toISOString(),
-    },
-    version: "1.0.0",
-  });
+export const getRole = async (id: string): Promise<TRoleDetailResponse> => {
+  const { data } = await api.get(`/v1/roles/detail/${id}`);
+  return data;
 };
 
-export const createRole = (data: TRoleCreateRequest): Promise<TRoleDetailResponse> => {
-  console.log(data);
-  return Promise.resolve({
-    status_code: 200,
-    data: {
-      created_at: new Date().toISOString(),
-      id: "1",
-      name: "Admin",
-      permissions: [
-        {
-          created_at: new Date().toISOString(),
-          id: "1",
-          name: PERMISSIONS.USERS.READ_USERS,
-          updated_at: new Date().toISOString(),
-        },
-        {
-          created_at: new Date().toISOString(),
-          id: "2",
-          name: PERMISSIONS.PERMISSIONS.READ_PERMISSIONS,
-          updated_at: new Date().toISOString(),
-        },
-        {
-          created_at: new Date().toISOString(),
-          id: "3",
-          name: PERMISSIONS.ROLES.READ_ROLES,
-          updated_at: new Date().toISOString(),
-        },
-      ],
-      updated_at: new Date().toISOString(),
-    },
-    version: "1.0.0",
-  });
+export const createRole = async (data: TRoleCreateRequest): Promise<TResponseData<null>> => {
+  const response = await api.post("/v1/roles", data);
+  return response.data;
 };
 
-export const updateRole = (id: string, data: TRoleUpdateRequest): Promise<TRoleDetailResponse> => {
-  console.log(id, data);
-  return Promise.resolve({
-    status_code: 200,
-    data: {
-      created_at: new Date().toISOString(),
-      id: "1",
-      name: "Admin",
-      permissions: [
-        {
-          created_at: new Date().toISOString(),
-          id: "1",
-          name: PERMISSIONS.USERS.READ_USERS,
-          updated_at: new Date().toISOString(),
-        },
-        {
-          created_at: new Date().toISOString(),
-          id: "2",
-          name: PERMISSIONS.PERMISSIONS.READ_PERMISSIONS,
-          updated_at: new Date().toISOString(),
-        },
-        {
-          created_at: new Date().toISOString(),
-          id: "3",
-          name: PERMISSIONS.ROLES.READ_ROLES,
-          updated_at: new Date().toISOString(),
-        },
-      ],
-      updated_at: new Date().toISOString(),
-    },
-    version: "1.0.0",
-  });
+export const updateRole = async (
+  id: string,
+  data: TRoleUpdateRequest,
+): Promise<TResponseData<null>> => {
+  const response = await api.put(`/v1/roles/update/${id}`, data);
+  return response.data;
 };
 
-export const deleteRole = (id: string): Promise<TRoleDetailResponse> => {
-  console.log(id);
-  return Promise.resolve({
-    status_code: 200,
-    data: {
-      created_at: new Date().toISOString(),
-      id: "1",
-      name: "Admin",
-      permissions: [
-        {
-          created_at: new Date().toISOString(),
-          id: "1",
-          name: PERMISSIONS.USERS.READ_USERS,
-          updated_at: new Date().toISOString(),
-        },
-        {
-          created_at: new Date().toISOString(),
-          id: "2",
-          name: PERMISSIONS.PERMISSIONS.READ_PERMISSIONS,
-          updated_at: new Date().toISOString(),
-        },
-        {
-          created_at: new Date().toISOString(),
-          id: "3",
-          name: PERMISSIONS.ROLES.READ_ROLES,
-          updated_at: new Date().toISOString(),
-        },
-      ],
-      updated_at: new Date().toISOString(),
-    },
-    version: "1.0.0",
-  });
+export const deleteRole = async (id: string): Promise<TResponseData<null>> => {
+  const response = await api.delete(`/v1/roles/delete/${id}`);
+  return response.data;
 };
