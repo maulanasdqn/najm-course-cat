@@ -19,7 +19,7 @@ export const getRole = async (id: string): Promise<TRoleDetailResponse> => {
 };
 
 export const createRole = async (data: TRoleCreateRequest): Promise<TResponseData<null>> => {
-  const response = await api.post("/v1/roles", data);
+  const response = await api.post("/v1/roles/create", data);
   return response.data;
 };
 

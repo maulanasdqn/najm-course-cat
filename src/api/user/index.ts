@@ -20,7 +20,7 @@ export const getUser = async (id: string): Promise<TUserDetailResponse> => {
 };
 
 export const createUser = async (data: TUserCreateRequest): Promise<TResponseData<null>> => {
-  const response = await api.post("/v1/users", data);
+  const response = await api.post("/v1/users/create", data);
   return response.data;
 };
 

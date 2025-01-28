@@ -19,7 +19,7 @@ export const getPermission = async (id: string): Promise<TPermissionDetailRespon
 };
 
 export const createPermission = async (data: TPermissionCreateRequest): Promise<TResponseData<null>> => {
-  const response = await api.post("/v1/permissions", data);
+  const response = await api.post("/v1/permissions/create", data);
   return response.data;
 };
 
