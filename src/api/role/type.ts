@@ -9,14 +9,19 @@ export type TRoleItem = {
   updated_at: string;
 };
 
-export type TRoleCreateRequest = Omit<
-  TRoleItem,
-  "id" | "created_at" | "updated_at" | "permissions"
->;
+// TODO: Create form schema for role create/update
+export type TRoleCreateRequest = {
+  name: string;
+  permission_ids: string[];
+};
 
-export type TRoleUpdateRequest = Omit<TRoleItem, "created_at" | "updated_at" | "permissions">;
+export type TRoleUpdateRequest = {
+  id: string;
+  name: string;
+  permission_ids: string[];
+};
 
-export type TRoleGetRequest = {
+export type TGetRolesParams = {
   page?: number;
   limit?: number;
   sort?: string;
@@ -24,6 +29,13 @@ export type TRoleGetRequest = {
   search?: string;
 };
 
-export type TRoleListResponse = TResponsePaginate<TRoleItem>;
-
+export type TRolePaginateResponse = TResponsePaginate<TRoleItem>;
 export type TRoleDetailResponse = TResponseData<TRoleItem>;
+
+export type ApiError = {
+  response?: {
+    data?: {
+      message?: string;
+    };
+  };
+};

@@ -4,6 +4,9 @@ import UsersPage from "./users/page";
 import CreateUserPage from "./users/create/page";
 import EditUserPage from "./users/[id]/edit/page";
 import UserDetailPage from "./users/[id]/detail/page";
+import RolesPage from "./roles/page";
+import CreateRolePage from "./roles/create/page";
+import EditRolePage from "./roles/[id]/edit/page";
 
 export const AdminRouter = [
     {
@@ -31,6 +34,18 @@ export const AdminRouter = [
                     {
                         path: "users/:id/update",
                         element: <EditUserPage />,
+                    },
+                    {
+                        path: "roles",
+                        element: <RolesPage />,
+                    },
+                    {
+                        path: "roles/create",
+                        element: <CreateRolePage />,
+                    },
+                    {
+                        path: "roles/:id/update",
+                        element: <EditRolePage />,
                     },
                 ]
             }
