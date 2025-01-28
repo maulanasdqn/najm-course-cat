@@ -1,4 +1,4 @@
-import { FC, ReactElement, useEffect } from "react";
+import { FC, ReactElement, useEffect, useState } from "react";
 import { useRegister } from "./hooks/use-register";
 import { InputText } from "@/app/_components/ui/inputs/text";
 import { InputTag } from "@/app/_components/ui/inputs/tag";
@@ -7,6 +7,7 @@ import { GoogleButton } from "@/app/_components/ui/button/google-button";
 import { Select } from "@/app/_components/ui/inputs/select";
 import { queryClient } from "@/libs/react-query/react-query-client";
 import { POST_REGISTER_MUTATION_KEY } from "./hooks/use-post-register";
+import { IcEye } from "@/app/_components/ui/icons/ic-eye";
 
 const studentTypeOption = [
   { value: "polri", label: "Polri" },
@@ -17,6 +18,8 @@ const studentTypeOption = [
 
 export const Component: FC = (): ReactElement => {
   const { form, handler } = useRegister();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   useEffect(() => {
     queryClient
@@ -77,18 +80,36 @@ export const Component: FC = (): ReactElement => {
           />
           <div className="flex w-full gap-x-4">
             <InputText
-              type="password"
+              type={showPassword ? "text" : "password"}
               label="Password"
               control={form.control}
               name="password"
               placeholder="**********"
+              append={
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="text-gray-400 hover:text-gray-600 mt-0.5"
+                >
+                  <IcEye isOpen={showPassword} />
+                </button>
+              }
             />
             <InputText
-              type="password"
+              type={showConfirmPassword ? "text" : "password"}
               label="Masukan Ulang Password"
               control={form.control}
               name="confirmPassword"
               placeholder="**********"
+              append={
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="text-gray-400 hover:text-gray-600 mt-0.5"
+                >
+                  <IcEye isOpen={showConfirmPassword} />
+                </button>
+              }
             />
           </div>
           <InputTag label="Tau dari mana?" name="interests" control={form.control} />
