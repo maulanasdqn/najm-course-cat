@@ -6,6 +6,7 @@ import {
   TUserDetailResponse,
   TUserCreateRequest,
   TUserPaginateResponse,
+  TUserActivateRequest,
 } from "./type";
 
 export const getUsers = async (params: TGetUsersParams): Promise<TUserPaginateResponse> => {
@@ -33,5 +34,10 @@ export const updateUser = async (
 
 export const deleteUser = async (id: string): Promise<TResponseData<null>> => {
   const response = await api.delete(`/v1/users/delete/${id}`);
+  return response.data;
+};
+
+export const activateUser = async ({ id, is_active }: TUserActivateRequest): Promise<TResponseData<null>> => {
+  const response = await api.put(`/v1/users/activate/${id}`, { is_active });
   return response.data;
 };
