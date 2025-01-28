@@ -1,4 +1,4 @@
-import { FC, ReactElement, useEffect } from "react";
+import { FC, ReactElement, useEffect, useState } from "react";
 import { useLogin } from "./_hooks/use-login";
 import { GoogleButton } from "@/app/_components/ui/button/google-button";
 import { InputText } from "@/app/_components/ui/inputs/text";
@@ -6,10 +6,12 @@ import { Button } from "@/app/_components/ui/button";
 import { InputCheckbox } from "@/app/_components/ui/inputs/checkbox";
 import { queryClient } from "@/libs/react-query/react-query-client";
 import { POST_LOGIN_MUTATION_KEY } from "./_hooks/use-post-login";
+import { IcEye } from "@/app/_components/ui/icons/ic-eye";
 
 export const Component: FC = (): ReactElement => {
   const { form, handler } = useLogin();
   const checkboxLabel = <span className="text-gray-500">Ingat Saya</span>;
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     queryClient
@@ -45,11 +47,20 @@ export const Component: FC = (): ReactElement => {
             placeholder="Email"
           />
           <InputText
-            type="password"
+            type={showPassword ? "text" : "password"}
             label="Password"
             control={form.control}
             name="password"
             placeholder="**********"
+            append={
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="text-gray-400 hover:text-gray-600 mt-0.5"
+              >
+                <IcEye isOpen={showPassword} />
+              </button>
+            }
           />
           <div className="flex w-full justify-between items-center">
             <InputCheckbox label={checkboxLabel} name={"remember"} control={form.control} />
