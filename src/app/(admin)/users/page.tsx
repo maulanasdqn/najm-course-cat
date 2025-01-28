@@ -25,7 +25,7 @@ export default function UsersPage() {
       header: "Email",
     },
     {
-      accessorKey: "role.name",
+      accessorKey: "role",
       header: "Role",
     },
     {
