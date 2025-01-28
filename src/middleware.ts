@@ -29,7 +29,7 @@ export const middleware = async ({ request }: LoaderFunctionArgs) => {
   const session = AccessTokenCookies.get();
   const userData = UserCookies.get();
   const userPermissions = userData?.role?.permissions?.map((perm) => perm.name) || [];
-  const isAdmin = userData?.fullname?.includes("admin");
+  const isAdmin = userData?.role?.name.toLowerCase() === "student";
   // const isAdmin = userData?.role?.name.toLowerCase() === "admin";
 
   const pathname = url.pathname;

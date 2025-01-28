@@ -20,4 +20,11 @@ export const QUERY_KEY = {
     UPDATE: "put-update-role",
     DELETE: "delete-delete-role",
   },
+  PERMISSIONS: {
+    LIST: "get-permissions-list",
+    DETAIL: "get-permissions-detail",
+    CREATE: "post-create-permission",
+    UPDATE: "put-update-permission",
+    DELETE: "delete-delete-permission",
+  },
 } as const;

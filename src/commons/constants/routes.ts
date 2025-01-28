@@ -33,23 +33,23 @@ export const ROUTES = {
       ROLES: {
         LIST: {
           URL: PREFIX.ADMIN.IAM.ROLES,
-          PERMISSIONS: [PERMISSIONS.USERS.READ_USERS],
+          PERMISSIONS: [PERMISSIONS.ROLES.READ_ROLES],
         },
         CREATE: {
           URL: `${PREFIX.ADMIN.IAM.ROLES}/create`,
-          PERMISSIONS: [PERMISSIONS.USERS.CREATE_USERS],
+          PERMISSIONS: [PERMISSIONS.ROLES.CREATE_ROLES],
         },
         DETAIL: {
           URL: `${PREFIX.ADMIN.IAM.ROLES}/:id/detail`,
-          PERMISSIONS: [PERMISSIONS.USERS.READ_USERS],
+          PERMISSIONS: [PERMISSIONS.ROLES.READ_ROLES],
         },
         UPDATE: {
           URL: `${PREFIX.ADMIN.IAM.ROLES}/:id/update`,
-          PERMISSIONS: [PERMISSIONS.USERS.UPDATE_USERS],
+          PERMISSIONS: [PERMISSIONS.ROLES.UPDATE_ROLES],
         },
         DELETE: {
           URL: `${PREFIX.ADMIN.IAM.ROLES}/:id/delete`,
-          PERMISSIONS: [PERMISSIONS.USERS.DELETE_USERS],
+          PERMISSIONS: [PERMISSIONS.ROLES.DELETE_ROLES],
         },
       },
       PERMISSIONS: {
@@ -81,9 +81,9 @@ export const ROUTES = {
       URL: PREFIX.STUDENT.DASHBOARD,
       PERMISSIONS: [PERMISSIONS.DASHBOARD.READ_DASHBOARD],
     },
-    COURSE: { 
-      URL: `${PREFIX.STUDENT.ROOT}${PREFIX.COURSE}`, 
-      PERMISSIONS: [] 
+    COURSE: {
+      URL: `${PREFIX.STUDENT.ROOT}${PREFIX.COURSE}`,
+      PERMISSIONS: []
     },
     EXAMS: {
       START: {
@@ -101,33 +101,33 @@ export const ROUTES = {
     },
   },
   AUTH: {
-    LOGIN: { 
-      URL: `${PREFIX.AUTH}/login`, 
-      PERMISSIONS: [] 
+    LOGIN: {
+      URL: `${PREFIX.AUTH}/login`,
+      PERMISSIONS: []
     },
-    REGISTER: { 
-      URL: `${PREFIX.AUTH}/register`, 
-      PERMISSIONS: [] 
+    REGISTER: {
+      URL: `${PREFIX.AUTH}/register`,
+      PERMISSIONS: []
     },
-    CALLBACK: { 
-      URL: `${PREFIX.AUTH}/oauth-callback`, 
-      PERMISSIONS: [] 
+    CALLBACK: {
+      URL: `${PREFIX.AUTH}/oauth-callback`,
+      PERMISSIONS: []
     },
-    FORGOT_PASSWORD: { 
-      URL: `${PREFIX.AUTH}/forgot-password`, 
-      PERMISSIONS: [] 
+    FORGOT_PASSWORD: {
+      URL: `${PREFIX.AUTH}/forgot-password`,
+      PERMISSIONS: []
     },
-    RESET_PASSWORD: { 
-      URL: `${PREFIX.AUTH}/reset-password`, 
-      PERMISSIONS: [] 
+    RESET_PASSWORD: {
+      URL: `${PREFIX.AUTH}/reset-password`,
+      PERMISSIONS: []
     },
-    VERIFY_EMAIL: { 
-      URL: `${PREFIX.AUTH}/verify-email`, 
-      PERMISSIONS: [] 
+    VERIFY_EMAIL: {
+      URL: `${PREFIX.AUTH}/verify-email`,
+      PERMISSIONS: []
     },
-    CONFIRM_PAYMENT: { 
-      URL: `${PREFIX.AUTH}/confirm-payment`, 
-      PERMISSIONS: [] 
+    CONFIRM_PAYMENT: {
+      URL: `${PREFIX.AUTH}/confirm-payment`,
+      PERMISSIONS: []
     },
   },
 };

@@ -28,10 +28,9 @@ const processQueue = (error: unknown, token: string | null = null) => {
 api.interceptors.response.use(
     (response) => response,
     async (error) => {
-        console.log('error', error)
         const originalRequest = error.config;
 
-        if (error.response.status === 401 && !originalRequest._retry) {
+        if (error.response.status === 403 && error.response.data.message === 'Invalid token' && !originalRequest._retry) {
             if (isRefreshing) {
                 return new Promise<string>((resolve, reject) => {
                     failedQueue.push({ resolve, reject });
