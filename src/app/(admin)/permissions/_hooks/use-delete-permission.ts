@@ -1,35 +1,35 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteUser } from "@/api/user";
+import { deletePermission } from "@/api/permission";
 import { QUERY_KEY } from "@/commons/constants/query-key";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@/commons/constants/routes";
 import toast from "react-hot-toast";
 import { createElement } from "react";
-import { ApiError } from "@/api/user/type";
+import { ApiError } from "@/api/permission/type";
 import { DeleteConfirmation } from "../../_components/delete-confirmation";
 
-export const useDeleteUser = () => {
+export const useDeletePermission = () => {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
 
     const { mutate, isPending } = useMutation({
-        mutationFn: ({ id }: { id: string }) => deleteUser(id),
+        mutationFn: (id: string) => deletePermission(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: [QUERY_KEY.USERS.LIST] });
-            toast.success("Pengguna berhasil dihapus");
-            navigate(ROUTES.ADMIN.IAM.USERS.LIST.URL);
+            queryClient.invalidateQueries({ queryKey: [QUERY_KEY.PERMISSIONS.LIST] });
+            toast.success("Permission berhasil dihapus");
+            navigate(ROUTES.ADMIN.IAM.PERMISSIONS.LIST.URL);
         },
         onError: (error: ApiError) => {
-            toast.error(error.response?.data?.message || "Gagal menghapus pengguna");
+            toast.error(error.response?.data?.message || "Gagal menghapus permission");
         },
     });
 
     const handleDelete = (id: string) => {
         toast.custom(
             (t) => createElement(DeleteConfirmation, {
-                onConfirm: () => mutate({ id }),
+                onConfirm: () => mutate(id),
                 toastId: t.id,
-                message: "Apakah Anda yakin ingin menghapus pengguna ini?"
+                message: "Apakah Anda yakin ingin menghapus permission ini?"
             }),
             {
                 duration: Infinity,

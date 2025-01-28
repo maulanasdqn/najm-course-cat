@@ -1,4 +1,5 @@
-import { PERMISSIONS } from "@/commons/constants/permissions";
+import { api } from "@/libs/axios/api";
+import { TResponseData } from "@/commons/types/response";
 import {
   TPermissionCreateRequest,
   TPermissionDetailResponse,
@@ -7,97 +8,30 @@ import {
   TPermissionUpdateRequest,
 } from "./type";
 
-export const getPermissions = (params: TGetPermissionsParams): Promise<TPermissionListResponse> => {
-  console.log(params);
-  return Promise.resolve({
-    status_code: 200,
-    data: [
-      {
-        created_at: new Date().toISOString(),
-        id: "1",
-        name: PERMISSIONS.USERS.READ_USERS,
-        updated_at: new Date().toISOString(),
-      },
-      {
-        created_at: new Date().toISOString(),
-        id: "2",
-        name: PERMISSIONS.PERMISSIONS.READ_PERMISSIONS,
-        updated_at: new Date().toISOString(),
-      },
-      {
-        created_at: new Date().toISOString(),
-        id: "3",
-        name: PERMISSIONS.ROLES.READ_ROLES,
-        updated_at: new Date().toISOString(),
-      },
-    ],
-    meta: {
-      total_page: 2,
-      total: 12,
-      page: 1,
-      per_page: 10,
-    },
-    version: "1.0.0",
-  });
+export const getPermissions = async (params: TGetPermissionsParams): Promise<TPermissionListResponse> => {
+  const { data } = await api.get("/v1/permissions", { params });
+  return data;
 };
 
-export const getPermission = (id: string): Promise<TPermissionDetailResponse> => {
-  console.log(id);
-  return Promise.resolve({
-    status_code: 200,
-    data: {
-      created_at: new Date().toISOString(),
-      id: "1",
-      name: PERMISSIONS.USERS.READ_USERS,
-      updated_at: new Date().toISOString(),
-    },
-    version: "1.0.0",
-  });
+export const getPermission = async (id: string): Promise<TPermissionDetailResponse> => {
+  const { data } = await api.get(`/v1/permissions/detail/${id}`);
+  return data;
 };
 
-export const createPermission = (
-  data: TPermissionCreateRequest,
-): Promise<TPermissionDetailResponse> => {
-  console.log(data);
-  return Promise.resolve({
-    status_code: 200,
-    data: {
-      created_at: new Date().toISOString(),
-      id: "1",
-      name: PERMISSIONS.USERS.READ_USERS,
-      updated_at: new Date().toISOString(),
-    },
-    version: "1.0.0",
-  });
+export const createPermission = async (data: TPermissionCreateRequest): Promise<TResponseData<null>> => {
+  const response = await api.post("/v1/permissions/create", data);
+  return response.data;
 };
 
-export const updatePermission = (
+export const updatePermission = async (
   id: string,
   data: TPermissionUpdateRequest,
-): Promise<TPermissionDetailResponse> => {
-  console.log(id, data);
-  return Promise.resolve({
-    status_code: 200,
-    data: {
-      created_at: new Date().toISOString(),
-      id: "1",
-      name: PERMISSIONS.USERS.READ_USERS,
-      updated_at: new Date().toISOString(),
-    },
-    version: "1.0.0",
-  });
+): Promise<TResponseData<null>> => {
+  const response = await api.put(`/v1/permissions/update/${id}`, data);
+  return response.data;
 };
 
-export const deletePermission = (id: string): Promise<TPermissionDetailResponse> => {
-  console.log(id);
-  return Promise.resolve({
-    status_code: 200,
-    data: {
-      created_at: new Date().toISOString(),
-      id: "1",
-      name: PERMISSIONS.USERS.READ_USERS,
-      updated_at: new Date().toISOString(),
-    },
-    version: "1.0.0",
-  });
+export const deletePermission = async (id: string): Promise<TResponseData<null>> => {
+  const response = await api.delete(`/v1/permissions/delete/${id}`);
+  return response.data;
 };
