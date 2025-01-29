@@ -4,6 +4,7 @@ import { QUERY_KEY } from "@/commons/constants/query-key";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@/commons/constants/routes";
 import { TPermissionForm } from "../_schemas/permission-form.schema";
+import toast from "react-hot-toast";
 
 export const useCreatePermission = () => {
     const queryClient = useQueryClient();
@@ -11,7 +12,8 @@ export const useCreatePermission = () => {
 
     const mutation = useMutation({
         mutationFn: (data: TPermissionForm) => createPermission(data),
-        onSuccess: () => {
+        onSuccess: (res) => {
+            toast.success(res.message || 'Permission berhasil dibuat');
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.PERMISSIONS.LIST],
             });

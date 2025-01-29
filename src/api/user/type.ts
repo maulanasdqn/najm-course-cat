@@ -31,15 +31,27 @@ export type TGetUsersParams = {
 export type TUserPaginateResponse = TResponsePaginate<TUserItem>;
 export type TUserDetailResponse = TResponseData<TUserItem>;
 
-export type ApiError = {
-  response?: {
-    data?: {
-      message?: string;
-    };
-  };
-};
-
 export type TUserActivateRequest = {
   id: string;
   is_active: boolean;
 };
+
+export type TUserActivateResponse = {
+  message: string;
+  version: string;
+}
+
+export type TUserCreateResponse = {
+  message: string;
+  version: string;
+}
+
+export type TUserUpdateResponse = {
+  message: string;
+  version: string;
+}
+
+export type TUserDeleteResponse = {
+  message: string;
+  version: string;
+}

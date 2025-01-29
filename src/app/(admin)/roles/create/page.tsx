@@ -4,6 +4,8 @@ import { createRole } from "../../../../api/role";
 import { ROUTES } from "../../../../commons/constants/routes";
 import { RoleForm } from "../components/role-form";
 import { CreateRoleFormData } from "../_schemas/role-form.schema";
+import toast from "react-hot-toast";
+import { TErrorResponse } from "@/commons/types/error";
 
 export default function CreateRolePage() {
     const navigate = useNavigate();
@@ -13,9 +15,13 @@ export default function CreateRolePage() {
             name: data.name,
             permission_ids: data.permissions
         }),
-        onSuccess: () => {
+        onSuccess: (res) => {
+            toast.success(res.message || "Role berhasil dibuat");
             navigate(ROUTES.ADMIN.IAM.ROLES.LIST.URL);
         },
+        onError: (err: TErrorResponse) => {
+            toast.error(err?.response?.data?.message as string);
+        }
     });
 
     const handleSubmit = (data: CreateRoleFormData) => {
