@@ -31,7 +31,7 @@ export function RoleForm({ onSubmit, isLoading, isEditMode, defaultValues }: Rol
 
   useEffect(() => {
     reset(defaultValues);
-  }, [defaultValues, reset]);
+  }, []);
 
   const { data: permissionsData } = useQuery({
     queryKey: [QUERY_KEY.PERMISSIONS.LIST],
