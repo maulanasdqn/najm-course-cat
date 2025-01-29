@@ -32,7 +32,8 @@ api.interceptors.response.use(
 
     if (
       error.response?.status === 401 &&
-      error.response?.data?.message?.toLowerCase()?.includes("invalid") &&
+      (error.response?.data?.message?.toLowerCase()?.includes("invalid") ||
+        error.response?.data?.message?.toLowerCase()?.includes("expired")) &&
       !originalRequest._retry
     ) {
       if (isRefreshing) {

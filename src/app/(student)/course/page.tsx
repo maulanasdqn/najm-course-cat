@@ -9,7 +9,7 @@ const testList = [
 
 export const Component: FC = (): ReactElement => {
   return (
-    <div className="flex flex-col items-center justify-center w-full">
+    <div className="flex flex-col items-center justify-center w-full bg-gray-100">
       <section className="flex flex-1 w-full max-w-7xl">
         <main className="col-span-2 w-full p-6">
           <h2 className="text-xl font-bold text-gray-700 mb-6">Daftar Tes</h2>

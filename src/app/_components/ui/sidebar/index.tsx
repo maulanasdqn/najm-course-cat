@@ -5,7 +5,7 @@ import { MyCourseIcon } from "../icons/ic-my-course";
 import { ROUTES } from "@/commons/constants/routes";
 import { UserIcon } from "../icons/ic-user";
 import { LogoutIcon } from "../icons/ic-logout";
-import { logout } from "@/utils/auth";
+import { Link, useLocation } from "react-router-dom";
 
 type TSidebarItem = {
   icon: ReactNode;
@@ -17,7 +17,7 @@ type TSidebarItem = {
 };
 
 export const Sidebar: FC = (): ReactElement => {
-  const pathname = window.location.pathname;
+  const { pathname } = useLocation();
   const [isOpen, setIsOpen] = useState(true);
 
   const sidebarItems: TSidebarItem[] = [
@@ -43,20 +43,17 @@ export const Sidebar: FC = (): ReactElement => {
       icon: <LogoutIcon />,
       label: "Logout",
       active: false,
-      onClick: () => {
-        logout()
-      },
+      link: ROUTES.AUTH.LOGOUT.URL,
     },
   ];
 
   return (
     <div
       className={clsx(
-        "min-h-screen bg-white shadow flex flex-col transition-all duration-300",
+        "min-h-screen bg-white shadow flex flex-col transition-all h-full sticky top-0 left-0 duration-300",
         isOpen ? "w-60" : "w-20",
       )}
     >
-      {/* Logo & Toggle Button */}
       <div className="flex justify-between px-4 border-b">
         {isOpen && <span className="flex items-center text-sm text-blue-500"></span>}
         <button
@@ -67,15 +64,10 @@ export const Sidebar: FC = (): ReactElement => {
         </button>
       </div>
 
-      {/* Navigation */}
       <nav className="flex flex-col flex-1 mt-4">
         {sidebarItems.map((item, index) => (
-          <a
-            href={item.link || "#"}
-            onClick={(e) => {
-              e.preventDefault()
-              item.onClick?.()
-            }}
+          <Link
+            to={item.link || "#"}
             key={index}
             className={clsx(
               "flex items-center px-4 py-3 text-sm cursor-pointer hover:bg-blue-100",
@@ -89,7 +81,7 @@ export const Sidebar: FC = (): ReactElement => {
                 {item.notification}
               </span>
             )}
-          </a>
+          </Link>
         ))}
       </nav>
     </div>

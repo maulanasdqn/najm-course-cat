@@ -6,6 +6,9 @@ export const AuthRouter = [
     lazy: () => import("./login/page"),
   },
   {
+    path: ROUTES.AUTH.LOGOUT.URL,
+  },
+  {
     path: ROUTES.AUTH.REGISTER.URL,
     lazy: () => import("./register/page"),
   },

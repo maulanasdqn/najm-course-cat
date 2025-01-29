@@ -105,6 +105,9 @@ export const ROUTES = {
     },
   },
   AUTH: {
+    LOGOUT: {
+      URL: `${PREFIX.AUTH}/logout`,
+    },
     LOGIN: {
       URL: `${PREFIX.AUTH}/login`,
       PERMISSIONS: [],

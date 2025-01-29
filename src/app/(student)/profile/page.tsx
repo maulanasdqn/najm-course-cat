@@ -17,8 +17,8 @@ export const Component: FC = (): ReactElement => {
     { value: "laki-laki", label: "Laki-laki" },
   ];
   return (
-    <div className="flex flex-col p-4 w-full min-h-screen bg-gray-100">
-      <div className="bg-white rounded-md w-full h-full p-8 ">
+    <div className="flex flex-col p-4 w-full items-center min-h-screen bg-gray-100">
+      <div className="bg-white rounded-md w-full h-full p-8 max-w-7xl">
         <h2 className="text-2xl font-bold text-gray-800 mb-6">Lengkapi Profil</h2>
         <div className="flex flex-col items-center pb-4">
           <div className="flex w-[100px] h-[100px] rounded-full bg-gray-100 items-center justify-center">
@@ -30,57 +30,65 @@ export const Component: FC = (): ReactElement => {
           </p>
         </div>
         <div className="flex flex-col w-full gap-y-6">
-          <InputText
-            label="Email"
-            control={form.control}
-            name="email"
-            placeholder="Masukan email"
-          />
-          <InputText
-            type="number"
-            label="Nomor Whatsapp"
-            control={form.control}
-            name="phone_number"
-            placeholder="Your phone number"
-            preppend={<span className="text-primary font-semibold text-xs">+62</span>}
-          />
-          <InputText
-            control={form.control}
-            name="identity_number"
-            label="Nomor Induk Kependudukan"
-            placeholder="Masukan NIK pada KTP/KK"
-          />
-          <InputText
-            control={form.control}
-            name="fullname"
-            label="Nama Lengkap"
-            placeholder="Masukan Nama Lengkap"
-          />
-          <InputText
-            control={form.control}
-            name="birthdate"
-            label="Tanggal Lahir"
-            placeholder="Masukan Tanggal Lahir"
-          />
-          <Select
-            name="gender"
-            control={form.control}
-            label="Jenis Kelamin"
-            placeholder="Pilih Jenis Kelamin"
-            options={genderOption}
-          />
-          <InputText
-            control={form.control}
-            name="religion"
-            label="Agama"
-            placeholder="Masukan Agama pada KTP"
-          />
-          <InputText
-            control={form.control}
-            name="address"
-            label="Alamat"
-            placeholder="Masukan Alamat Lengkap"
-          />
+          <div className="flex gap-x-4">
+            <InputText
+              label="Email"
+              control={form.control}
+              name="email"
+              placeholder="Masukan email"
+            />
+            <InputText
+              type="number"
+              label="Nomor Whatsapp"
+              control={form.control}
+              name="phone_number"
+              placeholder="Your phone number"
+              preppend={<span className="text-primary font-semibold text-xs">+62</span>}
+            />
+          </div>
+          <div className="flex gap-x-4">
+            <InputText
+              control={form.control}
+              name="identity_number"
+              label="Nomor Induk Kependudukan"
+              placeholder="Masukan NIK pada KTP/KK"
+            />
+            <InputText
+              control={form.control}
+              name="fullname"
+              label="Nama Lengkap"
+              placeholder="Masukan Nama Lengkap"
+            />
+          </div>
+          <div className="flex gap-x-4">
+            <InputText
+              control={form.control}
+              name="birthdate"
+              label="Tanggal Lahir"
+              placeholder="Masukan Tanggal Lahir"
+            />
+            <Select
+              name="gender"
+              control={form.control}
+              label="Jenis Kelamin"
+              placeholder="Pilih Jenis Kelamin"
+              options={genderOption}
+            />
+          </div>
+          <div className="flex gap-x-4">
+            <InputText
+              control={form.control}
+              name="religion"
+              label="Agama"
+              placeholder="Masukan Agama pada KTP"
+            />
+            <InputText
+              control={form.control}
+              name="address"
+              label="Alamat"
+              placeholder="Masukan Alamat Lengkap"
+            />
+          </div>
           <InputText
             control={form.control}
             name="school"
@@ -100,7 +108,7 @@ export const Component: FC = (): ReactElement => {
             placeholder="Pilih Kategori"
             options={studentTypeOptions}
           />
-          <Button onClick={handler.onSubmit} type="button">
+          <Button className="w-fit" onClick={handler.onSubmit} type="button">
             Simpan
           </Button>
         </div>

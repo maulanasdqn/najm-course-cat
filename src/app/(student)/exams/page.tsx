@@ -54,9 +54,9 @@ export const Component: FC = (): ReactElement => {
   const unansweredCount = questions.length - answeredCount;
 
   return (
-    <div className="flex flex-col items-center justify-center w-full">
+    <div className="flex flex-col items-center justify-center w-full bg-gray-100">
       <section className="flex flex-1 w-full max-w-7xl">
-        <aside className="w-1/4 order-2 bg-gray-100 p-4 rounded-lg shadow-md">
+        <aside className="w-1/4 order-2 bg-white mt-6 p-4 rounded-lg shadow-md h-fit">
           <h3 className="text-lg font-semibold text-gray-800 mb-4">Navigasi Soal</h3>
           <div className="grid grid-cols-5 gap-2">
             {questions.map((_, index) => (
