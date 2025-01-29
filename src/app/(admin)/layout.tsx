@@ -86,48 +86,10 @@ export default function AdminLayout() {
         </svg>
       ),
     },
-    {
-      name: "Logout",
-      icon: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M16.3137 8.0625L20.2501 12L16.3137 15.9375"
-            stroke="white"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M9.75 12H20.2472"
-            stroke="white"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M9.75 20.25H4.5C4.30109 20.25 4.11032 20.171 3.96967 20.0303C3.82902 19.8897 3.75 19.6989 3.75 19.5V4.5C3.75 4.30109 3.82902 4.11032 3.96967 3.96967C4.11032 3.82902 4.30109 3.75 4.5 3.75H9.75"
-            stroke="white"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      ),
-      onClick: () => {
-        logout()
-      },
-    },
   ];
 
   return (
     <div className="flex h-screen">
-      {/* Sidebar */}
       <div className="w-64 bg-gray-800 text-white">
         <div className="p-4">
           <h1 className="text-xl font-bold">Admin Panel</h1>
@@ -138,15 +100,12 @@ export default function AdminLayout() {
             return (
               <Link
                 key={item.name}
-                to={item.href || '#'}
-                onClick={(e) => {
-                  e.preventDefault();
-                  item.onClick?.()
-                }}
-                className={`flex items-center gap-3 px-4 py-2 text-sm ${isActive
-                  ? "bg-gray-900 text-white"
-                  : "text-gray-300 hover:bg-gray-700 hover:text-white"
-                  }`}
+                to={item.href || "#"}
+                className={`flex items-center gap-3 px-4 py-2 text-sm ${
+                  isActive
+                    ? "bg-gray-900 text-white"
+                    : "text-gray-300 hover:bg-gray-700 hover:text-white"
+                }`}
               >
                 {item.icon}
                 {item.name}
@@ -154,6 +113,41 @@ export default function AdminLayout() {
             );
           })}
         </nav>
+        <span
+          className="flex items-center gap-3 px-4 py-2 text-sm cursor-pointer text-gray-300 hover:bg-gray-700 hover:text-white"
+          onClick={logout}
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M16.3137 8.0625L20.2501 12L16.3137 15.9375"
+              stroke="white"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M9.75 12H20.2472"
+              stroke="white"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M9.75 20.25H4.5C4.30109 20.25 4.11032 20.171 3.96967 20.0303C3.82902 19.8897 3.75 19.6989 3.75 19.5V4.5C3.75 4.30109 3.82902 4.11032 3.96967 3.96967C4.11032 3.82902 4.30109 3.75 4.5 3.75H9.75"
+              stroke="white"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          Logout
+        </span>
       </div>
 
       {/* Main content */}
@@ -165,4 +159,3 @@ export default function AdminLayout() {
     </div>
   );
 }
-

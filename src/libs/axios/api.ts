@@ -31,8 +31,8 @@ api.interceptors.response.use(
     const originalRequest = error.config;
 
     if (
-      error.response.status === 401 &&
-      error.response?.data?.message?.toLowerCase()?.includes?.("invalid") &&
+      error.response?.status === 401 &&
+      error.response?.data?.message?.toLowerCase()?.includes("invalid") &&
       !originalRequest._retry
     ) {
       if (isRefreshing) {
@@ -43,9 +43,7 @@ api.interceptors.response.use(
             originalRequest.headers["Authorization"] = `Bearer ${token}`;
             return api(originalRequest);
           })
-          .catch((err) => {
-            return Promise.reject(err);
-          });
+          .catch((err) => Promise.reject(err));
       }
 
       originalRequest._retry = true;
@@ -66,15 +64,16 @@ api.interceptors.response.use(
         originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
 
         processQueue(null, newAccessToken);
-
         isRefreshing = false;
 
         return api(originalRequest);
       } catch (refreshError) {
         processQueue(refreshError, null);
+
         AccessTokenCookies.remove();
         RefreshTokenCookies.remove();
         window.location.href = ROUTES.AUTH.LOGIN.URL;
+
         return Promise.reject(refreshError);
       }
     }
