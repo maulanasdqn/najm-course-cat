@@ -30,7 +30,11 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (
+      error.response.status === 401 &&
+      error.response?.data?.message?.toLowerCase()?.includes?.("invalid") &&
+      !originalRequest._retry
+    ) {
       if (isRefreshing) {
         return new Promise<string>((resolve, reject) => {
           failedQueue.push({ resolve, reject });
