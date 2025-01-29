@@ -67,13 +67,12 @@ export default function UsersPage() {
             >
               Edit
             </Link>
-            <Link
-              to="#"
+            <div
               onClick={() => handleDelete(id)}
-              className="text-red-600 hover:underline"
+              className="text-red-600 hover:underline cursor-pointer"
             >
               Delete
-            </Link>
+            </div>
           </div>
         );
       },

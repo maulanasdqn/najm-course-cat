@@ -29,10 +29,17 @@ export type TPermissionListResponse = TResponsePaginate<TPermissionItem>;
 
 export type TPermissionDetailResponse = TResponseData<TPermissionItem>;
 
-export type ApiError = {
-  response?: {
-    data?: {
-      message?: string;
-    };
-  };
-};
+export type TPermissionCreateResponse = {
+  message: string;
+  version: string;
+}
+
+export type TPermissionUpdateResponse = {
+  message: string;
+  version: string;
+}
+
+export type TPermissionDeleteResponse = {
+  message: string;
+  version: string;
+}

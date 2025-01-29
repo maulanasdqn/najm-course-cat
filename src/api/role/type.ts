@@ -32,10 +32,17 @@ export type TGetRolesParams = {
 export type TRolePaginateResponse = TResponsePaginate<TRoleItem>;
 export type TRoleDetailResponse = TResponseData<TRoleItem>;
 
-export type ApiError = {
-  response?: {
-    data?: {
-      message?: string;
-    };
-  };
-};
+export type TRoleCreateResponse = {
+  message: string;
+  version: string;
+}
+
+export type TRoleUpdateResponse = {
+  message: string;
+  version: string;
+}
+
+export type TRoleDeleteResponse = {
+  message: string;
+  version: string;
+}

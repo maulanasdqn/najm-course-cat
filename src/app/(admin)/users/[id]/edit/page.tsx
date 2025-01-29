@@ -6,6 +6,8 @@ import { QUERY_KEY } from "../../../../../commons/constants/query-key";
 import { ROUTES } from "../../../../../commons/constants/routes";
 import { UserForm } from "../../components/user-form";
 import { UpdateUserFormData } from "../../_schemas/user-form.schema";
+import toast from "react-hot-toast";
+import { TErrorResponse } from "@/commons/types/error";
 
 export default function EditUserPage() {
     const { id } = useParams<{ id: string }>();
@@ -19,8 +21,12 @@ export default function EditUserPage() {
 
     const { mutate, isPending } = useMutation({
         mutationFn: (data: TUserUpdateRequest) => updateUser(id!, data),
-        onSuccess: () => {
+        onSuccess: (res) => {
+            toast.success(res.message || "User berhasil diperbarui");
             navigate(ROUTES.ADMIN.IAM.USERS.LIST.URL);
+        },
+        onError: (error: TErrorResponse) => {
+            toast.error(error.response?.data?.message || error.message);
         },
     });
 

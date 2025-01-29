@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@/commons/constants/routes";
 import toast from "react-hot-toast";
 import { createElement } from "react";
-import { ApiError } from "@/api/role/type";
 import { DeleteConfirmation } from "../../_components/delete-confirmation";
+import { TErrorResponse } from "@/commons/types/error";
 
 export const useDeleteRole = () => {
     const queryClient = useQueryClient();
@@ -14,12 +14,12 @@ export const useDeleteRole = () => {
 
     const { mutate, isPending } = useMutation({
         mutationFn: (id: string) => deleteRole(id),
-        onSuccess: () => {
+        onSuccess: (res) => {
+            toast.success(res.message || "Role berhasil dihapus");
             queryClient.invalidateQueries({ queryKey: [QUERY_KEY.ROLES.LIST] });
-            toast.success("Role berhasil dihapus");
             navigate(ROUTES.ADMIN.IAM.ROLES.LIST.URL);
         },
-        onError: (error: ApiError) => {
+        onError: (error: TErrorResponse) => {
             toast.error(error.response?.data?.message || "Gagal menghapus role");
         },
     });

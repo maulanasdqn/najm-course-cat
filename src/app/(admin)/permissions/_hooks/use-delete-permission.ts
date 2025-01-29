@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@/commons/constants/routes";
 import toast from "react-hot-toast";
 import { createElement } from "react";
-import { ApiError } from "@/api/permission/type";
 import { DeleteConfirmation } from "../../_components/delete-confirmation";
+import { TErrorResponse } from "@/commons/types/error";
 
 export const useDeletePermission = () => {
     const queryClient = useQueryClient();
@@ -14,12 +14,12 @@ export const useDeletePermission = () => {
 
     const { mutate, isPending } = useMutation({
         mutationFn: (id: string) => deletePermission(id),
-        onSuccess: () => {
+        onSuccess: (res) => {
             queryClient.invalidateQueries({ queryKey: [QUERY_KEY.PERMISSIONS.LIST] });
-            toast.success("Permission berhasil dihapus");
+            toast.success(res.message || "Permission berhasil dihapus");
             navigate(ROUTES.ADMIN.IAM.PERMISSIONS.LIST.URL);
         },
-        onError: (error: ApiError) => {
+        onError: (error: TErrorResponse) => {
             toast.error(error.response?.data?.message || "Gagal menghapus permission");
         },
     });

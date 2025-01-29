@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@/commons/constants/routes";
 import toast from "react-hot-toast";
 import { createElement } from "react";
-import { ApiError } from "@/api/user/type";
 import { DeleteConfirmation } from "../../_components/delete-confirmation";
+import { TErrorResponse } from "@/commons/types/error";
 
 export const useDeleteUser = () => {
     const queryClient = useQueryClient();
@@ -14,12 +14,12 @@ export const useDeleteUser = () => {
 
     const { mutate, isPending } = useMutation({
         mutationFn: ({ id }: { id: string }) => deleteUser(id),
-        onSuccess: () => {
+        onSuccess: (res) => {
+            toast.success(res.message || "User berhasil dihapus");
             queryClient.invalidateQueries({ queryKey: [QUERY_KEY.USERS.LIST] });
-            toast.success("Pengguna berhasil dihapus");
             navigate(ROUTES.ADMIN.IAM.USERS.LIST.URL);
         },
-        onError: (error: ApiError) => {
+        onError: (error: TErrorResponse) => {
             toast.error(error.response?.data?.message || "Gagal menghapus pengguna");
         },
     });
