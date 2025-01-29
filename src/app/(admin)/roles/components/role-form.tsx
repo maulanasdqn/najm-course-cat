@@ -9,6 +9,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEY } from "@/commons/constants/query-key";
 import { getPermissions } from "@/api/permission";
+import { useEffect } from "react";
 
 interface RoleFormProps {
   onSubmit: (data: CreateRoleFormData | UpdateRoleFormData) => void;
@@ -21,11 +22,16 @@ export function RoleForm({ onSubmit, isLoading, isEditMode, defaultValues }: Rol
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<CreateRoleFormData | UpdateRoleFormData>({
     resolver: zodResolver(isEditMode ? updateRoleSchema : createRoleSchema),
     defaultValues,
   });
+
+  useEffect(() => {
+    reset(defaultValues);
+  }, [defaultValues, reset]);
 
   const { data: permissionsData } = useQuery({
     queryKey: [QUERY_KEY.PERMISSIONS.LIST],
