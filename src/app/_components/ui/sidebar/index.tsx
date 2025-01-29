@@ -5,6 +5,7 @@ import { MyCourseIcon } from "../icons/ic-my-course";
 import { ROUTES } from "@/commons/constants/routes";
 import { UserIcon } from "../icons/ic-user";
 import { LogoutIcon } from "../icons/ic-logout";
+import { logout } from "@/utils/auth";
 
 type TSidebarItem = {
   icon: ReactNode;
@@ -12,6 +13,7 @@ type TSidebarItem = {
   notification?: number;
   active?: boolean;
   link?: string;
+  onClick?: () => void;
 };
 
 export const Sidebar: FC = (): ReactElement => {
@@ -41,7 +43,9 @@ export const Sidebar: FC = (): ReactElement => {
       icon: <LogoutIcon />,
       label: "Logout",
       active: false,
-      link: "",
+      onClick: () => {
+        logout()
+      },
     },
   ];
 
@@ -68,6 +72,10 @@ export const Sidebar: FC = (): ReactElement => {
         {sidebarItems.map((item, index) => (
           <a
             href={item.link || "#"}
+            onClick={(e) => {
+              e.preventDefault()
+              item.onClick?.()
+            }}
             key={index}
             className={clsx(
               "flex items-center px-4 py-3 text-sm cursor-pointer hover:bg-blue-100",
