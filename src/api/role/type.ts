@@ -18,7 +18,7 @@ export type TRoleCreateRequest = {
 export type TRoleUpdateRequest = {
   id: string;
   name: string;
-  permission_ids: string[];
+  permission: string[];
 };
 
 export type TGetRolesParams = {
