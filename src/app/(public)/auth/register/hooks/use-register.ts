@@ -20,7 +20,7 @@ export const useRegister = () => {
     },
   });
 
-  const { mutate: mutatePostRegister } = usePostRegister();
+  const { mutate: mutatePostRegister, isPending } = usePostRegister();
 
   const onSubmit = form.handleSubmit((data) => {
     mutatePostRegister({
@@ -48,5 +48,6 @@ export const useRegister = () => {
   return {
     form,
     handler,
+    isPending,
   };
 };

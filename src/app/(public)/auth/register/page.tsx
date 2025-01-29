@@ -17,9 +17,9 @@ const studentTypeOption = [
 ];
 
 export const Component: FC = (): ReactElement => {
-  const { form, handler } = useRegister();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const { form, handler, isPending } = useRegister();
 
   useEffect(() => {
     queryClient
@@ -129,10 +129,11 @@ export const Component: FC = (): ReactElement => {
           <div className="flex w-full justify-between gap-x-4 items-center">
             <InputCheckbox label={checkboxLabel} name="terms" control={form.control} />
             <button
+              disabled={isPending}
               className="w-auto text-sm flex bg-blue-900 text-white px-6 py-2 rounded-full font-medium items-center justify-center hover:bg-blue-800"
               type="submit"
             >
-              <div className="flex items-center gap-x-2">Daftar</div>
+              <div className="flex items-center gap-x-2">{isPending ? "Loading..." : "Daftar"}</div>
             </button>
           </div>
           <p className="text-center text-sm text-gray-500">Atau Daftar Dengan</p>

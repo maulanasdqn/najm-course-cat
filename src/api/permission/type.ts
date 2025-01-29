@@ -19,7 +19,7 @@ export type TPermissionUpdateRequest = Omit<
 
 export type TGetPermissionsParams = {
   page?: number;
-  limit?: number;
+  per_page?: number;
   sort?: string;
   order?: string;
   search?: string;
