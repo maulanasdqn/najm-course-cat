@@ -23,7 +23,7 @@ export default function EditRolePage() {
       updateRole(id!, {
         id: id!,
         name: data.name,
-        permission: data.permissions,
+        permissions: data.permissions,
       }),
     onSuccess: () => {
       navigate(ROUTES.ADMIN.IAM.ROLES.LIST.URL);
