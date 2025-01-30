@@ -14,7 +14,7 @@ export const useRegister = () => {
       password: "",
       phoneNumber: "",
       referralCode: "",
-      interests: [],
+      interests: "",
       confirmPassword: "",
       studentType: "",
     },
@@ -32,9 +32,8 @@ export const useRegister = () => {
       password: data.password,
       phone_number: data.phoneNumber,
       referral_code: data.referralCode,
-      referred_by: data.studentType,
+      referred_by: data.interests,
       student_type: data.studentType,
-      interests: data.interests,
     });
   });
 

@@ -1,7 +1,6 @@
 import { FC, ReactElement, useEffect, useState } from "react";
 import { useRegister } from "./hooks/use-register";
 import { InputText } from "@/app/_components/ui/inputs/text";
-import { InputTag } from "@/app/_components/ui/inputs/tag";
 import { InputCheckbox } from "@/app/_components/ui/inputs/checkbox";
 import { GoogleButton } from "@/app/_components/ui/button/google-button";
 import { Select } from "@/app/_components/ui/inputs/select";
@@ -112,7 +111,7 @@ export const Component: FC = (): ReactElement => {
               }
             />
           </div>
-          <InputTag label="Tau dari mana?" name="interests" control={form.control} />
+          <InputText label="Tau dari mana?" name="interests" control={form.control} />
           <InputText
             label="Kode Referal"
             control={form.control}

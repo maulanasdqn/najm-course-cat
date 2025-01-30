@@ -36,9 +36,8 @@ export type TRegisterParam = {
   password: string;
   phone_number: string;
   referral_code: string;
-  referred_by: string;
+  referred_by?: string;
   student_type: string;
-  interests: string[];
 };
 
 export type TRegisterResponse = {

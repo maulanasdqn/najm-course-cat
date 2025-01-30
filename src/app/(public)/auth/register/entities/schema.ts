@@ -3,7 +3,7 @@ import { z } from "zod";
 export const registerSchema = z
   .object({
     fullname: z.string().min(1, { message: "First name is required" }),
-    interests: z.array(z.string()).min(1, { message: "At least one interest is required" }),
+    interests: z.string().optional(),
     referralCode: z.string().min(1, { message: "Referral code is required" }),
     terms: z.boolean().refine((value) => value, {
       message: "You must agree to the terms and conditions",
