@@ -8,6 +8,8 @@ import { useActivateUser } from "./_hooks/use-activate-user";
 import { ColumnDef } from "@tanstack/react-table";
 import { TUserItem } from "../../../api/user/type";
 import { Switch } from "../../_components/ui/inputs/switch";
+import { Guard } from "@/app/_components/ui/guard";
+import PermissionsEnum from "@/commons/enums/permission";
 
 export default function UsersPage() {
   const { params, setParams } = useTableParams();
@@ -55,24 +57,30 @@ export default function UsersPage() {
         const id = row.original.id;
         return (
           <div className="flex gap-2">
-            <Link
-              to={ROUTES.ADMIN.IAM.USERS.DETAIL.URL.replace(":id", id)}
-              className="text-blue-600 hover:underline"
-            >
-              Detail
-            </Link>
-            <Link
-              to={ROUTES.ADMIN.IAM.USERS.UPDATE.URL.replace(":id", id)}
-              className="text-blue-600 hover:underline"
-            >
-              Edit
-            </Link>
-            <div
-              onClick={() => handleDelete(id)}
-              className="text-red-600 hover:underline cursor-pointer"
-            >
-              Delete
-            </div>
+            <Guard permissions={[PermissionsEnum.ReadDetailUsers]}>
+              <Link
+                to={ROUTES.ADMIN.IAM.USERS.DETAIL.URL.replace(":id", id)}
+                className="text-blue-600 hover:underline"
+              >
+                Detail
+              </Link>
+            </Guard>
+            <Guard permissions={[PermissionsEnum.UpdateUsers]}>
+              <Link
+                to={ROUTES.ADMIN.IAM.USERS.UPDATE.URL.replace(":id", id)}
+                className="text-blue-600 hover:underline"
+              >
+                Edit
+              </Link>
+            </Guard>
+            <Guard permissions={[PermissionsEnum.DeleteUsers]}>
+              <div
+                onClick={() => handleDelete(id)}
+                className="text-red-600 hover:underline cursor-pointer"
+              >
+                Delete
+              </div>
+            </Guard>
           </div>
         );
       },
@@ -119,7 +127,7 @@ export default function UsersPage() {
           currentPage: params.page,
           pageSize: params.limit,
           totalItems: data?.meta.total ?? 0,
-          totalPages: data ? Math.ceil(data.meta.total / data.meta.per_page) : 0
+          totalPages: data ? Math.ceil(data.meta.total / data.meta.per_page) : 0,
         }}
         onPageChange={handlePageChange}
       />

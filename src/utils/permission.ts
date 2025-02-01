@@ -1,4 +1,8 @@
+import PermissionsEnum from "@/commons/enums/permission";
 import { hasCommonElements } from "./has-common-element";
+import { UserCookies } from "@/libs/cookies";
+import { redirect } from "react-router-dom";
+import { ROUTES } from "@/commons/constants/routes";
 
 type TPermissionChecker = {
   permissions: Array<string>;
@@ -54,9 +58,7 @@ const isPermissionWithChildren = (
   return "children" in permission;
 };
 
-export const filterPermission = <
-  T extends PermissionWithChildren | PermissionWithoutChildren,
->(
+export const filterPermission = <T extends PermissionWithChildren | PermissionWithoutChildren>(
   menus: T[],
   hasPermissionCB: (menu: T) => boolean,
 ): T[] => {
@@ -75,4 +77,27 @@ export const filterPermission = <
     }
     return all;
   }, [] as T[]);
+};
+
+export const permissionLoader = (allowedPermission: PermissionsEnum[]) => {
+  return async () => {
+    const userData = UserCookies.get();
+    const permissions = userData?.role.permissions;
+
+    const permissionsRequired = Array.from(allowedPermission);
+
+    for (let j = 0; j < permissionsRequired?.length; j++) {
+      if (permissions.some((permission) => permission.name === permissionsRequired[j])) {
+        permissionsRequired.splice(j, 1);
+        j -= 1;
+      }
+    }
+
+    const allowed = permissionsRequired.length === 0;
+
+    if (!allowed) {
+      return redirect(ROUTES.ADMIN.DASHBOARD.URL);
+    }
+    return null;
+  };
 };
