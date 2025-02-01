@@ -1,6 +1,9 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { ROUTES } from "../../commons/constants/routes";
 import { logout } from "@/utils/auth";
+import { filterPermission } from "@/utils/permission";
+import { UserCookies } from "@/libs/cookies";
+import PermissionsEnum from "@/commons/enums/permission";
 
 export default function AdminLayout() {
   const location = useLocation();
@@ -29,6 +32,7 @@ export default function AdminLayout() {
     {
       name: "Users",
       href: ROUTES.ADMIN.IAM.USERS.LIST.URL,
+      permissions: [PermissionsEnum.ReadListUsers],
       icon: (
         <svg
           className="h-5 w-5"
@@ -49,6 +53,7 @@ export default function AdminLayout() {
     {
       name: "Roles",
       href: ROUTES.ADMIN.IAM.ROLES.LIST.URL,
+      permissions: [PermissionsEnum.ReadListRoles],
       icon: (
         <svg
           className="h-5 w-5"
@@ -69,6 +74,7 @@ export default function AdminLayout() {
     {
       name: "Permissions",
       href: ROUTES.ADMIN.IAM.PERMISSIONS.LIST.URL,
+      permissions: [PermissionsEnum.ReadListPermissions],
       icon: (
         <svg
           className="h-5 w-5"
@@ -88,6 +94,16 @@ export default function AdminLayout() {
     },
   ];
 
+  const userData = UserCookies.get();
+  const permissions = userData?.role.permissions;
+
+  const allowedPermissions = filterPermission(navigationItems, (item) => {
+    return (
+      item.permissions?.some((permission) => permissions?.some((p) => p.name === permission)) ||
+      true
+    );
+  });
+
   return (
     <div className="flex h-screen">
       <div className="w-64 bg-gray-800 text-white">
@@ -95,7 +111,7 @@ export default function AdminLayout() {
           <h1 className="text-xl font-bold">Admin Panel</h1>
         </div>
         <nav className="mt-4">
-          {navigationItems.map((item) => {
+          {allowedPermissions.map((item) => {
             const isActive = location.pathname === item.href;
             return (
               <Link

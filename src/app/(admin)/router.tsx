@@ -10,6 +10,8 @@ import EditRolePage from "./roles/[id]/edit/page";
 import PermissionsPage from "./permissions/page";
 import CreatePermissionPage from "./permissions/create/page";
 import EditPermissionPage from "./permissions/[id]/edit/page";
+import { permissionLoader } from "@/utils/permission";
+import PermissionsEnum from "@/commons/enums/permission";
 
 export const AdminRouter = [
   {
@@ -24,42 +26,52 @@ export const AdminRouter = [
         children: [
           {
             path: "users",
+            loader: permissionLoader([PermissionsEnum.ReadListUsers]),
             element: <UsersPage />,
           },
           {
             path: "users/create",
+            loader: permissionLoader([PermissionsEnum.CreateUsers]),
             element: <CreateUserPage />,
           },
           {
             path: "users/:id/detail",
+            loader: permissionLoader([PermissionsEnum.ReadDetailUsers]),
             element: <UserDetailPage />,
           },
           {
             path: "users/:id/update",
+            loader: permissionLoader([PermissionsEnum.UpdateUsers]),
             element: <EditUserPage />,
           },
           {
             path: "roles",
+            loader: permissionLoader([PermissionsEnum.ReadListRoles]),
             element: <RolesPage />,
           },
           {
             path: "roles/create",
+            loader: permissionLoader([PermissionsEnum.CreateRoles]),
             element: <CreateRolePage />,
           },
           {
             path: "roles/:id/update",
+            loader: permissionLoader([PermissionsEnum.UpdateRoles]),
             element: <EditRolePage />,
           },
           {
             path: "permissions",
+            loader: permissionLoader([PermissionsEnum.ReadListPermissions]),
             element: <PermissionsPage />,
           },
           {
             path: "permissions/create",
+            loader: permissionLoader([PermissionsEnum.CreatePermissions]),
             element: <CreatePermissionPage />,
           },
           {
             path: "permissions/:id/update",
+            loader: permissionLoader([PermissionsEnum.UpdatePermissions]),
             element: <EditPermissionPage />,
           },
         ],
