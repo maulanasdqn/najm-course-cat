@@ -36,10 +36,12 @@ export default function UsersPage() {
       cell: ({ row }) => {
         const user = row.original;
         return (
-          <Switch
-            checked={user.is_active ?? false}
-            onChange={(checked) => handleActivate({ id: user.id, is_active: checked })}
-          />
+          <Guard permissions={[PermissionsEnum.UpdateUsers]}>
+            <Switch
+              checked={user.is_active ?? false}
+              onChange={(checked) => handleActivate({ id: user.id, is_active: checked })}
+            />
+          </Guard>
         );
       },
     },
