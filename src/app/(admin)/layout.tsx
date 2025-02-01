@@ -98,10 +98,9 @@ export default function AdminLayout() {
   const permissions = userData?.role.permissions;
 
   const allowedPermissions = filterPermission(navigationItems, (item) => {
-    return (
-      item.permissions?.some((permission) => permissions?.some((p) => p.name === permission)) ||
-      true
-    );
+    return item.permissions
+      ? item.permissions.some((permission) => permissions?.some((p) => p.name === permission))
+      : true;
   });
 
   return (
