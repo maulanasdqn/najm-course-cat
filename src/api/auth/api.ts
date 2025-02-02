@@ -114,10 +114,6 @@ export const postForgotPassword = async (
   payload: TForgotPasswordParam,
 ): Promise<TForgotPasswordResponse> => {
   return {
-    data: {
-      token:
-        Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
-    },
     message: "Email telah dikirim",
   };
   const { data } = await api({

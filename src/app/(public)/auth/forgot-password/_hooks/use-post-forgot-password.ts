@@ -11,10 +11,7 @@ export const usePostForgotPassword = () => {
     mutationFn: postForgotPassword,
     onSuccess: (res) => {
       toast.success(res.message);
-      const queryParams = new URLSearchParams({
-        token: res.data.token,
-      });
-      navigate(`${ROUTES.AUTH.RESET_PASSWORD.URL}?${queryParams.toString()}`);
+      navigate(ROUTES.AUTH.LOGIN.URL);
     },
     onError: (err) => {
       toast.error(err.response?.data.message || "Terjadi Kesalahan");

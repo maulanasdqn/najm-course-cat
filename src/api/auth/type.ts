@@ -68,9 +68,6 @@ export type TForgotPasswordParam = {
 
 export type TForgotPasswordResponse = {
   message: string;
-  data: {
-    token: string;
-  };
 };
 
 export type TSetNewPasswordParam = {
