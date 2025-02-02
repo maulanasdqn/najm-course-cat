@@ -6,7 +6,7 @@ export const ENDPOINT = {
     REFRESH: `/v1/auth/refresh`,
     SEND_OTP: `/v1/auth/send-otp`,
     FORGOT_PASSWORD: `/v1/auth/forgot-password`,
-    SET_NEW_PASSWORD: `/v1/auth/set-new-password`,
+    RESET_PASSWORD: `/v1/auth/reset-password`,
   },
   USERS: {
     LIST: `/v1/users`,

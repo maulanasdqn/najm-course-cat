@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
-import { usePostNewPassword } from "./use-post-new-password";
-import { TSetNewPasswordParam } from "@/api/auth/type";
+import { usePostResetPassword } from "./use-post-reset-password";
+import { TResetPasswordParam } from "@/api/auth/type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { resetPasswordSchema } from "../_entities/scheme";
 
@@ -14,10 +14,10 @@ export const useResetPassword = () => {
     },
   });
 
-  const { mutate: mutatePostNewPassword, isPending } = usePostNewPassword();
+  const { mutate: mutatePostNewPassword, isPending } = usePostResetPassword();
 
   const handler = {
-    onSubmit: form.handleSubmit((data: TSetNewPasswordParam) => {
+    onSubmit: form.handleSubmit((data: TResetPasswordParam) => {
       mutatePostNewPassword(data);
     }),
   };

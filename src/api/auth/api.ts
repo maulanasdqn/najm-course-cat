@@ -12,8 +12,8 @@ import {
   TSendOtpResponse,
   TForgotPasswordParam,
   TForgotPasswordResponse,
-  TSetNewPasswordParam,
-  TSetNewPasswordResponse,
+  TResetPasswordParam,
+  TResetPasswordResponse,
 } from "./type";
 import { PERMISSIONS } from "@/commons/constants/permissions";
 
@@ -124,14 +124,14 @@ export const postForgotPassword = async (
   return data;
 };
 
-export const setNewPassword = async (
-  payload: TSetNewPasswordParam,
-): Promise<TSetNewPasswordResponse> => {
+export const postResetPassword = async (
+  payload: TResetPasswordParam,
+): Promise<TResetPasswordResponse> => {
   return {
     message: "Password berhasil diubah",
   };
   const { data } = await api({
-    url: ENDPOINT.AUTH.SET_NEW_PASSWORD,
+    url: ENDPOINT.AUTH.RESET_PASSWORD,
     method: "POST",
     data: payload,
   });

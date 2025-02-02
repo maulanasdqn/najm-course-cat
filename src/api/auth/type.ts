@@ -70,11 +70,11 @@ export type TForgotPasswordResponse = {
   message: string;
 };
 
-export type TSetNewPasswordParam = {
+export type TResetPasswordParam = {
   password: string;
   token: string;
 };
 
-export type TSetNewPasswordResponse = {
+export type TResetPasswordResponse = {
   message: string;
 };
