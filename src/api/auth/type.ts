@@ -61,3 +61,23 @@ export type TSendOtpParam = {
 export type TSendOtpResponse = {
   message: string;
 };
+
+export type TForgotPasswordParam = {
+  email: string;
+};
+
+export type TForgotPasswordResponse = {
+  message: string;
+  data: {
+    token: string;
+  };
+};
+
+export type TSetNewPasswordParam = {
+  password: string;
+  token: string;
+};
+
+export type TSetNewPasswordResponse = {
+  message: string;
+};

@@ -20,4 +20,12 @@ export const AuthRouter = [
     path: ROUTES.AUTH.CONFIRM_PAYMENT.URL,
     lazy: () => import("./confirm-payment/page"),
   },
+  {
+    path: ROUTES.AUTH.FORGOT_PASSWORD.URL,
+    lazy: () => import("./forgot-password/page"),
+  },
+  {
+    path: ROUTES.AUTH.RESET_PASSWORD.URL,
+    lazy: () => import("./reset-password/page"),
+  },
 ];

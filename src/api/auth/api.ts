@@ -10,6 +10,10 @@ import {
   TRegisterResponse,
   TSendOtpParam,
   TSendOtpResponse,
+  TForgotPasswordParam,
+  TForgotPasswordResponse,
+  TSetNewPasswordParam,
+  TSetNewPasswordResponse,
 } from "./type";
 import { PERMISSIONS } from "@/commons/constants/permissions";
 
@@ -100,6 +104,38 @@ export const postVerifyEmail = async (
 export const postSendOtp = async (payload: TSendOtpParam): Promise<TSendOtpResponse> => {
   const { data } = await api({
     url: ENDPOINT.AUTH.SEND_OTP,
+    method: "POST",
+    data: payload,
+  });
+  return data;
+};
+
+export const postForgotPassword = async (
+  payload: TForgotPasswordParam,
+): Promise<TForgotPasswordResponse> => {
+  return {
+    data: {
+      token:
+        Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
+    },
+    message: "Email telah dikirim",
+  };
+  const { data } = await api({
+    url: ENDPOINT.AUTH.FORGOT_PASSWORD,
+    method: "POST",
+    data: payload,
+  });
+  return data;
+};
+
+export const setNewPassword = async (
+  payload: TSetNewPasswordParam,
+): Promise<TSetNewPasswordResponse> => {
+  return {
+    message: "Password berhasil diubah",
+  };
+  const { data } = await api({
+    url: ENDPOINT.AUTH.SET_NEW_PASSWORD,
     method: "POST",
     data: payload,
   });
