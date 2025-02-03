@@ -19,6 +19,8 @@ const mappingPublicRoutes = [
   "/auth/register",
   "/auth/verify-email",
   "/auth/confirm-payment",
+  "/auth/forgot-password",
+  "/auth/reset-password",
 ];
 
 const isAdminRoute = (pathname: string) => pathname.startsWith("/admin");

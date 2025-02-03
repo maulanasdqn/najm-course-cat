@@ -5,6 +5,8 @@ export const ENDPOINT = {
     REGISTER: `/v1/auth/register`,
     REFRESH: `/v1/auth/refresh`,
     SEND_OTP: `/v1/auth/send-otp`,
+    FORGOT_PASSWORD: `/v1/auth/forgot`,
+    NEW_PASSWORD: `/v1/auth/new-password`,
   },
   USERS: {
     LIST: `/v1/users`,

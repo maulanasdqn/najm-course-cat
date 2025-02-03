@@ -10,6 +10,10 @@ import {
   TRegisterResponse,
   TSendOtpParam,
   TSendOtpResponse,
+  TForgotPasswordParam,
+  TForgotPasswordResponse,
+  TResetPasswordParam,
+  TResetPasswordResponse,
 } from "./type";
 import { PERMISSIONS } from "@/commons/constants/permissions";
 
@@ -100,6 +104,28 @@ export const postVerifyEmail = async (
 export const postSendOtp = async (payload: TSendOtpParam): Promise<TSendOtpResponse> => {
   const { data } = await api({
     url: ENDPOINT.AUTH.SEND_OTP,
+    method: "POST",
+    data: payload,
+  });
+  return data;
+};
+
+export const postForgotPassword = async (
+  payload: TForgotPasswordParam,
+): Promise<TForgotPasswordResponse> => {
+  const { data } = await api({
+    url: ENDPOINT.AUTH.FORGOT_PASSWORD,
+    method: "POST",
+    data: payload,
+  });
+  return data;
+};
+
+export const postResetPassword = async (
+  payload: TResetPasswordParam,
+): Promise<TResetPasswordResponse> => {
+  const { data } = await api({
+    url: ENDPOINT.AUTH.NEW_PASSWORD,
     method: "POST",
     data: payload,
   });
