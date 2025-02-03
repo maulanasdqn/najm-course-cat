@@ -1,12 +1,20 @@
 import { FC, ReactElement, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useExam } from "./_hooks/exam";
 
 export const Component: FC = (): ReactElement => {
-  const [sessionNumber, setSessionNumber] = useState("");
   const navigate = useNavigate();
+  const { startExam } = useExam({
+    onFinish: () => {
+      // TODO: mutate finish exam
+      navigate("/student/course");
+    },
+  });
+  const [sessionNumber, setSessionNumber] = useState("");
 
   const handleStart = () => {
     if (sessionNumber.trim() !== "") {
+      startExam();
       navigate(`/student/exams/1?page=1&session=${sessionNumber}`);
     } else {
       alert("Silakan masukkan nomor sesi sebelum memulai ujian.");
@@ -21,6 +29,9 @@ export const Component: FC = (): ReactElement => {
           Sebelum memulai ujian, pastikan Anda telah membaca petunjuk berikut:
         </p>
         <ul className="list-disc list-inside text-gray-600 mb-6">
+          <li style={{ textTransform: "uppercase", fontWeight: "bold" }}>
+            Keluar dari fullscreen mode akan menyelesaikan ujian.
+          </li>
           <li>Pastikan Anda memiliki koneksi internet yang stabil.</li>
           <li>Waktu ujian akan dimulai setelah Anda menekan tombol "Mulai Ujian".</li>
           <li>Setiap soal wajib dijawab sebelum menyelesaikan ujian.</li>
