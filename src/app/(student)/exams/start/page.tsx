@@ -1,6 +1,7 @@
 import { FC, ReactElement, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useExam } from "./_hooks/exam";
+import toast from "react-hot-toast";
 
 export const Component: FC = (): ReactElement => {
   const navigate = useNavigate();
@@ -8,6 +9,7 @@ export const Component: FC = (): ReactElement => {
     onFinish: () => {
       // TODO: mutate finish exam
       navigate("/student/course");
+      toast.success("Ujian telah selesai.");
     },
   });
   const [sessionNumber, setSessionNumber] = useState("");
