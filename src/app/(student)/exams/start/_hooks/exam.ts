@@ -1,6 +1,10 @@
+import { useFullscreen } from "@/app/(student)/_components/providers/fullscreen";
+
 export const useExam = ({ onFinish }: { onFinish: (() => Promise<void>) | (() => void) }) => {
+  const { isFullscreen, setIsFullscreen } = useFullscreen();
   const startExam = () => {
     // enable full screen
+    setIsFullscreen?.(true);
     if (document.addEventListener) {
       document.addEventListener("fullscreenchange", exitHandler, false);
       document.addEventListener("mozfullscreenchange", exitHandler, false);
@@ -12,6 +16,7 @@ export const useExam = ({ onFinish }: { onFinish: (() => Promise<void>) | (() =>
   };
 
   const finishExam = async () => {
+    setIsFullscreen?.(false);
     if (document.removeEventListener) {
       document.removeEventListener("fullscreenchange", exitHandler, false);
       document.removeEventListener("mozfullscreenchange", exitHandler, false);
@@ -50,5 +55,6 @@ export const useExam = ({ onFinish }: { onFinish: (() => Promise<void>) | (() =>
   return {
     startExam,
     finishExam,
+    isFullscreen,
   };
 };
