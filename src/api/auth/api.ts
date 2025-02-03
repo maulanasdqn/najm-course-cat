@@ -113,9 +113,6 @@ export const postSendOtp = async (payload: TSendOtpParam): Promise<TSendOtpRespo
 export const postForgotPassword = async (
   payload: TForgotPasswordParam,
 ): Promise<TForgotPasswordResponse> => {
-  return {
-    message: "Email telah dikirim",
-  };
   const { data } = await api({
     url: ENDPOINT.AUTH.FORGOT_PASSWORD,
     method: "POST",
@@ -127,11 +124,8 @@ export const postForgotPassword = async (
 export const postResetPassword = async (
   payload: TResetPasswordParam,
 ): Promise<TResetPasswordResponse> => {
-  return {
-    message: "Password berhasil diubah",
-  };
   const { data } = await api({
-    url: ENDPOINT.AUTH.RESET_PASSWORD,
+    url: ENDPOINT.AUTH.NEW_PASSWORD,
     method: "POST",
     data: payload,
   });
