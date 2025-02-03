@@ -31,6 +31,13 @@ export const Component = () => {
             name="password"
             placeholder="Password"
           />
+          <InputText
+            type="password"
+            label="Confirm Password"
+            control={form.control}
+            name="confirm_password"
+            placeholder="Confirm Password"
+          />
           <Button
             size="lg"
             disabled={!form.formState.isValid}

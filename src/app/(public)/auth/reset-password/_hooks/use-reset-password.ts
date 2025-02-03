@@ -10,6 +10,7 @@ export const useResetPassword = () => {
     resolver: zodResolver(resetPasswordSchema),
     defaultValues: {
       password: "",
+      confirm_password: "",
       token: "",
     },
   });
