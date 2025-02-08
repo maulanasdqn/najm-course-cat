@@ -1,5 +1,5 @@
 import { Button } from "@/app/_components/ui/button";
-import { InputText } from "@/app/_components/ui/inputs/text";
+import { OtpInput } from "@/app/_components/ui/inputs/otp-input";
 import { useVerifyEmail } from "./_hooks/use-verify-email";
 import { useEffect } from "react";
 import { queryClient } from "@/libs/react-query/react-query-client";
@@ -48,13 +48,24 @@ export const Component = () => {
         <img src="/logo.png" alt="Logo" className="w-32" />
         <form
           onSubmit={handler.onSubmit}
-          className="w-full flex flex-col mt-4 gap-y-2 lg:px-12 px-0"
+          className="w-full flex flex-col mt-4 gap-y-4 lg:px-12 px-0"
         >
-          <InputText type="text" label="OTP" control={form.control} name="otp" />
+          <div className="text-center">
+            <h2 className="text-2xl font-semibold text-gray-900">Verify Your Email</h2>
+            <p className="mt-2 text-sm text-gray-600">
+              We've sent a verification code to your email. Please enter the code below.
+            </p>
+          </div>
+
+          <OtpInput
+            value={form.watch("otp")}
+            onChange={(value) => form.setValue("otp", value, { shouldValidate: true })}
+            className="mb-4"
+          />
 
           {countdown.times > 0 ? (
-            <div className="flex justify-center items-center">
-              {countdown.minutes < 10 ? "0" + countdown.minutes : countdown.minutes}:
+            <div className="flex justify-center items-center text-gray-600">
+              Resend code in {countdown.minutes < 10 ? "0" + countdown.minutes : countdown.minutes}:
               {countdown.seconds < 10 ? "0" + countdown.seconds : countdown.seconds}
             </div>
           ) : (
@@ -71,7 +82,7 @@ export const Component = () => {
                 });
               }}
             >
-              Resend OTP
+              Resend Code
             </Button>
           )}
 
@@ -81,7 +92,7 @@ export const Component = () => {
             type="submit"
             className="w-full bg-blue-700 hover:bg-blue-600 text-white"
           >
-            Verify
+            Verify Email
           </Button>
         </form>
       </div>

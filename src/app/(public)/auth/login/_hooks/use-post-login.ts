@@ -19,7 +19,7 @@ export const usePostLogin = () => {
       navigate(0);
     },
     onError: (err) => {
-      if (err.response?.data.message === "Your Account is not active, please contact admin") {
+      if (err.status === 403) {
         return navigate("/auth/verify-email");
       }
       toast.error(err.response?.data.message || "Terjadi Kesalahan");
