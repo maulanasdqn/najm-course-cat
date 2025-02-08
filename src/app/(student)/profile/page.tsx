@@ -5,7 +5,7 @@ import { Select } from "@/app/_components/ui/inputs/select";
 import { Button } from "@/app/_components/ui/button";
 
 export const Component: FC = (): ReactElement => {
-  const { form, handler } = useAccountSettings();
+  const { form, handler, isPending } = useAccountSettings();
   const studentTypeOptions = [
     { value: "polri", label: "Polri" },
     { value: "tni", label: "TNI" },
@@ -108,7 +108,12 @@ export const Component: FC = (): ReactElement => {
             placeholder="Pilih Kategori"
             options={studentTypeOptions}
           />
-          <Button className="w-fit" onClick={handler.onSubmit} type="button">
+          <Button
+            className="w-fit"
+            onClick={handler.onSubmit}
+            type="button"
+            disabled={isPending}
+          >
             Simpan
           </Button>
         </div>

@@ -22,6 +22,21 @@ export type TUserItem = {
 
 export type TUserCreateRequest = CreateUserFormData;
 export type TUserUpdateRequest = UpdateUserFormData;
+export type TUserMeUpdateRequest = {
+  avatar: string,
+  birthdate: string,
+  email: string,
+  fullname: string,
+  gender: string,
+  identity_number: string,
+  phone_number: string,
+  religion: string,
+  address?: string,
+  experience?: string,
+  school?: string
+  role_id: string,
+  student_type: string
+}
 
 export type TGetUsersParams = {
   page?: number;
