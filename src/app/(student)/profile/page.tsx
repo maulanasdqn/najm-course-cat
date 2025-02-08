@@ -1,4 +1,4 @@
-import { FC, ReactElement } from "react";
+import { FC, ReactElement, useRef } from "react";
 import { useAccountSettings } from "./_hooks/use-detail-profile";
 import { InputText } from "@/app/_components/ui/inputs/text";
 import { Select } from "@/app/_components/ui/inputs/select";
@@ -6,6 +6,9 @@ import { Button } from "@/app/_components/ui/button";
 
 export const Component: FC = (): ReactElement => {
   const { form, handler, isPending } = useAccountSettings();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const avatar = form.watch("avatar");
+
   const studentTypeOptions = [
     { value: "polri", label: "Polri" },
     { value: "tni", label: "TNI" },
@@ -13,16 +16,39 @@ export const Component: FC = (): ReactElement => {
     { value: "kedinasan", label: "Kedinasan" },
   ];
   const genderOption = [
-    { value: "wanita", label: "Wanita" },
-    { value: "laki-laki", label: "Laki-laki" },
+    { value: "male", label: "Wanita" },
+    { value: "female", label: "Laki-laki" },
   ];
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      handler.onUploadAvatar(file);
+    }
+  };
+
   return (
     <div className="flex flex-col p-4 w-full items-center min-h-screen bg-gray-100">
       <div className="bg-white rounded-md w-full h-full p-8 max-w-7xl">
         <h2 className="text-2xl font-bold text-gray-800 mb-6">Lengkapi Profil</h2>
         <div className="flex flex-col items-center pb-4">
-          <div className="flex w-[100px] h-[100px] rounded-full bg-gray-100 items-center justify-center">
-            <img src="/profile.png" alt="profile" className="w-20" />
+          <div
+            className="flex w-[100px] h-[100px] rounded-full bg-gray-100 items-center justify-center"
+            onClick={() => fileInputRef.current?.click()}
+          >
+            <img
+              src={avatar || "/profile.png"}
+              alt="profile"
+              className="w-full h-full object-cover cursor-pointer"
+            />
+            <input
+              type="file"
+              ref={fileInputRef}
+              className="hidden"
+              accept="image/*"
+              onChange={handleFileChange}
+              disabled={isPending}
+            />
           </div>
           <label className="text-gray-700">Unggah Foto</label>
           <p className="text-[10px] px-4 font-normal text-center text-gray-400">
@@ -63,6 +89,7 @@ export const Component: FC = (): ReactElement => {
           <div className="flex gap-x-4">
             <InputText
               control={form.control}
+              type="date"
               name="birthdate"
               label="Tanggal Lahir"
               placeholder="Masukan Tanggal Lahir"
@@ -108,12 +135,7 @@ export const Component: FC = (): ReactElement => {
             placeholder="Pilih Kategori"
             options={studentTypeOptions}
           />
-          <Button
-            className="w-fit"
-            onClick={handler.onSubmit}
-            type="button"
-            disabled={isPending}
-          >
+          <Button className="w-fit" onClick={handler.onSubmit} type="button" disabled={isPending}>
             Simpan
           </Button>
         </div>
