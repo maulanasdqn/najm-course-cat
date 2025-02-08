@@ -32,14 +32,14 @@ export type TPermissionDetailResponse = TResponseData<TPermissionItem>;
 export type TPermissionCreateResponse = {
   message: string;
   version: string;
-}
+};
 
 export type TPermissionUpdateResponse = {
   message: string;
   version: string;
-}
+};
 
 export type TPermissionDeleteResponse = {
   message: string;
   version: string;
-}
+};

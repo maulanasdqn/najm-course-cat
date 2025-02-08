@@ -5,20 +5,20 @@ import toast from "react-hot-toast";
 import { TErrorResponse } from "@/commons/types/error";
 
 export const useActivateUser = () => {
-    const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
-    const { mutate: handleActivate } = useMutation({
-        mutationFn: activateUser,
-        onSuccess: (res) => {
-            toast.success(res.message || "User berhasil diperbarui");
-            queryClient.invalidateQueries({
-                queryKey: [QUERY_KEY.USERS.LIST],
-            });
-        },
-        onError: (error: TErrorResponse) => {
-            toast.error(error.response?.data?.message || error.message);
-        },
-    });
+  const { mutate: handleActivate } = useMutation({
+    mutationFn: activateUser,
+    onSuccess: (res) => {
+      toast.success(res.message || "User berhasil diperbarui");
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY.USERS.LIST],
+      });
+    },
+    onError: (error: TErrorResponse) => {
+      toast.error(error.response?.data?.message || error.message);
+    },
+  });
 
-    return { handleActivate };
+  return { handleActivate };
 };

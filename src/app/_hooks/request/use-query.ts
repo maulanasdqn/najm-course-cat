@@ -13,10 +13,7 @@ export const useQuery = <
   TQueryKey extends QueryKey = QueryKey,
 >(
   options: UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
-  queryClient?: QueryClient
+  queryClient?: QueryClient,
 ) => {
-  return useQueryOriginal<TQueryFnData, TError, TData, TQueryKey>(
-    options,
-    queryClient
-  );
+  return useQueryOriginal<TQueryFnData, TError, TData, TQueryKey>(options, queryClient);
 };

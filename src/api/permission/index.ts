@@ -9,7 +9,9 @@ import {
 } from "./type";
 import { TUserCreateResponse, TUserUpdateResponse } from "../user/type";
 
-export const getPermissions = async (params: TGetPermissionsParams): Promise<TPermissionListResponse> => {
+export const getPermissions = async (
+  params: TGetPermissionsParams,
+): Promise<TPermissionListResponse> => {
   const { data } = await api.get("/v1/permissions", { params });
   return data;
 };
@@ -19,7 +21,9 @@ export const getPermission = async (id: string): Promise<TPermissionDetailRespon
   return data;
 };
 
-export const createPermission = async (data: TPermissionCreateRequest): Promise<TUserCreateResponse> => {
+export const createPermission = async (
+  data: TPermissionCreateRequest,
+): Promise<TUserCreateResponse> => {
   const response = await api.post("/v1/permissions/create", data);
   return response.data;
 };

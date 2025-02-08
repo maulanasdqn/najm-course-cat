@@ -5,10 +5,7 @@
  * @param b - The second object.
  * @returns `true` if all properties match, otherwise `false`.
  */
-export const everyEqual = (
-  a: Record<string, unknown>,
-  b: Record<string, unknown>
-) => {
+export const everyEqual = (a: Record<string, unknown>, b: Record<string, unknown>) => {
   for (const key in a) {
     if (a[key] !== b[key]) {
       return false;
@@ -39,8 +36,7 @@ export const everyEqual = (
  * ```
  */
 export function hasCommonElements<T>(arr1: T[], arr2: T[]): boolean {
-  const [shorter, longer] =
-    arr1?.length < arr2?.length ? [arr1, arr2] : [arr2, arr1];
+  const [shorter, longer] = arr1?.length < arr2?.length ? [arr1, arr2] : [arr2, arr1];
   const set = new Set<T>(shorter);
   return longer?.some((element) => set.has(element));
 }

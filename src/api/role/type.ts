@@ -35,14 +35,14 @@ export type TRoleDetailResponse = TResponseData<TRoleItem>;
 export type TRoleCreateResponse = {
   message: string;
   version: string;
-}
+};
 
 export type TRoleUpdateResponse = {
   message: string;
   version: string;
-}
+};
 
 export type TRoleDeleteResponse = {
   message: string;
   version: string;
-}
+};

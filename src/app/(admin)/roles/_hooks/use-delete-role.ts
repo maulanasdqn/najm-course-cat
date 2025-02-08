@@ -9,36 +9,37 @@ import { DeleteConfirmation } from "../../_components/delete-confirmation";
 import { TErrorResponse } from "@/commons/types/error";
 
 export const useDeleteRole = () => {
-    const queryClient = useQueryClient();
-    const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
-    const { mutate, isPending } = useMutation({
-        mutationFn: (id: string) => deleteRole(id),
-        onSuccess: (res) => {
-            toast.success(res.message || "Role berhasil dihapus");
-            queryClient.invalidateQueries({ queryKey: [QUERY_KEY.ROLES.LIST] });
-            navigate(ROUTES.ADMIN.IAM.ROLES.LIST.URL);
-        },
-        onError: (error: TErrorResponse) => {
-            toast.error(error.response?.data?.message || "Gagal menghapus role");
-        },
-    });
+  const { mutate, isPending } = useMutation({
+    mutationFn: (id: string) => deleteRole(id),
+    onSuccess: (res) => {
+      toast.success(res.message || "Role berhasil dihapus");
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.ROLES.LIST] });
+      navigate(ROUTES.ADMIN.IAM.ROLES.LIST.URL);
+    },
+    onError: (error: TErrorResponse) => {
+      toast.error(error.response?.data?.message || "Gagal menghapus role");
+    },
+  });
 
-    const handleDelete = (id: string) => {
-        toast.custom(
-            (t) => createElement(DeleteConfirmation, {
-                onConfirm: () => mutate(id),
-                toastId: t.id,
-                message: "Apakah Anda yakin ingin menghapus role ini?"
-            }),
-            {
-                duration: Infinity,
-            }
-        );
-    };
+  const handleDelete = (id: string) => {
+    toast.custom(
+      (t) =>
+        createElement(DeleteConfirmation, {
+          onConfirm: () => mutate(id),
+          toastId: t.id,
+          message: "Apakah Anda yakin ingin menghapus role ini?",
+        }),
+      {
+        duration: Infinity,
+      },
+    );
+  };
 
-    return {
-        handleDelete,
-        isDeleting: isPending,
-    };
+  return {
+    handleDelete,
+    isDeleting: isPending,
+  };
 };
