@@ -11,8 +11,7 @@ export const getRoleOptions = (): Promise<TRoleOptionResponse> =>
         id: 2,
         name: "User",
       },
-    ]
-    ,
+    ],
     meta: {
       page: 1,
       per_page: 10,

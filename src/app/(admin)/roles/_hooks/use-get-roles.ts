@@ -4,8 +4,8 @@ import { getRoles } from "../../../../api/role";
 import { TGetRolesParams } from "../../../../api/role/type";
 
 export const useGetRoles = (params: TGetRolesParams) => {
-    return useQuery({
-        queryKey: [QUERY_KEY.ROLES.LIST, params],
-        queryFn: () => getRoles(params),
-    });
+  return useQuery({
+    queryKey: [QUERY_KEY.ROLES.LIST, params],
+    queryFn: () => getRoles(params),
+  });
 };

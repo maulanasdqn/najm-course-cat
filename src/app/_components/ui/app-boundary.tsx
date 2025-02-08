@@ -1,10 +1,4 @@
-import {
-  FC,
-  PropsWithChildren,
-  ReactElement,
-  ReactNode,
-  Suspense,
-} from "react";
+import { FC, PropsWithChildren, ReactElement, ReactNode, Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
 type TBoundary = PropsWithChildren & {

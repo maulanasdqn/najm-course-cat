@@ -10,62 +10,62 @@ import toast from "react-hot-toast";
 import { TErrorResponse } from "@/commons/types/error";
 
 export default function EditUserPage() {
-    const { id } = useParams<{ id: string }>();
-    const navigate = useNavigate();
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
 
-    const { data: userData, isLoading: isLoadingUser } = useQuery({
-        queryKey: [QUERY_KEY.USERS.DETAIL, id],
-        queryFn: () => getUser(id!),
-        enabled: !!id,
-    });
+  const { data: userData, isLoading: isLoadingUser } = useQuery({
+    queryKey: [QUERY_KEY.USERS.DETAIL, id],
+    queryFn: () => getUser(id!),
+    enabled: !!id,
+  });
 
-    const { mutate, isPending } = useMutation({
-        mutationFn: (data: TUserUpdateRequest) => updateUser(id!, data),
-        onSuccess: (res) => {
-            toast.success(res.message || "User berhasil diperbarui");
-            navigate(ROUTES.ADMIN.IAM.USERS.LIST.URL);
-        },
-        onError: (error: TErrorResponse) => {
-            toast.error(error.response?.data?.message || error.message);
-        },
-    });
+  const { mutate, isPending } = useMutation({
+    mutationFn: (data: TUserUpdateRequest) => updateUser(id!, data),
+    onSuccess: (res) => {
+      toast.success(res.message || "User berhasil diperbarui");
+      navigate(ROUTES.ADMIN.IAM.USERS.LIST.URL);
+    },
+    onError: (error: TErrorResponse) => {
+      toast.error(error.response?.data?.message || error.message);
+    },
+  });
 
-    const handleSubmit = (formData: UpdateUserFormData) => {
-        if (!id) return;
-        mutate(formData);
-    };
+  const handleSubmit = (formData: UpdateUserFormData) => {
+    if (!id) return;
+    mutate(formData);
+  };
 
-    if (isLoadingUser) {
-        return <div>Loading...</div>;
-    }
+  if (isLoadingUser) {
+    return <div>Loading...</div>;
+  }
 
-    if (!userData) {
-        return <div>User not found</div>;
-    }
+  if (!userData) {
+    return <div>User not found</div>;
+  }
 
-    const initialData: Partial<UpdateUserFormData> = {
-        fullname: userData.data.fullname,
-        email: userData.data.email,
-        phone_number: userData.data.phone_number,
-        role_id: userData.data.role.id,
-        student_type: userData.data.student_type,
-        referral_code: userData.data.referral_code,
-        referred_by: userData.data.referred_by,
-    };
+  const initialData: Partial<UpdateUserFormData> = {
+    fullname: userData.data.fullname,
+    email: userData.data.email,
+    phone_number: userData.data.phone_number,
+    role_id: userData.data.role.id,
+    student_type: userData.data.student_type,
+    referral_code: userData.data.referral_code,
+    referred_by: userData.data.referred_by,
+  };
 
-    return (
-        <div className="p-6">
-            <div className="mb-6">
-                <h1 className="text-2xl font-bold">Edit User</h1>
-            </div>
-            <div className="max-w-2xl rounded-lg border bg-white p-6">
-                <UserForm
-                    initialData={initialData}
-                    onSubmit={handleSubmit}
-                    isLoading={isPending}
-                    isEditMode={true}
-                />
-            </div>
-        </div>
-    );
+  return (
+    <div className="p-6">
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold">Edit User</h1>
+      </div>
+      <div className="max-w-2xl rounded-lg border bg-white p-6">
+        <UserForm
+          initialData={initialData}
+          onSubmit={handleSubmit}
+          isLoading={isPending}
+          isEditMode={true}
+        />
+      </div>
+    </div>
+  );
 }

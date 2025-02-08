@@ -1,6 +1,9 @@
 import { TResponseData, TResponsePaginate } from "@/commons/types/response";
 import { TRoleItem } from "../role/type";
-import { CreateUserFormData, UpdateUserFormData } from "@/app/(admin)/users/_schemas/user-form.schema";
+import {
+  CreateUserFormData,
+  UpdateUserFormData,
+} from "@/app/(admin)/users/_schemas/user-form.schema";
 
 export type TUserItem = {
   avatar: string;
@@ -39,19 +42,19 @@ export type TUserActivateRequest = {
 export type TUserActivateResponse = {
   message: string;
   version: string;
-}
+};
 
 export type TUserCreateResponse = {
   message: string;
   version: string;
-}
+};
 
 export type TUserUpdateResponse = {
   message: string;
   version: string;
-}
+};
 
 export type TUserDeleteResponse = {
   message: string;
   version: string;
-}
+};

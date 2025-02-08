@@ -1,11 +1,5 @@
 export const SettingIcon = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M12.0004 16.5C14.4856 16.5 16.5004 14.4853 16.5004 12C16.5004 9.51472 14.4856 7.5 12.0004 7.5C9.51508 7.5 7.50037 9.51472 7.50037 12C7.50037 14.4853 9.51508 16.5 12.0004 16.5Z"
       stroke="#1C437E"

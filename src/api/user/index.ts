@@ -40,7 +40,10 @@ export const deleteUser = async (id: string): Promise<TUserDeleteResponse> => {
   return response.data;
 };
 
-export const activateUser = async ({ id, is_active }: TUserActivateRequest): Promise<TUserActivateResponse> => {
+export const activateUser = async ({
+  id,
+  is_active,
+}: TUserActivateRequest): Promise<TUserActivateResponse> => {
   const response = await api.put(`/v1/users/activate/${id}`, { is_active });
   return response.data;
 };

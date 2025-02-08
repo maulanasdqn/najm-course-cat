@@ -1,11 +1,5 @@
 export const UserManagementIcon = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M8.25006 15C10.9424 15 13.1251 12.8174 13.1251 10.125C13.1251 7.43261 10.9424 5.25 8.25006 5.25C5.55767 5.25 3.37506 7.43261 3.37506 10.125C3.37506 12.8174 5.55767 15 8.25006 15Z"
       stroke="#1C437E"

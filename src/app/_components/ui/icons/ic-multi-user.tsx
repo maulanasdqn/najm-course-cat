@@ -1,12 +1,6 @@
 export const MultiUserIcon = () => {
   return (
-    <svg
-      width="32"
-      height="32"
-      viewBox="0 0 32 32"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M11.0001 20C14.5899 20 17.5001 17.0899 17.5001 13.5C17.5001 9.91015 14.5899 7 11.0001 7C7.41021 7 4.50006 9.91015 4.50006 13.5C4.50006 17.0899 7.41021 20 11.0001 20Z"
         stroke="#1C437E"

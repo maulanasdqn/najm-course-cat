@@ -9,36 +9,37 @@ import { DeleteConfirmation } from "../../_components/delete-confirmation";
 import { TErrorResponse } from "@/commons/types/error";
 
 export const useDeleteUser = () => {
-    const queryClient = useQueryClient();
-    const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
-    const { mutate, isPending } = useMutation({
-        mutationFn: ({ id }: { id: string }) => deleteUser(id),
-        onSuccess: (res) => {
-            toast.success(res.message || "User berhasil dihapus");
-            queryClient.invalidateQueries({ queryKey: [QUERY_KEY.USERS.LIST] });
-            navigate(ROUTES.ADMIN.IAM.USERS.LIST.URL);
-        },
-        onError: (error: TErrorResponse) => {
-            toast.error(error.response?.data?.message || "Gagal menghapus pengguna");
-        },
-    });
+  const { mutate, isPending } = useMutation({
+    mutationFn: ({ id }: { id: string }) => deleteUser(id),
+    onSuccess: (res) => {
+      toast.success(res.message || "User berhasil dihapus");
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.USERS.LIST] });
+      navigate(ROUTES.ADMIN.IAM.USERS.LIST.URL);
+    },
+    onError: (error: TErrorResponse) => {
+      toast.error(error.response?.data?.message || "Gagal menghapus pengguna");
+    },
+  });
 
-    const handleDelete = (id: string) => {
-        toast.custom(
-            (t) => createElement(DeleteConfirmation, {
-                onConfirm: () => mutate({ id }),
-                toastId: t.id,
-                message: "Apakah Anda yakin ingin menghapus pengguna ini?"
-            }),
-            {
-                duration: Infinity,
-            }
-        );
-    };
+  const handleDelete = (id: string) => {
+    toast.custom(
+      (t) =>
+        createElement(DeleteConfirmation, {
+          onConfirm: () => mutate({ id }),
+          toastId: t.id,
+          message: "Apakah Anda yakin ingin menghapus pengguna ini?",
+        }),
+      {
+        duration: Infinity,
+      },
+    );
+  };
 
-    return {
-        handleDelete,
-        isDeleting: isPending,
-    };
+  return {
+    handleDelete,
+    isDeleting: isPending,
+  };
 };
