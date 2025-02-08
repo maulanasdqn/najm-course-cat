@@ -47,3 +47,13 @@ export const activateUser = async ({
   const response = await api.put(`/v1/users/activate/${id}`, { is_active });
   return response.data;
 };
+
+export const getMe = async (): Promise<TUserDetailResponse> => {
+  const { data } = await api.get(`/v1/users/me`);
+  return data;
+};
+
+export const updateMe = async (data: TUserUpdateRequest): Promise<TUserUpdateResponse> => {
+  const response = await api.put(`/v1/users/update/me`, data);
+  return response.data;
+};

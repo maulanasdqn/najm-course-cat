@@ -9,6 +9,7 @@ export const QUERY_KEY = {
   USERS: {
     LIST: "get-users-list",
     DETAIL: "get-users-detail",
+    ME: "get-me",
     CREATE: "post-create-user",
     UPDATE: "put-update-user",
     DELETE: "delete-delete-user",

@@ -1,6 +1,6 @@
 "use client";
-import type { FC, ReactElement } from "react";
-import { Outlet } from "react-router-dom";
+import { useEffect, type FC, type ReactElement } from "react";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { UserCookies } from "@/libs/cookies";
 import { Navbar } from "@/app/_components/ui/navbar";
 import Sidebar from "@/app/_components/ui/sidebar";
@@ -8,10 +8,20 @@ import { useFullscreen } from "./_components/providers/fullscreen";
 
 const StudentLayout: FC = (): ReactElement => {
   const userData = UserCookies.get();
-  const userPermissions = userData?.role?.permissions?.map((perm) => perm.name) || [];
-  const { isFullscreen } = useFullscreen();
+  const { isFullscreen, setIsFullscreen } = useFullscreen();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  console.log(userPermissions);
+  useEffect(() => {
+    if (!userData.is_active) {
+      navigate("/student/profile");
+      setIsFullscreen?.(true);
+    }
+  }, []);
+
+  if (!userData.is_active && location.pathname !== "/student/profile") {
+    return <></>;
+  }
 
   return (
     <section className="flex h-full flex-col w-full min-h-screen justify-start items-start bg-gray-100">
