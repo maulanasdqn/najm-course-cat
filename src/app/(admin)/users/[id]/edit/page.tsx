@@ -8,6 +8,7 @@ import { UserForm } from "../../components/user-form";
 import { UpdateUserFormData } from "../../_schemas/user-form.schema";
 import toast from "react-hot-toast";
 import { TErrorResponse } from "@/commons/types/error";
+import { queryClient } from "@/libs/react-query/react-query-client";
 
 export default function EditUserPage() {
   const { id } = useParams<{ id: string }>();
@@ -23,6 +24,7 @@ export default function EditUserPage() {
     mutationFn: (data: TUserUpdateRequest) => updateUser(id!, data),
     onSuccess: (res) => {
       toast.success(res.message || "User berhasil diperbarui");
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.USERS.DETAIL, id] });
       navigate(ROUTES.ADMIN.IAM.USERS.LIST.URL);
     },
     onError: (error: TErrorResponse) => {
@@ -44,6 +46,7 @@ export default function EditUserPage() {
   }
 
   const initialData: Partial<UpdateUserFormData> = {
+    avatar: userData.data.avatar,
     fullname: userData.data.fullname,
     email: userData.data.email,
     phone_number: userData.data.phone_number,
