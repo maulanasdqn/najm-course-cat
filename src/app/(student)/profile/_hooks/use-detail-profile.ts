@@ -19,7 +19,10 @@ export const useAccountSettings = () => {
 
   useEffect(() => {
     if (me.data?.data) {
-      form.reset(me.data?.data);
+      form.reset({
+        ...me.data?.data,
+        role_id: me.data?.data?.role.id,
+      });
     }
   }, [me.data?.data?.id]);
 
@@ -65,6 +68,6 @@ export const useAccountSettings = () => {
   return {
     form,
     handler,
-    isPending: isPending || isUploading || me.isLoading,
+    isPending: (isPending || isUploading || me.isLoading) && false,
   };
 };

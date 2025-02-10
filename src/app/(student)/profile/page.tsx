@@ -3,6 +3,7 @@ import { useAccountSettings } from "./_hooks/use-detail-profile";
 import { InputText } from "@/app/_components/ui/inputs/text";
 import { Select } from "@/app/_components/ui/inputs/select";
 import { Button } from "@/app/_components/ui/button";
+import { InputWrap } from "@/app/_components/ui/inputs/wrap";
 
 export const Component: FC = (): ReactElement => {
   const { form, handler, isPending } = useAccountSettings();
@@ -52,9 +53,12 @@ export const Component: FC = (): ReactElement => {
           </div>
           <label className="text-gray-700">Unggah Foto</label>
           <p className="text-[10px] px-4 font-normal text-center text-gray-400">
-            Image size should be under 1MB and image ration needs to be 1:1
+            <InputWrap message={form.formState.errors.avatar?.message}>
+              Image size should be under 1MB and image ration needs to be 1:1
+            </InputWrap>
           </p>
         </div>
+
         <div className="flex flex-col w-full gap-y-6">
           <div className="flex gap-x-4">
             <InputText

@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 const baseUserSchema = z.object({
+  avatar: z.string().optional(),
   fullname: z
     .string()
     .min(3, "Full name must be at least 3 characters")

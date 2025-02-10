@@ -52,6 +52,18 @@ export default function UserDetailPage() {
       <div className="max-w-2xl rounded-lg border bg-white p-6">
         <div className="space-y-4">
           <div>
+            <label className="block text-sm font-medium text-gray-700">Avatar</label>
+            <p className="mt-1 text-sm text-gray-900">
+              <div className="flex w-[100px] h-[100px] rounded-full bg-gray-100 items-center justify-center">
+                <img
+                  src={user.avatar || "/profile.png"}
+                  alt="profile"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </p>
+          </div>
+          <div>
             <label className="block text-sm font-medium text-gray-700">Nama</label>
             <p className="mt-1 text-sm text-gray-900">{user.fullname}</p>
           </div>
