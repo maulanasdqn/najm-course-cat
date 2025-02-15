@@ -18,6 +18,7 @@ export type TUserItem = {
   referral_code?: string;
   referred_by?: string;
   is_active?: boolean;
+  is_profile_completed: boolean;
 };
 
 export type TUserCreateRequest = CreateUserFormData;
@@ -66,6 +67,7 @@ export type TUserCreateResponse = {
 
 export type TUserUpdateResponse = {
   message: string;
+  data: TUserItem;
   version: string;
 };
 

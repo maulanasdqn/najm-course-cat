@@ -13,7 +13,7 @@ const StudentLayout: FC = (): ReactElement => {
   const location = useLocation();
 
   useEffect(() => {
-    if (!userData.is_active) {
+    if (!userData.is_profile_completed) {
       navigate("/student/profile");
       setIsFullscreen?.(true);
     }
