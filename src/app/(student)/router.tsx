@@ -3,6 +3,7 @@ import DashboardPage from "./dashboard/page";
 import { ExamsRouter } from "./exams/router";
 import { CourseRouter } from "./course/router";
 import { ProfileRouter } from "./profile/router";
+import { SessionsRouter } from "./sessions/router";
 
 export const StudentRouter = [
   {
@@ -19,6 +20,10 @@ export const StudentRouter = [
       {
         path: "course",
         children: CourseRouter,
+      },
+      {
+        path: "sessions",
+        children: SessionsRouter,
       },
       {
         path: "profile",

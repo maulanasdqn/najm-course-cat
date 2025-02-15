@@ -34,6 +34,12 @@ export const Sidebar: FC = (): ReactElement => {
       link: ROUTES.STUDENT.COURSE.URL,
     },
     {
+      icon: <MyCourseIcon />,
+      label: "Daftar Sesi",
+      active: pathname === ROUTES.STUDENT.SESSIONS.LIST.URL,
+      link: ROUTES.STUDENT.SESSIONS.LIST.URL,
+    },
+    {
       icon: <UserIcon />,
       label: "Data Pengguna",
       active: pathname === ROUTES.STUDENT.PROFILE.URL,
