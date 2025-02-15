@@ -1,13 +1,13 @@
 import React, { useRef, KeyboardEvent, ClipboardEvent } from "react";
 
 interface OtpInputProps {
-  value: string;
-  onChange: (value: string) => void;
+  value?: number;
+  onChange: (value?: number) => void;
   length?: number;
   className?: string;
 }
 
-export const OtpInput = ({ value = "", onChange, length = 6, className }: OtpInputProps) => {
+export const OtpInput = ({ value, onChange, length = 6, className }: OtpInputProps) => {
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const createRefs = (count: number) => {
@@ -29,8 +29,11 @@ export const OtpInput = ({ value = "", onChange, length = 6, className }: OtpInp
     const newValue = e.target.value;
     if (!/^\d*$/.test(newValue)) return; // Only allow digits
 
-    const newOtpValue = value.slice(0, index) + newValue.slice(-1) + value.slice(index + 1);
-    onChange(newOtpValue);
+    const newOtpValue =
+      (value?.toString().slice(0, index) || "") +
+      newValue.slice(-1) +
+      (value?.toString().slice(index + 1) || "");
+    onChange(newOtpValue ? Number(newOtpValue) : undefined);
 
     if (newValue && index < length - 1) {
       focusInput(index + 1);
@@ -40,9 +43,10 @@ export const OtpInput = ({ value = "", onChange, length = 6, className }: OtpInp
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>, index: number) => {
     if (e.key === "Backspace") {
       e.preventDefault();
-      if (value[index]) {
-        const newOtpValue = value.slice(0, index) + "" + value.slice(index + 1);
-        onChange(newOtpValue);
+      const valueStr = value?.toString();
+      if (valueStr?.[index]) {
+        const newOtpValue = valueStr.slice(0, index) + "" + valueStr.slice(index + 1);
+        onChange(newOtpValue ? Number(newOtpValue) : undefined);
       } else if (index > 0) {
         focusInput(index - 1);
       }
@@ -61,7 +65,7 @@ export const OtpInput = ({ value = "", onChange, length = 6, className }: OtpInp
     if (!/^\d+$/.test(pastedData)) return; // Only allow digits
 
     const newValue = pastedData.slice(0, length).padEnd(length, "");
-    onChange(newValue);
+    onChange(newValue ? Number(newValue) : undefined);
 
     // Focus the next empty input or the last input
     const nextEmptyIndex = newValue.indexOf("");
@@ -78,7 +82,7 @@ export const OtpInput = ({ value = "", onChange, length = 6, className }: OtpInp
           pattern="\d*"
           maxLength={1}
           ref={(ref) => (inputRefs.current[index] = ref)}
-          value={value[index] || ""}
+          value={value?.toString()[index] || ""}
           onChange={(e) => handleChange(e, index)}
           onKeyDown={(e) => handleKeyDown(e, index)}
           onPaste={handlePaste}

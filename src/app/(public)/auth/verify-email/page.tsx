@@ -59,7 +59,7 @@ export const Component = () => {
 
           <OtpInput
             value={form.watch("otp")}
-            onChange={(value) => form.setValue("otp", value, { shouldValidate: true })}
+            onChange={(value) => form.setValue("otp", value!, { shouldValidate: true })}
             className="mb-4"
           />
 

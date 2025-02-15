@@ -46,7 +46,7 @@ export type TRegisterResponse = {
 };
 
 export type TVerifyEmailParam = {
-  otp: string;
+  otp: number;
   email: string;
 };
 
