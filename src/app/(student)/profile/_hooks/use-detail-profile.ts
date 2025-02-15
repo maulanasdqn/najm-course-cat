@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import { upload } from "@/api/storage";
 import { useEffect } from "react";
 import { useMe } from "./use-me";
+import { UserCookies } from "@/libs/cookies";
 
 export const useAccountSettings = () => {
   const queryClient = useQueryClient();
@@ -28,9 +29,11 @@ export const useAccountSettings = () => {
 
   const { mutate: updateProfile, isPending } = useMutation({
     mutationFn: updateMe,
-    onSuccess: () => {
+    onSuccess: (data) => {
       toast.success("Profil berhasil diperbarui");
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.USERS.ME] });
+      UserCookies.set(data?.data);
+      window.location.reload();
     },
     onError: (error) => {
       toast.error(error.message || "Terjadi kesalahan saat memperbarui profil");

@@ -17,6 +17,7 @@ export const Component: FC = (): ReactElement => {
     { value: "kedinasan", label: "Kedinasan" },
   ];
   const genderOption = [
+    { value: "", label: "Pilih Jenis Kelamin" },
     { value: "male", label: "Wanita" },
     { value: "female", label: "Laki-laki" },
   ];
