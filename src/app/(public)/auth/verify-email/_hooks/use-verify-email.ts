@@ -10,7 +10,7 @@ export const useVerifyEmail = () => {
     mode: "all",
     resolver: zodResolver(verifyEmailSchema),
     defaultValues: {
-      otp: "",
+      otp: undefined,
       email: "",
     },
   });
