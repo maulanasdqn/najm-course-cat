@@ -7,6 +7,7 @@ import {
 
 export type TUserItem = {
   avatar: string;
+  birthdate: string;
   created_at: string;
   email: string;
   fullname: string;
