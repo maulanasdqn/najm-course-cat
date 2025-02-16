@@ -77,7 +77,7 @@ export const Sidebar: FC = (): ReactElement => {
             key={index}
             className={clsx(
               "flex items-center px-4 py-3 text-sm cursor-pointer hover:bg-blue-100",
-              item.active ? "bg-blue-600 text-white" : "text-blue-800",
+              item.active ? "bg-blue-600 text-white hover:text-blue-600" : "text-blue-800",
             )}
           >
             <div className="text-lg">{item.icon}</div>
