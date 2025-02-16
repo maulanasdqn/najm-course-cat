@@ -1,0 +1,1441 @@
+[
+  {
+    "id": "1",
+    "label": "Menyelesaikan tugas dengan seadanya lebih baik daripada tidak disiplin.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "label": "Saya lebih baik mengerjakan tugas yang baru daripada tugas yang rutin dan membosankan.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "3",
+    "label": "Melupakan kemarahan lebih baik daripada selalu berkata buruk di depannya.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "4",
+    "label": "Mendorong agar dilihat orang banyak lebih baik daripada mengorbankan diri sendiri.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "5",
+    "label": "Ketika mengandalkan mobil, saya memberikan kesempatan orang yang berkepentingan meskipun saya sudah terlambat masuk kantor.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "6",
+    "label": "Saya lebih memilih dengan tegas kepada orang yang salah menangani nama saya, daripada selalu menahan malu.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "7",
+    "label": "Lebih banyak kesalahan telah mengenal hadiah yang murah lebih baik daripada menjanjikan sesuatu yang mahal.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "8",
+    "label": "Saya sering berteriak tentang rasa khawatir berlebih di depan banyak orang daripada menyembunyikan diri.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "9",
+    "label": "Saya lebih memilih dengan tegas kepada orang yang salah menangani nama saya, daripada selalu menahan malu.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "10",
+    "label": "Lebih banyak kesalahan telah mengenal hadiah yang murah lebih baik daripada menjanjikan sesuatu yang mahal.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "11",
+    "label": "Saya sering berteriak tentang rasa khawatir berlebih di depan banyak orang daripada menyembunyikan diri.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "12",
+    "label": "Ketika sudah terlalu sibuk, saya lebih memilih mengajukan pintu kamar dan menunggu pertolongan.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "13",
+    "label": "Sebagai teman lebih baik menunjukkan penghargaan atas favorit daripada menyimpan sesuatu.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "14",
+    "label": "Saya lebih baik mendukung pertimbangan percaya artis favorit daripada berdebat untuk mengubah kebijakan film.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "15",
+    "label": "Saya lebih baik langsung bertindak membela teman, ketika disalahkan, lebih baik daripada menunggu dahulu.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "16",
+    "label": "Saya lebih baik mengambil alih risiko pekerjaan daripada pekerjaan yang lebih sulit.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "17",
+    "label": "Saya lebih baik mengabaikan orang yang salah ketika anak sesuai kesepakatan bersama.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "18",
+    "label": "Mengorbankan anak diulang-uang lebih baik dari pada terus berbelanja lebih baik mengorbankan cita-cita.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "19",
+    "label": "Saya lebih baik membela masalah kesalahan saya secara marah daripada mencari penyelesaian lain.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "20",
+    "label": "Jika harus ulang pekerjaan yang tidak diawasi secara teratur daripada mengerjakan sesuatu yang diperintah.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "21",
+    "label": "Saya lebih baik memikirkan kesalahan dan keinginan lebih baik untuk memikirkan pekerjaan penting.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "22",
+    "label": "Di jalan orang menyalip tidak diduga daripada belajar di warung.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "23",
+    "label": "Memperbaiki peralatan akan lebih baik daripada memberikan sambutan.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "24",
+    "label": "Saya sangat terbuka.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "25",
+    "label": "Mengorbankan diri sendiri lebih baik daripada menolong dengan pamrih.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "26",
+    "label": "Saya merasa nyaman bersama orang-orang.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "27",
+    "label": "Saya cenderung berpikir untuk menerima skenario terburuk.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "28",
+    "label": "Masuk kantor tepat waktu lebih baik daripada menolong orang yang kesulitan di jalan ketika berangkat ke kantor.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "29",
+    "label": "Saya lebih percaya pada perasaan saya dalam mengambil keputusan.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "30",
+    "label": "Saya suka mengambil inisiatif.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "31",
+    "label": "Saya suka menjadi terkenal.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "32",
+    "label": "Saya lebih suka contoh nyata daripada teori.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "33",
+    "label": "Saya sering menolong orang lain tetapi mengabaikan kondisi saya.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "34",
+    "label": "Saya berprinsip tegas.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "35",
+    "label": "Saya lebih suka menyelesaikan pekerjaan mendahului jadwal.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "36",
+    "label": "Saya fokus pada kemungkinan di masa depan daripada kenyataan sekarang.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "37",
+    "label": "Saya suka menguasai orang lain.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "38",
+    "label": "Saya berkembang dengan berani mengambil risiko.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "39",
+    "label": "Saya cenderung mengungkap pikiran daripada perasaan saya.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "40",
+    "label": "Saya menyelesaikan pekerjaan tepat waktu.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "41",
+    "label": "Perhatian dan pemurah adalah pendirian saya.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "42",
+    "label": "Saya sangat ramah.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "43",
+    "label": "Saya tidak peduli menjadi pusat perhatian.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "44",
+    "label": "Saya merasa kesepian sekali.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "45",
+    "label": "Lebih baik melayani orang lain daripada menepati janji.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "46",
+    "label": "Saya bersikap tegas terhadap diri saya.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "47",
+    "label": "Lebih baik ditegur atas diri ruangannya daripada ditegur di depan banyak orang.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "48",
+    "label": "Mengajak putanan saudara untuk pengobatan orang tua lebih baik daripada mengorbankan sendiri biaya orang tua.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "49",
+    "label": "Jika peduli atas aturan (walaupun kurang peduli pada sesama) daripada peduli pada sesama tetapi sering melanggar aturan.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "50",
+    "label": "Orang berkata terus melihat foto anak yang penuh darah karena menjadi kesulitan orang lain.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "51",
+    "label": "Saya merasa berpikir kesalahan lebih baik daripada puas dengan pekerjaan anak didik.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "52",
+    "label": "Mengundang pendapat orang lain ketika berdiskusi lebih baik daripada menghilangkan pendapat sendiri.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "53",
+    "label": "Mendukung pendapat baru lalu lintas meskipun terlambat datang ke acara besar.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "54",
+    "label": "Menjaga gengsi lebih baik daripada dianggap ramah dan tidak memiliki kharisma.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "55",
+    "label": "Ketika pertama bertemu, saya akan memperkenalkan diri lebih dulu daripada orang lain memperkenalkan dirinya.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "56",
+    "label": "Mengerjakan tidak bisa mengerjakan pekerjaan yang sulit lebih baik daripada mengerjakannya dengan tidak maksimal.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "57",
+    "label": "Melakukan pekerjaan tanpa tekanan lebih disukai daripada menyelesaikan pekerjaan yang penuh ketentuan.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "58",
+    "label": "Lebih baik terlambat bus ke ujian untuk menolong korban tabrak lari daripada mengejar kesempatan untuk berangkat.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "59",
+    "label": "Saya tidak memiliki banyak teman daripada mem Exidekan diri sendiri.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "60",
+    "label": "Lebih baik lamban daripada kerja berkecepatan tinggi.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "61",
+    "label": "Mengikuti keputusan rapat tidak lebih baik daripada mengikuti pendapat pribadi.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "62",
+    "label": "Saya lebih sering menyapa teman yang tidak sengaja ditemui di jalan daripada pura-pura tidak melihat.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "63",
+    "label": "Mengikuti pendapat sendiri untuk menyelesaikan pekerjaan lebih baik daripada mengikuti saran teman.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "64",
+    "label": "Menyelesaikan diri sendiri karena hasil yang mengecewakan lebih baik daripada mencari penyelesaian lain.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "65",
+    "label": "Mengusahakan segala cara meskipun melanggar hukum demi membahagiakan keluarga lebih baik daripada keluarga hidup penuh kesulitan.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "66",
+    "label": "Saya lebih senang diberikan tugas yang dikerjakan bersama-sama daripada tugas yang dilakukan sendiri.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "67",
+    "label": "Saya mendahulukan memberikan sumbangan untuk korban banjir dekat rumah daripada berkunjung dengan teman di restoran mahal.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "68",
+    "label": "Ketika terjadi kecelakaan, saya akan mencari tahu sebab kegagalan daripada meredakan diri sendiri.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "69",
+    "label": "Menyelesaikan masalah yang sulit lebih baik daripada menghindarinya.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "70",
+    "label": "Saya sering menolong orang lain tetapi mengabaikan kondisi saya.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "71",
+    "label": "Saya berprinsip tegas.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "72",
+    "label": "Saya lebih suka menyelesaikan pekerjaan mendahului jadwal.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "73",
+    "label": "Saya fokus pada kemungkinan di masa depan daripada kenyataan sekarang.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "74",
+    "label": "Saya suka menguasai orang lain.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "75",
+    "label": "Saya berkembang dengan berani mengambil risiko.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "76",
+    "label": "Saya cenderung mengungkap pikiran daripada perasaan saya.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "77",
+    "label": "Saya menyelesaikan pekerjaan tepat waktu.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "78",
+    "label": "Perhatian dan pemurah adalah pendirian saya.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "79",
+    "label": "Saya sangat ramah.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "80",
+    "label": "Saya tidak peduli menjadi pusat perhatian.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "81",
+    "label": "Saya merasa kesepian sekali.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "82",
+    "label": "Lebih baik melayani orang lain daripada menepati janji.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "83",
+    "label": "Saya bersikap tegas terhadap diri saya.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "84",
+    "label": "Lebih baik ditegur atas diri ruangannya daripada ditegur di depan banyak orang.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju"
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "85",
+    "label": "Mengajak putanan saudara untuk pengobatan orang tua lebih baik daripada mengorbankan sendiri biaya orang tua.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "86",
+    "label": "Jika peduli atas aturan (walaupun kurang peduli pada sesama) daripada peduli pada sesama tetapi sering melanggar aturan.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "87",
+    "label": "Orang berkata terus melihat foto anak yang penuh darah karena menjadi kesulitan orang lain.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "88",
+    "label": "Saya merasa berpikir kesalahan lebih baik daripada puas dengan pekerjaan anak didik.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "89",
+    "label": "Mengundang pendapat orang lain ketika berdiskusi lebih baik daripada menghilangkan pendapat sendiri.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "90",
+    "label": "Mendukung pendapat baru lalu lintas meskipun terlambat datang ke acara besar.",
+    "options": [
+      {
+        "id": "1",
+        "label": "Setuju",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak Setuju",
+        "is_correct": false
+      }
+    ]
+  }
+]

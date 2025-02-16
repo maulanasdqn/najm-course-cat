@@ -14,6 +14,7 @@ export const PREFIX = {
   STUDENT: {
     ROOT: "/student",
     DASHBOARD: "/student/dashboard",
+    SESSIONS: "/student/sessions",
   },
   USERS: "/users",
   ROLES: "/roles",
