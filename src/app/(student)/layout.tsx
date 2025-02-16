@@ -19,7 +19,7 @@ const StudentLayout: FC = (): ReactElement => {
     }
   }, []);
 
-  if (!userData.is_active && location.pathname !== "/student/profile") {
+  if (!userData.is_profile_completed && location.pathname !== "/student/profile") {
     return <></>;
   }
 

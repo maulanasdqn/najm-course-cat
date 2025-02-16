@@ -4,8 +4,10 @@ import { match } from "ts-pattern";
 import { useLocation } from "react-router-dom";
 import { LogoutIcon } from "../icons/ic-logout";
 import { logout } from "@/utils/auth";
+import { UserCookies } from "@/libs/cookies";
 
 export const Navbar: FC = (): ReactElement => {
+  const userData = UserCookies.get();
   const { pathname } = useLocation();
 
   const isDashboard = pathname === ROUTES.STUDENT.DASHBOARD.URL;
@@ -45,11 +47,11 @@ export const Navbar: FC = (): ReactElement => {
           </div>
 
           <img
-            src="/dummy/profile-pic.svg"
+            src={userData.avatar || "/profile.png"}
             alt="Profile"
             width={40}
             height={40}
-            className="h-10 w-10 rounded-full object-cover"
+            className="h-10 w-10 bg-gray-100 rounded-full object-cover"
           />
 
           <button
