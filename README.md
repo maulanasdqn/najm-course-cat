@@ -12,8 +12,7 @@
 - React v18
 - React-dom v18
 - Typescript v5.4.9
-- Ant Design v5.16.2
-- Admiral v2.0.0-beta.x ([Storybook](https://beta--65cb2a66b1a56c748571f7ec.chromatic.com/))
+- Tailwind 3
 
 ## Quick Start
 
