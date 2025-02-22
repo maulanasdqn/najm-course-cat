@@ -29,6 +29,28 @@ export const ROUTES = {
         PERMISSIONS: [PERMISSIONS.SESSION_TESTS.DELETE_SESSION_TESTS],
       },
     },
+    TESTS: {
+      LIST: {
+        URL: PREFIX.ADMIN.TESTS,
+        PERMISSIONS: [PERMISSIONS.TESTS.READ_TESTS],
+      },
+      CREATE: {
+        URL: `${PREFIX.ADMIN.TESTS}/create`,
+        PERMISSIONS: [PERMISSIONS.TESTS.CREATE_TESTS],
+      },
+      DETAIL: {
+        URL: `${PREFIX.ADMIN.TESTS}/:id/detail`,
+        PERMISSIONS: [PERMISSIONS.TESTS.READ_TESTS],
+      },
+      UPDATE: {
+        URL: `${PREFIX.ADMIN.TESTS}/:id/update`,
+        PERMISSIONS: [PERMISSIONS.TESTS.UPDATE_TESTS],
+      },
+      DELETE: {
+        URL: `${PREFIX.ADMIN.TESTS}/:id/delete`,
+        PERMISSIONS: [PERMISSIONS.TESTS.DELETE_TESTS],
+      },
+    },
     IAM: {
       USERS: {
         LIST: {

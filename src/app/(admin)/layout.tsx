@@ -36,6 +36,11 @@ export default function AdminLayout() {
       icon: <IcSessionTest />,
     },
     {
+      name: "Test Management",
+      href: ROUTES.ADMIN.TESTS.LIST.URL,
+      icon: <IcSessionTest />,
+    },
+    {
       name: "Users Management",
       href: ROUTES.ADMIN.IAM.USERS.LIST.URL,
       permissions: [PermissionsEnum.ReadListUsers],

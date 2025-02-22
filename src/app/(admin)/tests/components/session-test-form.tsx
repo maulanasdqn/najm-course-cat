@@ -1,0 +1,73 @@
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "@/commons/constants/routes";
+import { createTestFormSchema, CreateTestFormData } from "../_schemas/test-form.schema";
+import { useCreateSessionTest } from "../_hooks/use-create-session-test";
+import { useUpdateSessionTest } from "../_hooks/use-update-session-test";
+import { TSessionTestItem } from "@/api/session-test/type";
+import { InputText } from "@/app/_components/ui/inputs/text";
+
+type SessionTestFormProps = {
+  type: "create" | "update";
+  defaultValues?: TSessionTestItem;
+};
+
+export const SessionTestForm = ({ type, defaultValues }: SessionTestFormProps) => {
+  const navigate = useNavigate();
+  const { mutate: createSessionTest } = useCreateSessionTest();
+  const { mutate: updateSessionTest } = useUpdateSessionTest(defaultValues?.id ?? "");
+
+  const { control, handleSubmit } = useForm<CreateTestFormData>({
+    resolver: zodResolver(createTestFormSchema),
+    defaultValues: defaultValues
+      ? {
+          name: defaultValues.name,
+          start_date: defaultValues.start_date?.split(" ")[0],
+          end_date: defaultValues.end_date?.split(" ")[0],
+        }
+      : undefined,
+  });
+
+  const onSubmit = (data: CreateTestFormData) => {
+    if (type === "create") {
+      createSessionTest(data, {
+        onSuccess: () => {
+          navigate(ROUTES.ADMIN.SESSION_TESTS.LIST.URL);
+        },
+      });
+    } else {
+      updateSessionTest(data, {
+        onSuccess: () => {
+          navigate(ROUTES.ADMIN.SESSION_TESTS.LIST.URL);
+        },
+      });
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <InputText name="name" control={control} label="Nama" placeholder="Masukan Nama Lengkap" />
+
+      <InputText name="start_date" type="datetime-local" control={control} label="Start Date" />
+
+      <InputText name="end_date" type="datetime-local" control={control} label="End Date" />
+
+      <div className="flex justify-end space-x-4">
+        <button
+          type="button"
+          onClick={() => navigate(ROUTES.ADMIN.SESSION_TESTS.LIST.URL)}
+          className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+        >
+          {type === "create" ? "Create" : "Update"} Session Test
+        </button>
+      </div>
+    </form>
+  );
+};
