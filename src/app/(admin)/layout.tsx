@@ -4,6 +4,7 @@ import { logout } from "@/utils/auth";
 import { filterPermission } from "@/utils/permission";
 import { UserCookies } from "@/libs/cookies";
 import PermissionsEnum from "@/commons/enums/permission";
+import { IcSessionTest } from "../_components/ui/icons/ic-session-test";
 
 export default function AdminLayout() {
   const location = useLocation();
@@ -31,24 +32,8 @@ export default function AdminLayout() {
     },
     {
       name: "Session Test Management",
-      href: ROUTES.ADMIN.IAM.PERMISSIONS.LIST.URL,
-      permissions: [PermissionsEnum.ReadListPermissions],
-      icon: (
-        <svg
-          className="h-5 w-5"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-          />
-        </svg>
-      ),
+      href: ROUTES.ADMIN.SESSION_TESTS.LIST.URL,
+      icon: <IcSessionTest />,
     },
     {
       name: "Users Management",

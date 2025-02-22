@@ -4,6 +4,8 @@ export const PREFIX = {
   ADMIN: {
     ROOT: "/admin",
     DASHBOARD: "/admin/dashboard",
+    SESSION: "/admin/session",
+    SESSION_TESTS: "/admin/session-tests",
     IAM: {
       ROOT: "/admin/iam",
       USERS: "/admin/iam/users",
