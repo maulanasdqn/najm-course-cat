@@ -94,7 +94,7 @@ export const Component: FC = (): ReactElement => {
                 onClick={() => goToQuestion(index)}
                 className={`w-10 h-10 rounded-md ${
                   currentQuestion === index ? "bg-blue-500 text-white" : "bg-gray-300"
-                }`}
+                } ${answers[index]?.id && currentQuestion !== index ? "bg-blue-400 text-white" : ""}`}
               >
                 {index + 1}
               </button>

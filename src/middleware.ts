@@ -36,12 +36,12 @@ export const middleware = async ({ request }: LoaderFunctionArgs) => {
   const pathname = url.pathname;
 
   // Allow public routes
-  if (mappingPublicRoutes.includes(pathname) && !session) {
+  if (mappingPublicRoutes.includes(pathname) && (!session || !userData?.role)) {
     return null;
   }
 
   // Redirect to login if no session
-  if (!session) {
+  if (!session || !userData?.role) {
     return redirect(ROUTES.AUTH.LOGIN.URL);
   }
 
