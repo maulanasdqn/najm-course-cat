@@ -16,6 +16,12 @@ enum PermissionsEnum {
   CreatePermissions = "Create Permissions",
   DeletePermissions = "Delete Permissions",
   UpdatePermissions = "Update Permissions",
+
+  ReadListSessionTests = "Read List Session Tests",
+  ReadDetailSessionTests = "Read Detail Session Tests",
+  CreateSessionTests = "Create Session Tests",
+  DeleteSessionTests = "Delete Session Tests",
+  UpdateSessionTests = "Update Session Tests",
 }
 
 export default PermissionsEnum;
