@@ -22,6 +22,7 @@ export const useAccountSettings = () => {
     if (me.data?.data) {
       form.reset({
         ...me.data?.data,
+        birthdate: me.data?.data?.birthdate?.split(" ")[0],
         role_id: me.data?.data?.role.id,
       });
     }
