@@ -13,7 +13,7 @@ import { InputText } from "@/app/_components/ui/inputs/text";
 
 type SessionTestFormProps = {
   type: "create" | "update";
-  defaultValues?: TSessionTestItem;
+  defaultValues?: Partial<TSessionTestItem>;
 };
 
 export const SessionTestForm = ({ type, defaultValues }: SessionTestFormProps) => {
@@ -25,7 +25,7 @@ export const SessionTestForm = ({ type, defaultValues }: SessionTestFormProps) =
     resolver: zodResolver(createSessionTestFormSchema),
     defaultValues: defaultValues
       ? {
-          name: defaultValues.name,
+          session_name: defaultValues.session_name,
           start_date: defaultValues.start_date?.split(" ")[0],
           end_date: defaultValues.end_date?.split(" ")[0],
         }
@@ -50,7 +50,12 @@ export const SessionTestForm = ({ type, defaultValues }: SessionTestFormProps) =
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      <InputText name="name" control={control} label="Nama" placeholder="Masukan Nama Lengkap" />
+      <InputText
+        name="session_name"
+        control={control}
+        label="Nama"
+        placeholder="Masukan Nama Lengkap"
+      />
 
       <InputText name="start_date" type="datetime-local" control={control} label="Start Date" />
 

@@ -1,9 +1,22 @@
 import { z } from "zod";
 
 export const createTestFormSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  start_date: z.string().min(1, "Start date is required"),
-  end_date: z.string().min(1, "End date is required"),
+  session_id: z.string().optional(),
+  test_name: z.string(),
+  questions: z.array(
+    z.object({
+      index: z.number().optional(),
+      discussion: z.string().optional(),
+      question: z.string().min(1, { message: "Required" }),
+      options: z.array(
+        z.object({
+          index: z.number().optional(),
+          label: z.string().min(1, { message: "Required" }),
+          is_correct: z.boolean().default(false),
+        }),
+      ),
+    }),
+  ),
 });
 
 export const updateTestFormSchema = createTestFormSchema;

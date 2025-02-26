@@ -1,20 +1,20 @@
 import { Link } from "react-router-dom";
 import { ROUTES } from "@/commons/constants/routes";
 import { DataTable } from "@/app/_components/ui/table/data-table";
-import { useGetSessionTests } from "./_hooks/use-get-session-tests";
+import { useGetTests } from "./_hooks/use-get-tests";
 import { useTableParams } from "@/app/_hooks/use-table-params";
-import { useDeleteSessionTest } from "./_hooks/use-delete-session-test";
+import { useDeleteTest } from "./_hooks/use-delete-test";
 import { ColumnDef } from "@tanstack/react-table";
-import { TSessionTestItem } from "@/api/session-test/type";
+import { TTestItem } from "@/api/test/type";
 import { Guard } from "@/app/_components/ui/guard";
 import { DeleteConfirmation } from "../_components/delete-confirmation";
 import { createElement } from "react";
 import toast from "react-hot-toast";
 
-export default function SessionTestsPage() {
+export default function TestsPage() {
   const { params, setParams } = useTableParams();
-  const { data, isLoading } = useGetSessionTests(params);
-  const { mutate } = useDeleteSessionTest();
+  const { data, isLoading } = useGetTests(params);
+  const { mutate } = useDeleteTest();
 
   const handleDelete = (id: string) => {
     toast.custom(
@@ -30,24 +30,14 @@ export default function SessionTestsPage() {
     );
   };
 
-  const columns: ColumnDef<TSessionTestItem>[] = [
+  const columns: ColumnDef<TTestItem>[] = [
     {
-      accessorKey: "name",
-      header: "Name",
+      accessorKey: "test_name",
+      header: "Nama Tes",
     },
     {
-      accessorKey: "start_date",
-      header: "Start Date",
-      cell: ({ row }) => {
-        return new Date(row.getValue("start_date")).toLocaleDateString();
-      },
-    },
-    {
-      accessorKey: "end_date",
-      header: "End Date",
-      cell: ({ row }) => {
-        return new Date(row.getValue("end_date")).toLocaleDateString();
-      },
+      accessorKey: "question_count",
+      header: "Jumlah Pertanyaan",
     },
     {
       accessorKey: "created_at",
@@ -65,7 +55,7 @@ export default function SessionTestsPage() {
           <div className="flex gap-2">
             <Guard permissions={[]}>
               <Link
-                to={ROUTES.ADMIN.SESSION_TESTS.DETAIL.URL.replace(":id", id)}
+                to={ROUTES.ADMIN.TESTS.DETAIL.URL.replace(":id", id)}
                 className="text-blue-600 hover:underline"
               >
                 Detail
@@ -73,7 +63,7 @@ export default function SessionTestsPage() {
             </Guard>
             <Guard permissions={[]}>
               <Link
-                to={ROUTES.ADMIN.SESSION_TESTS.UPDATE.URL.replace(":id", id)}
+                to={ROUTES.ADMIN.TESTS.UPDATE.URL.replace(":id", id)}
                 className="text-blue-600 hover:underline"
               >
                 Edit
@@ -114,13 +104,13 @@ export default function SessionTestsPage() {
   return (
     <div className="p-6">
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Session Tests</h1>
+        <h1 className="text-2xl font-bold">Tests</h1>
         <Guard permissions={[]}>
           <Link
-            to={ROUTES.ADMIN.SESSION_TESTS.CREATE.URL}
+            to={ROUTES.ADMIN.TESTS.CREATE.URL}
             className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
           >
-            Add Session Test
+            Add Test
           </Link>
         </Guard>
       </div>

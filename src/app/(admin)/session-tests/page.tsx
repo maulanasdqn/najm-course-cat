@@ -32,7 +32,7 @@ export default function SessionTestsPage() {
 
   const columns: ColumnDef<TSessionTestItem>[] = [
     {
-      accessorKey: "name",
+      accessorKey: "session_name",
       header: "Name",
     },
     {

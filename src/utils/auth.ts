@@ -1,8 +1,8 @@
-import { AccessTokenCookies, RefreshTokenCookies, UserCookies } from "@/libs/cookies";
+import { AccessTokenCookies, RefreshTokenCookies, UserLocalStorage } from "@/libs/cookies";
 
 export const logout = () => {
   RefreshTokenCookies.remove();
   AccessTokenCookies.remove();
-  UserCookies.remove();
+  UserLocalStorage.remove();
   window.location.href = "/auth/login";
 };

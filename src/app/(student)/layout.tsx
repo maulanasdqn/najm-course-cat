@@ -1,13 +1,13 @@
 "use client";
 import { useEffect, type FC, type ReactElement } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import { UserCookies } from "@/libs/cookies";
+import { UserLocalStorage } from "@/libs/cookies";
 import { Navbar } from "@/app/_components/ui/navbar";
 import Sidebar from "@/app/_components/ui/sidebar";
 import { useFullscreen } from "./_components/providers/fullscreen";
 
 const StudentLayout: FC = (): ReactElement => {
-  const userData = UserCookies.get();
+  const userData = UserLocalStorage.get();
   const { isFullscreen, setIsFullscreen } = useFullscreen();
   const navigate = useNavigate();
   const location = useLocation();

@@ -9,7 +9,7 @@ type TSelect<T extends FieldValues> = Omit<TInputWrap, "children"> &
     placeholder?: string;
     append?: ReactNode;
     preppend?: ReactNode;
-    options: { value: string | number; label: string }[];
+    options: { value?: string | number; label: string }[];
     multiple?: boolean;
   };
 

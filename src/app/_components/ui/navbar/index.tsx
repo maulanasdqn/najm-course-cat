@@ -4,10 +4,10 @@ import { match } from "ts-pattern";
 import { useLocation } from "react-router-dom";
 import { LogoutIcon } from "../icons/ic-logout";
 import { logout } from "@/utils/auth";
-import { UserCookies } from "@/libs/cookies";
+import { UserLocalStorage } from "@/libs/cookies";
 
 export const Navbar: FC = (): ReactElement => {
-  const userData = UserCookies.get();
+  const userData = UserLocalStorage.get();
   const { pathname } = useLocation();
 
   const isDashboard = pathname === ROUTES.STUDENT.DASHBOARD.URL;

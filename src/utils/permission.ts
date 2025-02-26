@@ -1,6 +1,6 @@
 import PermissionsEnum from "@/commons/enums/permission";
 import { hasCommonElements } from "./has-common-element";
-import { UserCookies } from "@/libs/cookies";
+import { UserLocalStorage } from "@/libs/cookies";
 import { redirect } from "react-router-dom";
 import { ROUTES } from "@/commons/constants/routes";
 
@@ -81,7 +81,7 @@ export const filterPermission = <T extends PermissionWithChildren | PermissionWi
 
 export const permissionLoader = (allowedPermission: PermissionsEnum[]) => {
   return async () => {
-    const userData = UserCookies.get();
+    const userData = UserLocalStorage.get();
     const permissions = userData?.role.permissions;
 
     const permissionsRequired = Array.from(allowedPermission);

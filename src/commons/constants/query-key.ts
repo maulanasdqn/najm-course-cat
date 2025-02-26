@@ -35,4 +35,11 @@ export const QUERY_KEY = {
     UPDATE: "put-update-session-test",
     DELETE: "delete-delete-session-test",
   },
+  TESTS: {
+    LIST: "get-tests-list",
+    DETAIL: "get-tests-detail",
+    CREATE: "post-create-test",
+    UPDATE: "put-update-test",
+    DELETE: "delete-delete-test",
+  },
 } as const;

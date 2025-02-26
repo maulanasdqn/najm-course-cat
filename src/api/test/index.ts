@@ -16,12 +16,12 @@ export const getTests = async (params: TGetTestsParams): Promise<TTestPaginateRe
 };
 
 export const getTest = async (id: string): Promise<TTestDetailResponse> => {
-  const { data } = await api.get(`/v1/tests/${id}`);
+  const { data } = await api.get(`/v1/tests/detail/${id}`);
   return data;
 };
 
 export const createTest = async (payload: TTestCreateRequest): Promise<TTestCreateResponse> => {
-  const { data } = await api.post("/v1/tests", payload);
+  const { data } = await api.post("/v1/tests/create", payload);
   return data;
 };
 
@@ -29,11 +29,11 @@ export const updateTest = async (
   id: string,
   payload: TTestUpdateRequest,
 ): Promise<TTestUpdateResponse> => {
-  const { data } = await api.put(`/v1/tests/${id}`, payload);
+  const { data } = await api.put(`/v1/tests/update/${id}`, payload);
   return data;
 };
 
 export const deleteTest = async (id: string): Promise<TTestDeleteResponse> => {
-  const { data } = await api.delete(`/v1/tests/${id}`);
+  const { data } = await api.delete(`/v1/tests/delete/${id}`);
   return data;
 };

@@ -1,5 +1,5 @@
 import PermissionsEnum from "@/commons/enums/permission";
-import { UserCookies } from "@/libs/cookies";
+import { UserLocalStorage } from "@/libs/cookies";
 import { FC, Fragment, PropsWithChildren, ReactNode, useMemo } from "react";
 
 type TProps = PropsWithChildren<{
@@ -8,7 +8,7 @@ type TProps = PropsWithChildren<{
 }>;
 
 export const Guard: FC<TProps> = (props): ReactNode => {
-  const userData = UserCookies.get();
+  const userData = UserLocalStorage.get();
   const permissions = userData?.role.permissions;
   const allowed = useMemo(() => {
     const permissionRequired = Array.from(props.permissions);

@@ -1,4 +1,4 @@
-import { SessionTestForm } from "../components/session-test-form";
+import { TestForm } from "../components/test-form";
 
 export default function CreateTestPage() {
   return (
@@ -7,7 +7,7 @@ export default function CreateTestPage() {
         <h1 className="text-2xl font-bold">Create Test</h1>
       </div>
       <div className="max-w-2xl rounded-lg border bg-white p-6">
-        <SessionTestForm type="create" />
+        <TestForm type="create" />
       </div>
     </div>
   );

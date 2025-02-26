@@ -6,8 +6,8 @@ import {
 
 export type TTestItem = {
   id: string;
-  session_id: string;
-  label: string;
+  test_name: string;
+  question_count: number;
   created_at: string;
   updated_at: string;
 };
@@ -24,7 +24,23 @@ export type TGetTestsParams = {
 };
 
 export type TTestPaginateResponse = TResponsePaginate<TTestItem>;
-export type TTestDetailResponse = TResponseData<TTestItem>;
+export type TTestDetailResponse = TResponseData<{
+  created_at: string;
+  id: string;
+  questions: {
+    discussion: string;
+    id: string;
+    options: {
+      id: string;
+      label: string;
+      is_correct: boolean;
+    }[];
+    question: string;
+  }[];
+  session_id: string;
+  test_name: string;
+  updated_at: string;
+}>;
 
 export type TTestCreateResponse = {
   message: string;
