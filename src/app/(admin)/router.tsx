@@ -14,6 +14,10 @@ import SessionTestsPage from "./session-tests/page";
 import CreateSessionTestPage from "./session-tests/create/page";
 import UpdateSessionTestPage from "./session-tests/[id]/update/page";
 import SessionTestDetailPage from "./session-tests/[id]/detail/page";
+import TestsPage from "./tests/page";
+import CreateTestPage from "./tests/create/page";
+import UpdateTestPage from "./tests/[id]/update/page";
+import TestDetailPage from "./tests/[id]/detail/page";
 import { permissionLoader } from "@/utils/permission";
 import PermissionsEnum from "@/commons/enums/permission";
 
@@ -40,6 +44,22 @@ export const AdminRouter = [
       {
         path: "session-tests/:id/update",
         element: <UpdateSessionTestPage />,
+      },
+      {
+        path: "tests",
+        element: <TestsPage />,
+      },
+      {
+        path: "tests/create",
+        element: <CreateTestPage />,
+      },
+      {
+        path: "tests/:id/detail",
+        element: <TestDetailPage />,
+      },
+      {
+        path: "tests/:id/update",
+        element: <UpdateTestPage />,
       },
       {
         path: "iam",

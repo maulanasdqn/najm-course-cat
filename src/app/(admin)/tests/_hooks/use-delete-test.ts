@@ -1,18 +1,18 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteSessionTest } from "@/api/session-test";
+import { deleteTest } from "@/api/test";
 import { QUERY_KEY } from "@/commons/constants/query-key";
 import toast from "react-hot-toast";
 import { TErrorResponse } from "@/commons/types/error";
 
-export const useDeleteSessionTest = () => {
+export const useDeleteTest = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (id: string) => deleteSessionTest(id),
+    mutationFn: (id: string) => deleteTest(id),
     onSuccess: (res) => {
-      toast.success(res.message || "Session test berhasil dihapus");
+      toast.success(res.message || "Test berhasil dihapus");
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEY.SESSION_TESTS.LIST],
+        queryKey: [QUERY_KEY.TESTS.LIST],
       });
     },
     onError: (error: TErrorResponse) => {

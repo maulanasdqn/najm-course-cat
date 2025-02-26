@@ -5,6 +5,7 @@ import { TSessionTestCreateRequest } from "@/api/session-test/type";
 import toast from "react-hot-toast";
 import { ROUTES } from "@/commons/constants/routes";
 import { useNavigate } from "react-router-dom";
+import { TErrorResponse } from "@/commons/types/error";
 
 export const useCreateSessionTest = () => {
   const navigate = useNavigate();
@@ -18,6 +19,9 @@ export const useCreateSessionTest = () => {
       });
       toast.success(res.message || "Session test berhasil dibuat");
       navigate(ROUTES.ADMIN.SESSION_TESTS.LIST.URL);
+    },
+    onError: (error: TErrorResponse) => {
+      toast.error(error.response?.data?.message || error.message);
     },
   });
 };

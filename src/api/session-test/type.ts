@@ -1,9 +1,13 @@
 import { TResponseData, TResponsePaginate } from "@/commons/types/response";
-import { CreateSessionTestFormData, UpdateSessionTestFormData } from "@/app/(admin)/session-tests/_schemas/session-test-form.schema";
+import {
+  CreateSessionTestFormData,
+  UpdateSessionTestFormData,
+} from "@/app/(admin)/session-tests/_schemas/session-test-form.schema";
 
 export type TSessionTestItem = {
   id: string;
-  name: string;
+  session_name: string;
+  test_count: number;
   start_date: string;
   end_date: string;
   created_at: string;

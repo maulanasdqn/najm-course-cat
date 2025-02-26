@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 import { upload } from "@/api/storage";
 import { useEffect } from "react";
 import { useMe } from "./use-me";
-import { UserCookies } from "@/libs/cookies";
+import { UserLocalStorage } from "@/libs/cookies";
 
 export const useAccountSettings = () => {
   const queryClient = useQueryClient();
@@ -33,7 +33,7 @@ export const useAccountSettings = () => {
     onSuccess: (data) => {
       toast.success("Profil berhasil diperbarui");
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.USERS.ME] });
-      UserCookies.set(data?.data);
+      UserLocalStorage.set(data?.data);
       window.location.reload();
     },
     onError: (error) => {

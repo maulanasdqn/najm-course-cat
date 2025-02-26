@@ -18,26 +18,28 @@ export default function SessionTestDetailPage() {
   return (
     <div className="p-6">
       <h1 className="mb-6 text-2xl font-bold">Session Test Details</h1>
-      <div className="space-y-4">
-        <div>
-          <h2 className="text-sm font-medium text-gray-500">Name</h2>
-          <p className="mt-1">{sessionTest.name}</p>
-        </div>
-        <div>
-          <h2 className="text-sm font-medium text-gray-500">Start Date</h2>
-          <p className="mt-1">{new Date(sessionTest.start_date).toLocaleString()}</p>
-        </div>
-        <div>
-          <h2 className="text-sm font-medium text-gray-500">End Date</h2>
-          <p className="mt-1">{new Date(sessionTest.end_date).toLocaleString()}</p>
-        </div>
-        <div>
-          <h2 className="text-sm font-medium text-gray-500">Created At</h2>
-          <p className="mt-1">{new Date(sessionTest.created_at).toLocaleString()}</p>
-        </div>
-        <div>
-          <h2 className="text-sm font-medium text-gray-500">Updated At</h2>
-          <p className="mt-1">{new Date(sessionTest.updated_at).toLocaleString()}</p>
+      <div className="max-w-2xl rounded-lg border bg-white p-6">
+        <div className="space-y-4">
+          <div>
+            <h2 className="text-sm font-medium text-gray-500">Name</h2>
+            <p className="mt-1">{sessionTest.session_name}</p>
+          </div>
+          <div>
+            <h2 className="text-sm font-medium text-gray-500">Start Date</h2>
+            <p className="mt-1">{new Date(sessionTest.start_date).toLocaleString()}</p>
+          </div>
+          <div>
+            <h2 className="text-sm font-medium text-gray-500">End Date</h2>
+            <p className="mt-1">{new Date(sessionTest.end_date).toLocaleString()}</p>
+          </div>
+          <div>
+            <h2 className="text-sm font-medium text-gray-500">Created At</h2>
+            <p className="mt-1">{new Date(sessionTest.created_at).toLocaleString()}</p>
+          </div>
+          <div>
+            <h2 className="text-sm font-medium text-gray-500">Updated At</h2>
+            <p className="mt-1">{new Date(sessionTest.updated_at).toLocaleString()}</p>
+          </div>
         </div>
       </div>
     </div>

@@ -11,21 +11,21 @@ import {
 } from "./type";
 
 export const getSessionTests = async (
-  params: TGetSessionTestsParams,
+  params?: TGetSessionTestsParams,
 ): Promise<TSessionTestPaginateResponse> => {
   const { data } = await api.get("/v1/sessions", { params });
   return data;
 };
 
 export const getSessionTest = async (id: string): Promise<TSessionTestDetailResponse> => {
-  const { data } = await api.get(`/v1/sessions/${id}`);
+  const { data } = await api.get(`/v1/sessions/detail/${id}`);
   return data;
 };
 
 export const createSessionTest = async (
   payload: TSessionTestCreateRequest,
 ): Promise<TSessionTestCreateResponse> => {
-  const { data } = await api.post("/v1/sessions", payload);
+  const { data } = await api.post("/v1/sessions/create", payload);
   return data;
 };
 
@@ -33,11 +33,11 @@ export const updateSessionTest = async (
   id: string,
   payload: TSessionTestUpdateRequest,
 ): Promise<TSessionTestUpdateResponse> => {
-  const { data } = await api.put(`/v1/sessions/${id}`, payload);
+  const { data } = await api.put(`/v1/sessions/update/${id}`, payload);
   return data;
 };
 
 export const deleteSessionTest = async (id: string): Promise<TSessionTestDeleteResponse> => {
-  const { data } = await api.delete(`/v1/sessions/${id}`);
+  const { data } = await api.delete(`/v1/sessions/delete/${id}`);
   return data;
 };

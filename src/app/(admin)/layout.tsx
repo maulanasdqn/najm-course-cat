@@ -2,7 +2,7 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 import { ROUTES } from "../../commons/constants/routes";
 import { logout } from "@/utils/auth";
 import { filterPermission } from "@/utils/permission";
-import { UserCookies } from "@/libs/cookies";
+import { UserLocalStorage } from "@/libs/cookies";
 import PermissionsEnum from "@/commons/enums/permission";
 import { IcSessionTest } from "../_components/ui/icons/ic-session-test";
 
@@ -33,6 +33,11 @@ export default function AdminLayout() {
     {
       name: "Session Test Management",
       href: ROUTES.ADMIN.SESSION_TESTS.LIST.URL,
+      icon: <IcSessionTest />,
+    },
+    {
+      name: "Test Management",
+      href: ROUTES.ADMIN.TESTS.LIST.URL,
       icon: <IcSessionTest />,
     },
     {
@@ -100,7 +105,7 @@ export default function AdminLayout() {
     },
   ];
 
-  const userData = UserCookies.get();
+  const userData = UserLocalStorage.get();
   const permissions = userData?.role.permissions;
 
   const allowedPermissions = filterPermission(navigationItems, (item) => {

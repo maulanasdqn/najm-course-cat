@@ -18,3 +18,9 @@ export const RefreshTokenCookies = {
   get: (): string | undefined => Cookies.get("refresh_token"),
   remove: () => Cookies.remove("refresh_token"),
 };
+
+export const UserLocalStorage = {
+  set: (val: TUserItem) => localStorage.setItem("users", JSON.stringify(val)),
+  get: (): TUserItem => JSON.parse(localStorage.getItem("users") ?? "{}"),
+  remove: () => localStorage.removeItem("users"),
+};
