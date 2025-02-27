@@ -7,6 +7,7 @@ import {
 export type TSessionTestItem = {
   id: string;
   session_name: string;
+  student_type: string;
   test_count: number;
   start_date: string;
   end_date: string;

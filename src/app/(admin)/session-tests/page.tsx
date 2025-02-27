@@ -36,6 +36,10 @@ export default function SessionTestsPage() {
       header: "Name",
     },
     {
+      accessorKey: "student_type",
+      header: "Kategori",
+    },
+    {
       accessorKey: "start_date",
       header: "Start Date",
       cell: ({ row }) => {

@@ -10,6 +10,8 @@ import { useCreateSessionTest } from "../_hooks/use-create-session-test";
 import { useUpdateSessionTest } from "../_hooks/use-update-session-test";
 import { TSessionTestItem } from "@/api/session-test/type";
 import { InputText } from "@/app/_components/ui/inputs/text";
+import { studentTypeOptions } from "@/commons/constants/student-type";
+import { Select } from "@/app/_components/ui/inputs/select";
 
 type SessionTestFormProps = {
   type: "create" | "update";
@@ -28,6 +30,7 @@ export const SessionTestForm = ({ type, defaultValues }: SessionTestFormProps) =
           session_name: defaultValues.session_name,
           start_date: defaultValues.start_date?.split(" ")[0],
           end_date: defaultValues.end_date?.split(" ")[0],
+          student_type: defaultValues.student_type,
         }
       : undefined,
   });
@@ -60,6 +63,14 @@ export const SessionTestForm = ({ type, defaultValues }: SessionTestFormProps) =
       <InputText name="start_date" type="datetime-local" control={control} label="Start Date" />
 
       <InputText name="end_date" type="datetime-local" control={control} label="End Date" />
+
+      <Select
+        name="student_type"
+        control={control}
+        label="Kategori"
+        placeholder="Pilih Kategori"
+        options={studentTypeOptions}
+      />
 
       <div className="flex justify-end space-x-4">
         <button
