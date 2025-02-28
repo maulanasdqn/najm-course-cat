@@ -19,6 +19,7 @@ export default function UpdateSessionTestPage() {
           defaultValues={{
             id: data?.data.id,
             session_name: data?.data?.session_name,
+            student_type: data?.data?.student_type,
             start_date: data?.data?.start_date
               ? convertDateToDatetimeLocal(new Date(data?.data?.start_date))
               : undefined,
