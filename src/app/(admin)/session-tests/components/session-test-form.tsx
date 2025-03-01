@@ -12,6 +12,7 @@ import { TSessionTestItem } from "@/api/session-test/type";
 import { InputText } from "@/app/_components/ui/inputs/text";
 import { studentTypeOptions } from "@/commons/constants/student-type";
 import { Select } from "@/app/_components/ui/inputs/select";
+import { InputTextArea } from "@/app/_components/ui/inputs/text-area";
 
 type SessionTestFormProps = {
   type: "create" | "update";
@@ -28,9 +29,8 @@ export const SessionTestForm = ({ type, defaultValues }: SessionTestFormProps) =
     defaultValues: defaultValues
       ? {
           session_name: defaultValues.session_name,
-          start_date: defaultValues.start_date?.split(" ")[0],
-          end_date: defaultValues.end_date?.split(" ")[0],
           student_type: defaultValues.student_type,
+          description: defaultValues.description,
         }
       : undefined,
   });
@@ -60,9 +60,12 @@ export const SessionTestForm = ({ type, defaultValues }: SessionTestFormProps) =
         placeholder="Masukan Nama Lengkap"
       />
 
-      <InputText name="start_date" type="datetime-local" control={control} label="Start Date" />
-
-      <InputText name="end_date" type="datetime-local" control={control} label="End Date" />
+      <InputTextArea
+        name="description"
+        control={control}
+        label="Deskripsi"
+        placeholder="Masukan Deskripsi"
+      />
 
       <Select
         name="student_type"

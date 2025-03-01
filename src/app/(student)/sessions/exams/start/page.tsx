@@ -1,15 +1,15 @@
 import { FC, ReactElement, useState, useEffect } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { useExamQuery } from "./_hooks/use-exam-query";
 import { TExamAnswerRequest } from "@/api/exams/type";
 import { useExam } from "../detail/_hooks/use-exam";
 import toast from "react-hot-toast";
 import { useAnswerExamMutation } from "./_hooks/use-answer-exam-mutation";
+import { useGetTest } from "./_hooks/use-get-tests-query";
 
 export const Component: FC = (): ReactElement => {
   const params = useParams<{ examId: string; sessionId: string }>();
-  const answerExamMutation = useAnswerExamMutation(params.examId!);
-  const examQuery = useExamQuery(params.examId!);
+  const answerExamMutation = useAnswerExamMutation();
+  const testQuery = useGetTest(params.examId!);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const currentQuestion = parseInt(searchParams.get("page") || "1", 10) - 1;
@@ -25,7 +25,9 @@ export const Component: FC = (): ReactElement => {
         },
         {
           onSuccess: () => {
-            navigate(`/student/sessions/${params.sessionId}/exams`, { replace: true });
+            navigate(`/student/sessions/${params.sessionId}/exams/${params.examId}/result`, {
+              replace: true,
+            });
             toast.success("Ujian telah selesai. Jawaban Anda telah disimpan.");
           },
         },
@@ -34,8 +36,8 @@ export const Component: FC = (): ReactElement => {
   });
 
   useEffect(() => {
-    setAnswers(Array(examQuery.data?.data.questions.length).fill(null));
-  }, [examQuery.data?.data.questions]);
+    setAnswers(Array(testQuery.data?.data.questions.length).fill(null));
+  }, [testQuery.data?.data.questions]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -45,8 +47,8 @@ export const Component: FC = (): ReactElement => {
   }, []);
 
   const nextQuestion = () => {
-    if (!examQuery.data) return;
-    if (currentQuestion < examQuery.data.data.questions.length - 1) {
+    if (!testQuery.data) return;
+    if (currentQuestion < testQuery.data.data.questions.length - 1) {
       navigate(
         `/student/sessions/${params.sessionId}/exams/${params.examId}/start?page=${currentQuestion + 2}`,
       );
@@ -80,7 +82,7 @@ export const Component: FC = (): ReactElement => {
   };
 
   const answeredCount = answers.filter((answer) => answer !== null).length;
-  const unansweredCount = (examQuery.data?.data.questions.length || 0) - answeredCount;
+  const unansweredCount = (testQuery.data?.data.questions.length || 0) - answeredCount;
 
   return (
     <div className="flex flex-col items-center justify-center w-full bg-gray-100">
@@ -88,7 +90,7 @@ export const Component: FC = (): ReactElement => {
         <aside className="w-1/4 order-2 bg-white mt-6 p-4 rounded-lg shadow-md h-fit">
           <h3 className="text-lg font-semibold text-gray-800 mb-4">Navigasi Soal</h3>
           <div className="grid grid-cols-5 gap-2">
-            {examQuery.data?.data.questions.map((_, index) => (
+            {testQuery.data?.data.questions.map((_, index) => (
               <button
                 key={index}
                 onClick={() => goToQuestion(index)}
@@ -120,13 +122,13 @@ export const Component: FC = (): ReactElement => {
           </div>
           <div className="bg-white shadow rounded-lg p-6">
             <h3 className="text-lg text-gray-800 mb-2">
-              Soal Nomor {currentQuestion + 1} dari {examQuery.data?.data.questions.length} :
+              Soal Nomor {currentQuestion + 1} dari {testQuery.data?.data.questions.length} :
             </h3>
             <h2 className="text-lg font-semibold  mb-4">
-              {examQuery.data?.data.questions[currentQuestion].label}
+              {testQuery.data?.data.questions[currentQuestion].question}
             </h2>
             <div className="flex flex-col gap-2">
-              {examQuery.data?.data.questions[currentQuestion].options.map((option, optIndex) => (
+              {testQuery.data?.data.questions[currentQuestion].options.map((option, optIndex) => (
                 <label key={optIndex} className="flex items-center gap-2">
                   <input
                     type="radio"
@@ -134,7 +136,7 @@ export const Component: FC = (): ReactElement => {
                     value={option.id}
                     onChange={() =>
                       handleAnswer({
-                        id: examQuery.data?.data.questions[currentQuestion].id,
+                        id: testQuery.data?.data.questions[currentQuestion].id,
                         option_id: option.id,
                       })
                     }
@@ -155,7 +157,7 @@ export const Component: FC = (): ReactElement => {
               </button>
               <button
                 onClick={nextQuestion}
-                disabled={currentQuestion === (examQuery.data?.data.questions.length || 1) - 1}
+                disabled={currentQuestion === (testQuery.data?.data.questions.length || 1) - 1}
                 className="px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-50"
               >
                 Lanjut
