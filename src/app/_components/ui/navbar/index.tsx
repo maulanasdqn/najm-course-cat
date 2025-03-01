@@ -14,7 +14,34 @@ export const Navbar: FC = (): ReactElement => {
 
   const title = match(pathname)
     .with(ROUTES.STUDENT.DASHBOARD.URL, () => "Dashboard")
-    .otherwise(() => "Dashboard");
+    .with(ROUTES.STUDENT.SESSIONS.LIST.URL, () => "Daftar Sesi")
+    .with(ROUTES.STUDENT.PROFILE.URL, () => "Data Pengguna")
+    .when(
+      (path) => path.includes("/sessions/") && path.includes("/exams/") && path.includes("/result"),
+      () => "Hasil Ujian"
+    )
+    .when(
+      (path) => path.includes("/sessions/") && path.includes("/exams/") && path.includes("/detail"),
+      () => "Detail Ujian"
+    )
+    .when(
+      (path) => path.includes("/sessions/") && path.includes("/exams/") && path.includes("/start"),
+      () => "Mulai Ujian"
+    )
+    .when(
+      (path) => path.includes("/sessions/") && path.includes("/exams"),
+      () => "Daftar Ujian"
+    )
+    .when(
+      (path) => path.includes("/course"),
+      () => "Kursus"
+    )
+    .when(
+      (path) => path.includes("/certificates"),
+      () => "Sertifikat"
+    )
+    .otherwise(() => "");
+
   return (
     <nav className="flex items-center justify-center px-16 py-4 bg-white w-full sticky top-0 z-10">
       <div className="max-w-7xl w-full flex items-center justify-between">

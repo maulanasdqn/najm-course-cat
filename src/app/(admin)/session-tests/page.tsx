@@ -40,20 +40,6 @@ export default function SessionTestsPage() {
       header: "Kategori",
     },
     {
-      accessorKey: "start_date",
-      header: "Start Date",
-      cell: ({ row }) => {
-        return new Date(row.getValue("start_date")).toLocaleDateString();
-      },
-    },
-    {
-      accessorKey: "end_date",
-      header: "End Date",
-      cell: ({ row }) => {
-        return new Date(row.getValue("end_date")).toLocaleDateString();
-      },
-    },
-    {
       accessorKey: "created_at",
       header: "Created At",
       cell: ({ row }) => {

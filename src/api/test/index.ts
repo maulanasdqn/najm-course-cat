@@ -8,6 +8,8 @@ import {
   TTestDeleteResponse,
   TTestUpdateResponse,
   TTestCreateResponse,
+  TExamAnswerRequest,
+  TExamAnswerResponse,
 } from "./type";
 
 export const getTests = async (params: TGetTestsParams): Promise<TTestPaginateResponse> => {
@@ -35,5 +37,14 @@ export const updateTest = async (
 
 export const deleteTest = async (id: string): Promise<TTestDeleteResponse> => {
   const { data } = await api.delete(`/v1/tests/delete/${id}`);
+  return data;
+};
+
+export const answerExam = async (payload: TExamAnswerRequest): Promise<TExamAnswerResponse> => {
+  return Promise.resolve({
+    status_code: 200,
+    message: "Exam answered successfully",
+  });
+  const { data } = await api.post(`/v1/tests/answer/create`, payload);
   return data;
 };

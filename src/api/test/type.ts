@@ -21,6 +21,7 @@ export type TGetTestsParams = {
   sort?: string;
   order?: string;
   search?: string;
+  session_id?: string;
 };
 
 export type TTestPaginateResponse = TResponsePaginate<TTestItem>;
@@ -56,4 +57,16 @@ export type TTestUpdateResponse = {
 export type TTestDeleteResponse = {
   message: string;
   version: string;
+};
+
+export type TExamAnswerRequest = {
+  id: string;
+  questions: Array<{
+    id: string;
+    option_id: string; // option id
+  }>;
+};
+
+export type TExamAnswerResponse = {
+  message: string;
 };

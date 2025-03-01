@@ -9,7 +9,9 @@ export const Component: FC = (): ReactElement => {
   const { startExam } = useExam({
     onExitFullscreen: () => {
       // TODO: mutate finish exam
-      navigate(`/student/sessions/${params.sessionId}/exams`, { replace: true });
+      navigate(`/student/sessions/${params.sessionId}/exams/${params.examId}/result`, {
+        replace: true,
+      });
       toast.success("Ujian telah selesai. Jawaban Anda telah disimpan.");
     },
   });
