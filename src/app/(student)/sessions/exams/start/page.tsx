@@ -5,6 +5,27 @@ import { useExam } from "../detail/_hooks/use-exam";
 import toast from "react-hot-toast";
 import { useAnswerExamMutation } from "./_hooks/use-answer-exam-mutation";
 import { useGetTest } from "./_hooks/use-get-tests-query";
+import { ArrowRightIcon } from "@/app/_components/ui/icons/ic-arrow-right";
+
+// Left arrow icon component
+const ArrowLeftIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M20.25 12H3.75"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M10.5 5.25L3.75 12L10.5 18.75"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
 
 export const Component: FC = (): ReactElement => {
   const params = useParams<{ examId: string; sessionId: string }>();
@@ -86,6 +107,28 @@ export const Component: FC = (): ReactElement => {
 
   return (
     <div className="flex flex-col items-center justify-center w-full bg-gray-100">
+      {/* Status section moved to top */}
+      <div className="w-full max-w-7xl bg-white mt-6 p-4 rounded-lg shadow-md">
+        <div className="flex justify-between items-center">
+          <div className="flex items-center space-x-6">
+            <h2 className="text-xl font-bold text-gray-700">Test Kesehatan Mental</h2>
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center">
+                <div className="w-4 h-4 bg-green-500 rounded-sm mr-2"></div>
+                <p className="text-gray-800">Terisi: {answeredCount}</p>
+              </div>
+              <div className="flex items-center">
+                <div className="w-4 h-4 bg-red-500 rounded-sm mr-2"></div>
+                <p className="text-gray-800">Belum Terisi: {unansweredCount}</p>
+              </div>
+            </div>
+          </div>
+          <div className="text-lg font-semibold text-red-600">
+            Waktu Tersisa: {formatTime(timeLeft)}
+          </div>
+        </div>
+      </div>
+
       <section className="flex flex-1 w-full max-w-7xl">
         <aside className="w-1/4 order-2 bg-white mt-6 p-4 rounded-lg shadow-md h-fit">
           <h3 className="text-lg font-semibold text-gray-800 mb-4">Navigasi Soal</h3>
@@ -95,16 +138,16 @@ export const Component: FC = (): ReactElement => {
                 key={index}
                 onClick={() => goToQuestion(index)}
                 className={`w-10 h-10 rounded-md ${
-                  currentQuestion === index ? "bg-blue-500 text-white" : "bg-gray-300"
-                } ${answers[index]?.id && currentQuestion !== index ? "bg-blue-400 text-white" : ""}`}
+                  currentQuestion === index
+                    ? "bg-blue-500 text-white"
+                    : answers[index]?.id && currentQuestion !== index
+                      ? "bg-green-500 text-white"
+                      : "bg-red-500"
+                }`}
               >
                 {index + 1}
               </button>
             ))}
-          </div>
-          <div className="mt-4 text-gray-800">
-            <p>Terisi: {answeredCount}</p>
-            <p>Belum Terisi: {unansweredCount}</p>
           </div>
           <button
             onClick={finishExam}
@@ -113,13 +156,7 @@ export const Component: FC = (): ReactElement => {
             Selesaikan Ujian
           </button>
         </aside>
-        <main className="flex-1 order-1 p-6">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-bold text-gray-700">Test Kesehatan Mental</h2>
-            <div className="text-lg font-semibold text-red-600">
-              Waktu Tersisa: {formatTime(timeLeft)}
-            </div>
-          </div>
+        <main className="flex-1 order-1 p-6 pl-0">
           <div className="bg-white shadow rounded-lg p-6">
             <h3 className="text-lg text-gray-800 mb-2">
               Soal Nomor {currentQuestion + 1} dari {testQuery.data?.data.questions.length} :
@@ -151,16 +188,18 @@ export const Component: FC = (): ReactElement => {
               <button
                 onClick={prevQuestion}
                 disabled={currentQuestion === 0}
-                className="px-4 py-2 bg-gray-300 text-gray-700 rounded disabled:opacity-50"
+                className="px-4 py-2 bg-gray-300 text-gray-700 rounded disabled:opacity-50 flex items-center"
               >
+                <span className="mr-2"><ArrowLeftIcon /></span>
                 Kembali
               </button>
               <button
                 onClick={nextQuestion}
                 disabled={currentQuestion === (testQuery.data?.data.questions.length || 1) - 1}
-                className="px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-50"
+                className="px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-50 flex items-center"
               >
-                Lanjut
+                Simpan dan Lanjutkan
+                <span className="ml-2"><ArrowRightIcon /></span>
               </button>
             </div>
           </div>
