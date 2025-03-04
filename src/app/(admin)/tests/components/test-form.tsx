@@ -7,11 +7,9 @@ import { useCreateTest } from "../_hooks/use-create-test";
 import { useUpdateTest } from "../_hooks/use-update-test";
 import { TTestDetailResponse } from "@/api/test/type";
 import { InputText } from "@/app/_components/ui/inputs/text";
-import { Select } from "@/app/_components/ui/inputs/select";
 import { InputCheckbox } from "@/app/_components/ui/inputs/checkbox";
 import { TrashIcon } from "@/app/_components/ui/icons/ic-trash";
 import { Button } from "../../_components/button";
-import { useSessionOption } from "../_hooks/use-session-option";
 
 type TestFormProps = {
   type: "create" | "update";
@@ -22,8 +20,6 @@ export const TestForm = ({ type, defaultValues }: TestFormProps) => {
   const navigate = useNavigate();
   const { mutate: createTest } = useCreateTest();
   const { mutate: updateTest } = useUpdateTest(defaultValues?.id ?? "");
-
-  const sessionOption = useSessionOption();
 
   const { control, handleSubmit } = useForm<CreateTestFormData>({
     resolver: zodResolver(createTestFormSchema),
@@ -66,13 +62,6 @@ export const TestForm = ({ type, defaultValues }: TestFormProps) => {
           control={control}
           label="Pertanyaan"
           placeholder="Masukan Pertanyaan"
-        />
-
-        <Select
-          name="session_id"
-          control={control}
-          label="Pilih Sesi"
-          options={[{ label: "Pilih sesi", value: undefined }, ...(sessionOption.data || [])]}
         />
       </div>
 

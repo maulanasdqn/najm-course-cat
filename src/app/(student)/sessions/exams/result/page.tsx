@@ -13,7 +13,7 @@ export const Component: FC = (): ReactElement => {
   }, [testQuery.data?.data.questions]);
 
   // Mock data for demonstration - in a real app, this would come from the API
-  const correctAnswers = 12;
+  const correctAnswers = 10;
   const totalQuestions = testQuery.data?.data.questions.length || 0;
   const scorePercentage = totalQuestions > 0 ? (correctAnswers / totalQuestions) * 100 : 0;
   const finalScore = 50;
@@ -26,7 +26,7 @@ export const Component: FC = (): ReactElement => {
           <div className="bg-white shadow-lg rounded-xl p-8 border border-gray-200">
             <div className="flex flex-col md:flex-row justify-center items-center mb-6">
               <h2 className="text-center text-2xl font-bold text-gray-800 mb-4 md:mb-0">
-                Exam Results
+                Hasil Ujian
               </h2>
             </div>
 
@@ -36,7 +36,7 @@ export const Component: FC = (): ReactElement => {
               <div className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <p className="text-gray-500 text-sm mb-1">Correct Answers</p>
+                    <p className="text-gray-500 text-sm mb-1">Jawaban yang Benar</p>
                     <div className="flex items-center">
                       <span className="text-2xl font-bold text-green-600">{correctAnswers}</span>
                       <span className="text-gray-500 ml-1">/ {totalQuestions}</span>
@@ -95,7 +95,7 @@ export const Component: FC = (): ReactElement => {
                     fontSize="12"
                     fill="#6b7280"
                   >
-                    Final Score
+                    Skor Akhir
                   </text>
                 </svg>
               </div>
@@ -103,7 +103,7 @@ export const Component: FC = (): ReactElement => {
           </div>
 
           {/* Questions Review Section */}
-          <h3 className="text-xl font-semibold text-gray-800 mt-4 mb-2">Questions Review</h3>
+          <h3 className="text-xl font-semibold text-gray-800 mt-4 mb-2">Ulasan Pertanyaan</h3>
 
           {testQuery.data?.data.questions.map((question, index) => {
             // Mock data - in a real app, you would compare with actual correct answers

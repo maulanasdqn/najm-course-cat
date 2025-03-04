@@ -8,7 +8,9 @@ export const createSessionTestFormSchema = z.object({
   tests: z
     .array(
       z.object({
-        id: z.string().min(1, "Id is required"),
+        test_id: z.string().min(1, "Id is required"),
+        weight: z.coerce.number(),
+        multiplier: z.coerce.number(),
         start_date: z.string().min(1, "Start date is required"),
         end_date: z.string().min(1, "End date is required"),
       }),
