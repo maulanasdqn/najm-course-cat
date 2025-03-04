@@ -139,7 +139,7 @@ export const SessionTestForm = ({ type, defaultValues }: SessionTestFormProps) =
                 key={field.id}
                 control={control}
                 index={index}
-                onRemove={() => remove(field.id as unknown as number)}
+                onRemove={() => remove(index)}
               />
             ))}
           </div>
