@@ -1,4 +1,4 @@
-import { Control, useFieldArray, useForm } from "react-hook-form";
+import { Control, FieldErrors, useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@/commons/constants/routes";
@@ -27,7 +27,13 @@ export const SessionTestForm = ({ type, defaultValues }: SessionTestFormProps) =
   const { mutate: createSessionTest } = useCreateSessionTest();
   const { mutate: updateSessionTest } = useUpdateSessionTest(defaultValues?.id ?? "");
 
-  const { control, handleSubmit } = useForm<CreateSessionTestFormData>({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<CreateSessionTestFormData>({
+    mode: "onChange",
+    reValidateMode: "onChange",
     resolver: zodResolver(createSessionTestFormSchema),
     defaultValues: defaultValues
       ? {
@@ -95,7 +101,9 @@ export const SessionTestForm = ({ type, defaultValues }: SessionTestFormProps) =
 
       <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">Tests</h2>
+          <div>
+            <h2 className="text-xl font-semibold">Tests</h2>
+          </div>
           <Button
             type="button"
             onClick={() =>
@@ -125,6 +133,13 @@ export const SessionTestForm = ({ type, defaultValues }: SessionTestFormProps) =
           </Button>
         </div>
 
+        {/* Display form-level errors */}
+        {(errors.tests?.message || errors.tests?.root?.message) && (
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-md text-red-600">
+            {errors.tests?.message || errors.tests?.root?.message}
+          </div>
+        )}
+
         {fields.length === 0 ? (
           <div className="text-center py-8 bg-gray-50 rounded-lg border border-dashed border-gray-300">
             <p className="text-gray-500">Belum ada test yang ditambahkan</p>
@@ -140,6 +155,7 @@ export const SessionTestForm = ({ type, defaultValues }: SessionTestFormProps) =
                 control={control}
                 index={index}
                 onRemove={() => remove(index)}
+                errors={errors}
               />
             ))}
           </div>
@@ -169,17 +185,29 @@ const TestCard = ({
   control,
   index,
   onRemove,
+  errors,
 }: {
   control: Control<CreateSessionTestFormData>;
   index: number;
   onRemove: () => void;
+  errors?: FieldErrors<CreateSessionTestFormData>;
 }) => {
   const { data } = useGetTestsOption({});
 
+  // Helper function to check if there are any errors for this test
+  const hasErrors = errors ? "tests" in errors : false;
+
   return (
-    <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
-      <div className="bg-gray-50 px-4 py-3 border-b border-gray-200 flex justify-between items-center">
-        <h3 className="font-medium text-gray-700">Test #{index + 1}</h3>
+    <div
+      className={`bg-white rounded-lg border ${hasErrors ? "border-red-300" : "border-gray-200"} shadow-sm overflow-hidden`}
+    >
+      <div
+        className={`${hasErrors ? "bg-red-50" : "bg-gray-50"} px-4 py-3 border-b ${hasErrors ? "border-red-300" : "border-gray-200"} flex justify-between items-center`}
+      >
+        <h3 className={`font-medium ${hasErrors ? "text-red-700" : "text-gray-700"}`}>
+          Test #{index + 1}
+          {hasErrors && <span className="ml-2 text-xs text-red-600">(has errors)</span>}
+        </h3>
         <Button
           type="button"
           onClick={onRemove}
@@ -217,6 +245,7 @@ const TestCard = ({
             control={control}
             label="Bobot(%)"
             placeholder="Masukan bobot"
+            rules={{ deps: ["tests"] }}
           />
           <InputText
             name={`tests.${index}.multiplier`}
@@ -234,6 +263,7 @@ const TestCard = ({
             control={control}
             label="Tanggal Mulai"
             placeholder="Masukan tanggal mulai"
+            rules={{ deps: ["tests"] }}
           />
           <InputText
             name={`tests.${index}.end_date`}
@@ -241,6 +271,7 @@ const TestCard = ({
             control={control}
             label="Tanggal Akhir"
             placeholder="Masukan tanggal akhir"
+            rules={{ deps: ["tests"] }}
           />
         </div>
       </div>
