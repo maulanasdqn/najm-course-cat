@@ -41,7 +41,11 @@ export const SessionTestForm = ({ type, defaultValues }: SessionTestFormProps) =
           student_type: defaultValues.student_type,
           description: defaultValues.description,
           is_active: defaultValues.is_active,
-          tests: defaultValues.tests,
+          tests: defaultValues.tests?.map((test) => ({
+            ...test,
+            weight: test.weight,
+            multiplier: test.multiplier,
+          })),
         }
       : undefined,
   });
@@ -109,10 +113,10 @@ export const SessionTestForm = ({ type, defaultValues }: SessionTestFormProps) =
             onClick={() =>
               append({
                 end_date: "",
-                multiplier: 0,
+                multiplier: "",
                 start_date: "",
                 test_id: "",
-                weight: 0,
+                weight: "",
               })
             }
             className="flex items-center"

@@ -13,8 +13,8 @@ export type TSessionTestItem = {
   is_active: boolean;
   tests: {
     id?: string;
-    weight?: number;
-    multiplier?: number;
+    weight?: string;
+    multiplier?: string;
     start_date?: string;
     end_date?: string;
   }[];

@@ -10,8 +10,8 @@ export const createSessionTestFormSchema = z
       .array(
         z.object({
           test_id: z.string().min(1, "Id is required"),
-          weight: z.coerce.number(),
-          multiplier: z.coerce.number(),
+          weight: z.string().min(1, "Weight is required"),
+          multiplier: z.string().min(1, "Multiplier is required"),
           start_date: z.string().min(1, "Start date is required"),
           end_date: z.string().min(1, "End date is required"),
         }),
@@ -22,7 +22,11 @@ export const createSessionTestFormSchema = z
     if (!data.tests || data.tests.length === 0) return true;
 
     // Check if total weight is less than or equal to 100
-    const totalWeight = data.tests.reduce((sum, test) => sum + (test.weight || 0), 0);
+    const totalWeight = data.tests.reduce(
+      (sum, test) => sum + (test.weight ? parseInt(test.weight) : 0),
+      0,
+    );
+    console.log(totalWeight);
     data.tests.forEach((_test, i) => {
       if (totalWeight > 100) {
         ctx.addIssue({
