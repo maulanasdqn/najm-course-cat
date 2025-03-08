@@ -18,16 +18,16 @@ export const usePostLogin = () => {
       UserLocalStorage.set(res.data.user);
       navigate(0);
     },
-    onError: (err) => {
-      if (err.status === 403) {
+    onError: (err: any) => {
+      if (err.response?.status === 403) {
         navigate("/student/dashboard");
-        toast.info('Please check your email to verify your account', {
+        toast('Please check your email to verify your account', {
           position: 'top-center',
-          autoClose: 5000,
+          duration: 5000,
         });
         return;
       }
-      toast.error(err.response?.data.message || "Terjadi Kesalahan");
+      toast.error(err.response?.data?.message || "Terjadi Kesalahan");
     },
   });
 };
