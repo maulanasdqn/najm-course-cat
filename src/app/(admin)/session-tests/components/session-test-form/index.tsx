@@ -85,7 +85,12 @@ export const SessionTestForm = ({ type, defaultValues }: SessionTestFormProps) =
             placeholder="Masukan nama sesi"
           />
 
-          <InputCheckbox name="is_active" control={control} label="Aktif" />
+          <div>
+            <InputCheckbox name="is_active" control={control} label="Aktif" />
+            <div className="text-sm mt-1 text-gray-500">
+              Jika sesi tidak aktif maka tidak akan muncul di halaman murid
+            </div>
+          </div>
 
           <InputTextArea
             name="description"
