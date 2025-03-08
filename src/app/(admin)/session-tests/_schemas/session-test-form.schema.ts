@@ -3,6 +3,7 @@ import { z } from "zod";
 export const createSessionTestFormSchema = z.object({
   session_name: z.string().min(1, "Name is required"),
   student_type: z.string().min(1, "Jenis siswa wajib diisi"),
+  category: z.string().min(1, "Kategori wajib diisi"),
   description: z.string().min(1, "Description is required"),
   is_active: z.boolean().default(false),
   tests: z

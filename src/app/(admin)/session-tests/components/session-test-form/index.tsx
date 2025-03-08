@@ -5,14 +5,15 @@ import { ROUTES } from "@/commons/constants/routes";
 import {
   createSessionTestFormSchema,
   CreateSessionTestFormData,
-} from "../_schemas/session-test-form.schema";
-import { useCreateSessionTest } from "../_hooks/use-create-session-test";
-import { useUpdateSessionTest } from "../_hooks/use-update-session-test";
+} from "../../_schemas/session-test-form.schema";
+import { useCreateSessionTest } from "../../_hooks/use-create-session-test";
+import { useUpdateSessionTest } from "../../_hooks/use-update-session-test";
 import { TSessionTestItem } from "@/api/session-test/type";
 import { InputText } from "@/app/_components/ui/inputs/text";
 import { studentTypeOptions } from "@/commons/constants/student-type";
 import { Select } from "@/app/_components/ui/inputs/select";
 import { InputTextArea } from "@/app/_components/ui/inputs/text-area";
+import { categoryOptions } from "./constants";
 
 type SessionTestFormProps = {
   type: "create" | "update";
@@ -70,9 +71,17 @@ export const SessionTestForm = ({ type, defaultValues }: SessionTestFormProps) =
       <Select
         name="student_type"
         control={control}
+        label="Jenis Siswa"
+        placeholder="Pilih Jenis Siswa"
+        options={studentTypeOptions}
+      />
+
+      <Select
+        name="category"
+        control={control}
         label="Kategori"
         placeholder="Pilih Kategori"
-        options={studentTypeOptions}
+        options={categoryOptions}
       />
 
       <div className="flex justify-end space-x-4">
