@@ -2,10 +2,12 @@ import { FC, ReactElement, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useExam } from "./_hooks/use-exam";
 import toast from "react-hot-toast";
+import { useSession } from "../../_hooks/use-session";
 
 export const Component: FC = (): ReactElement => {
   const navigate = useNavigate();
   const params = useParams<{ examId: string; sessionId: string }>();
+  const { data: session } = useSession({ sessionId: params.sessionId! });
   const { startExam } = useExam({
     onExitFullscreen: () => {
       // TODO: mutate finish exam
@@ -27,10 +29,15 @@ export const Component: FC = (): ReactElement => {
 
   const handleStart = () => {
     startExam();
-    const isNotNumber = isNaN(Number(params.examId));
-    if (isNotNumber) {
+    
+    if (!session) {
+      toast.error("Gagal memuat data sesi");
+      return;
+    }
+
+    if (session.category === 'akademik') {
       navigate(`/student/sessions/${params.sessionId}/exams/${params.examId}/start`);
-    } else {
+    } else if (session.category === 'psikolog') {
       navigate(`/student/sessions/${params.sessionId}/exams/${params.examId}/start-sequence`);
     }
   };
@@ -63,8 +70,13 @@ export const Component: FC = (): ReactElement => {
         <button
           onClick={handleStart}
           className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          disabled={!session}
         >
-          Mulai Ujian
+          {session ? (
+            session.category === 'akademik' ? 'Mulai Ujian Akademik' : 'Mulai Ujian Psikolog'
+          ) : (
+            'Memuat...'
+          )}
         </button>
       </div>
     </div>
