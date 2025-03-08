@@ -16,7 +16,13 @@ export const usePostLogin = () => {
       AccessTokenCookies.set(res.data.token.access_token);
       RefreshTokenCookies.set(res.data.token.refresh_token);
       UserLocalStorage.set(res.data.user);
-      navigate(0);
+      
+      // Redirect based on verification status
+      if (res.data.user.is_active) {
+        navigate("/student/dashboard");
+      } else {
+        navigate("/auth/verify-email");
+      }
     },
     onError: (err) => {
       if (err.response?.status === 403) {
