@@ -1,8 +1,16 @@
 import { FC, ReactElement } from "react";
+import { useLocation } from "react-router-dom";
 
 export const Component: FC = (): ReactElement => {
+  const location = useLocation();
+  const needsEmailVerification = location.state?.needsEmailVerification;
   return (
     <div className="min-h-screen w-full bg-gray-100">
+      {needsEmailVerification && (
+        <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4">
+          <p>Please check your email to verify your account. If you didn't receive the email, you can request a new verification link.</p>
+        </div>
+      )}
       {/* Main Content */}
       <main className="flex flex-col w-full mx-auto px-4 py-6 gap-y-6">
         {/* Card Progress */}

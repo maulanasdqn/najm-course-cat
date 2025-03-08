@@ -20,10 +20,8 @@ export const usePostLogin = () => {
     },
     onError: (err) => {
       if (err.response?.status === 403) {
-        navigate("/student/dashboard");
-        toast("Please check your email to verify your account", {
-          position: "top-center",
-          duration: 5000,
+        navigate("/student/dashboard", {
+          state: { needsEmailVerification: true }
         });
         return;
       }
