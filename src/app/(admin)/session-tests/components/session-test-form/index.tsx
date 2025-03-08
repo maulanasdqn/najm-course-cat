@@ -5,17 +5,18 @@ import { ROUTES } from "@/commons/constants/routes";
 import {
   createSessionTestFormSchema,
   CreateSessionTestFormData,
-} from "../_schemas/session-test-form.schema";
-import { useCreateSessionTest } from "../_hooks/use-create-session-test";
-import { useUpdateSessionTest } from "../_hooks/use-update-session-test";
+} from "../../_schemas/session-test-form.schema";
+import { useCreateSessionTest } from "../../_hooks/use-create-session-test";
+import { useUpdateSessionTest } from "../../_hooks/use-update-session-test";
 import { TSessionTestItem } from "@/api/session-test/type";
 import { InputText } from "@/app/_components/ui/inputs/text";
 import { studentTypeOptions } from "@/commons/constants/student-type";
 import { Select } from "@/app/_components/ui/inputs/select";
 import { InputTextArea } from "@/app/_components/ui/inputs/text-area";
+import { categoryOptions } from "./constants";
 import { InputCheckbox } from "@/app/_components/ui/inputs/checkbox";
 import { useGetTestsOption } from "./use-get-tests-option";
-import { Button } from "../../_components/button";
+import { Button } from "../../../_components/button";
 
 type SessionTestFormProps = {
   type: "create" | "update";
@@ -84,7 +85,12 @@ export const SessionTestForm = ({ type, defaultValues }: SessionTestFormProps) =
             placeholder="Masukan nama sesi"
           />
 
-          <InputCheckbox name="is_active" control={control} label="Aktif" />
+          <div>
+            <InputCheckbox name="is_active" control={control} label="Aktif" />
+            <div className="text-sm mt-1 text-gray-500">
+              Jika sesi tidak aktif maka tidak akan muncul di halaman murid
+            </div>
+          </div>
 
           <InputTextArea
             name="description"
@@ -96,9 +102,17 @@ export const SessionTestForm = ({ type, defaultValues }: SessionTestFormProps) =
           <Select
             name="student_type"
             control={control}
-            label="Kategori"
-            placeholder="Pilih kategori"
+            label="Jenis Siswa"
+            placeholder="Pilih Jenis Siswa"
             options={studentTypeOptions}
+          />
+
+          <Select
+            name="category"
+            control={control}
+            label="Kategori"
+            placeholder="Pilih Kategori"
+            options={categoryOptions}
           />
         </div>
       </div>

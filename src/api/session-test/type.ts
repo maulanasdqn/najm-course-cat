@@ -8,6 +8,7 @@ export type TSessionTestItem = {
   id: string;
   session_name: string;
   student_type: string;
+  category: string;
   test_count: number;
   description: string;
   is_active: boolean;

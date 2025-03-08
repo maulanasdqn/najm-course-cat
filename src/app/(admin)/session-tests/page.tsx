@@ -37,6 +37,10 @@ export default function SessionTestsPage() {
     },
     {
       accessorKey: "student_type",
+      header: "Jenis Siswa",
+    },
+    {
+      accessorKey: "category",
       header: "Kategori",
     },
     {

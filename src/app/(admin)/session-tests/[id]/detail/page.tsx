@@ -29,8 +29,12 @@ export default function SessionTestDetailPage() {
             <p className="mt-1">{sessionTest.description}</p>
           </div>
           <div>
-            <h2 className="text-sm font-medium text-gray-500">Kategori</h2>
+            <h2 className="text-sm font-medium text-gray-500">Jenis Siswa</h2>
             <p className="mt-1">{sessionTest.student_type}</p>
+          </div>
+          <div>
+            <h2 className="text-sm font-medium text-gray-500">Kategori</h2>
+            <p className="mt-1">{sessionTest.category}</p>
           </div>
           <div>
             <h2 className="text-sm font-medium text-gray-500">Created At</h2>
