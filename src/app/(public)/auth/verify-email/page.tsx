@@ -2,42 +2,29 @@ import { Button } from "@/app/_components/ui/button";
 import { OtpInput } from "@/app/_components/ui/inputs/otp-input";
 import { useVerifyEmail } from "./_hooks/use-verify-email";
 import { useEffect } from "react";
-import { queryClient } from "@/libs/react-query/react-query-client";
-import { POST_REGISTER_MUTATION_KEY } from "../register/hooks/use-post-register";
-import { TLoginParam, TLoginResponse, TRegisterParam, TRegisterResponse } from "@/api/auth/type";
-import { MutationState } from "@tanstack/react-query";
-import { AxiosError } from "axios";
-import { TErrorResponse } from "@/commons/types/error";
+import { UserLocalStorage } from "@/libs/cookies";
 import { Navigate } from "react-router-dom";
-import { POST_LOGIN_MUTATION_KEY } from "../login/_hooks/use-post-login";
 import { ROUTES } from "@/commons/constants/routes";
 import { useCountdown } from "@/app/_hooks/use-countdown";
 
 export const Component = () => {
   const { form, handler } = useVerifyEmail();
   const countdown = useCountdown(60 * 1000);
-
-  const registerResponse = queryClient.getMutationCache().find({
-    mutationKey: POST_REGISTER_MUTATION_KEY,
-  })?.state as MutationState<
-    TRegisterResponse,
-    AxiosError<TErrorResponse>,
-    TRegisterParam,
-    unknown
-  >;
-
-  const loginResponse = queryClient.getMutationCache().find({
-    mutationKey: POST_LOGIN_MUTATION_KEY,
-  })?.state as MutationState<TLoginResponse, AxiosError<TErrorResponse>, TLoginParam, unknown>;
+  const userData = UserLocalStorage.get();
 
   useEffect(() => {
-    form.setValue(
-      "email",
-      registerResponse?.variables?.email || loginResponse?.variables?.email || "",
-    );
-  }, []);
+    if (userData?.email) {
+      form.setValue("email", userData.email);
+    }
+  }, [userData]);
 
-  if (!registerResponse?.variables?.email && !loginResponse?.variables?.email) {
+  // Redirect to dashboard if already verified
+  if (userData?.is_active) {
+    return <Navigate to={ROUTES.STUDENT.DASHBOARD.URL} />;
+  }
+
+  // Redirect to login if no user data
+  if (!userData) {
     return <Navigate to={ROUTES.AUTH.LOGIN.URL} />;
   }
 
