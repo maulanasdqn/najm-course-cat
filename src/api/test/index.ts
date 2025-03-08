@@ -41,10 +41,6 @@ export const deleteTest = async (id: string): Promise<TTestDeleteResponse> => {
 };
 
 export const answerExam = async (payload: TExamAnswerRequest): Promise<TExamAnswerResponse> => {
-  return Promise.resolve({
-    status_code: 200,
-    message: "Exam answered successfully",
-  });
   const { data } = await api.post(`/v1/tests/answer/create`, payload);
   return data;
 };

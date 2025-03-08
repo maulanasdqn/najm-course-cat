@@ -9,9 +9,17 @@ export const Component: FC = (): ReactElement => {
   const { startExam } = useExam({
     onExitFullscreen: () => {
       // TODO: mutate finish exam
-      navigate(`/student/sessions/${params.sessionId}/exams/${params.examId}/result`, {
-        replace: true,
-      });
+
+      const isNotNumber = isNaN(Number(params.examId));
+      if (isNotNumber) {
+        navigate(`/student/sessions/${params.sessionId}/exams/${params.examId}/result`, {
+          replace: true,
+        });
+      } else {
+        navigate(`/student/sessions/${params.sessionId}/exams/results`, {
+          replace: true,
+        });
+      }
       toast.success("Ujian telah selesai. Jawaban Anda telah disimpan.");
     },
   });
@@ -19,7 +27,12 @@ export const Component: FC = (): ReactElement => {
 
   const handleStart = () => {
     startExam();
-    navigate(`/student/sessions/${params.sessionId}/exams/${params.examId}/start`);
+    const isNotNumber = isNaN(Number(params.examId));
+    if (isNotNumber) {
+      navigate(`/student/sessions/${params.sessionId}/exams/${params.examId}/start`);
+    } else {
+      navigate(`/student/sessions/${params.sessionId}/exams/${params.examId}/start-sequence`);
+    }
   };
 
   return (

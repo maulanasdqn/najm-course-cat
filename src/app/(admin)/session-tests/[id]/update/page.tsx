@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import { SessionTestForm } from "../../components/session-test-form";
 import { useGetSessionTest } from "../../_hooks/use-get-session-test";
-import { convertDateToDatetimeLocal } from "@/utils/date";
 
 export default function UpdateSessionTestPage() {
   const { id } = useParams<{ id: string }>();
@@ -19,13 +18,10 @@ export default function UpdateSessionTestPage() {
           defaultValues={{
             id: data?.data.id,
             session_name: data?.data?.session_name,
+            description: data?.data?.description,
             student_type: data?.data?.student_type,
-            start_date: data?.data?.start_date
-              ? convertDateToDatetimeLocal(new Date(data?.data?.start_date))
-              : undefined,
-            end_date: data?.data?.end_date
-              ? convertDateToDatetimeLocal(new Date(data?.data?.end_date))
-              : undefined,
+            is_active: data?.data.is_active,
+            tests: data?.data.tests,
           }}
         />
       </div>

@@ -1,0 +1,542 @@
+[
+  {
+    "id": "1",
+    "discussion": "Tes ini bertujuan untuk mengukur karakteristik kepribadian Anda.",
+    "question": "Seberapa sering Anda merasa cemas atau khawatir?",
+    "options": [
+      {
+        "id": "1",
+        "label": "Tidak pernah",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Jarang",
+        "is_correct": false
+      },
+      {
+        "id": "3",
+        "label": "Kadang-kadang",
+        "is_correct": false
+      },
+      {
+        "id": "4",
+        "label": "Sering",
+        "is_correct": true
+      },
+      {
+        "id": "5",
+        "label": "Selalu",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "discussion": "Pertanyaan ini menguji tingkat ekstroversi Anda.",
+    "question": "Seberapa suka Anda berada di tengah keramaian dan berinteraksi dengan banyak orang?",
+    "options": [
+      {
+        "id": "1",
+        "label": "Sangat tidak suka",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak suka",
+        "is_correct": false
+      },
+      {
+        "id": "3",
+        "label": "Netral",
+        "is_correct": false
+      },
+      {
+        "id": "4",
+        "label": "Suka",
+        "is_correct": true
+      },
+      {
+        "id": "5",
+        "label": "Sangat suka",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "3",
+    "discussion": "Pertanyaan ini menguji tingkat keramahan Anda.",
+    "question": "Seberapa mudah Anda percaya pada orang lain?",
+    "options": [
+      {
+        "id": "1",
+        "label": "Sangat tidak mudah",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak mudah",
+        "is_correct": false
+      },
+      {
+        "id": "3",
+        "label": "Netral",
+        "is_correct": false
+      },
+      {
+        "id": "4",
+        "label": "Mudah",
+        "is_correct": true
+      },
+      {
+        "id": "5",
+        "label": "Sangat mudah",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "4",
+    "discussion": "Pertanyaan ini menguji tingkat kesadaran Anda.",
+    "question": "Seberapa terorganisir dan terencana Anda dalam melakukan sesuatu?",
+    "options": [
+      {
+        "id": "1",
+        "label": "Sangat tidak terorganisir",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak terorganisir",
+        "is_correct": false
+      },
+      {
+        "id": "3",
+        "label": "Netral",
+        "is_correct": false
+      },
+      {
+        "id": "4",
+        "label": "Terorganisir",
+        "is_correct": true
+      },
+      {
+        "id": "5",
+        "label": "Sangat terorganisir",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "5",
+    "discussion": "Pertanyaan ini menguji tingkat keterbukaan Anda terhadap pengalaman baru.",
+    "question": "Seberapa suka Anda mencoba hal-hal baru dan berbeda?",
+    "options": [
+      {
+        "id": "1",
+        "label": "Sangat tidak suka",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak suka",
+        "is_correct": false
+      },
+      {
+        "id": "3",
+        "label": "Netral",
+        "is_correct": false
+      },
+      {
+        "id": "4",
+        "label": "Suka",
+        "is_correct": true
+      },
+      {
+        "id": "5",
+        "label": "Sangat suka",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "6",
+    "discussion": "Pertanyaan ini menguji bagaimana Anda bereaksi terhadap tekanan.",
+    "question": "Ketika menghadapi situasi yang menegangkan, apa yang biasanya Anda lakukan?",
+    "options": [
+      {
+        "id": "1",
+        "label": "Menarik diri dari situasi.",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Mencari dukungan dari orang lain.",
+        "is_correct": true
+      },
+      {
+        "id": "3",
+        "label": "Menyalahkan diri sendiri.",
+        "is_correct": false
+      },
+      {
+        "id": "4",
+        "label": "Menjadi agresif.",
+        "is_correct": false
+      },
+      {
+        "id": "5",
+        "label": "Tetap tenang dan mencari solusi.",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "7",
+    "discussion": "Pertanyaan ini menguji bagaimana Anda memandang diri sendiri.",
+    "question": "Seberapa percaya diri Anda dengan kemampuan Anda?",
+    "options": [
+      {
+        "id": "1",
+        "label": "Sangat tidak percaya diri",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Tidak percaya diri",
+        "is_correct": false
+      },
+      {
+        "id": "3",
+        "label": "Netral",
+        "is_correct": false
+      },
+      {
+        "id": "4",
+        "label": "Percaya diri",
+        "is_correct": true
+      },
+      {
+        "id": "5",
+        "label": "Sangat percaya diri",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "8",
+    "discussion": "Pertanyaan ini menguji bagaimana Anda berinteraksi dengan orang lain.",
+    "question": "Seberapa mudah Anda memaafkan orang lain?",
+    "options": [
+      {
+        "id": "1",
+        "label": "Sangat sulit",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Sulit",
+        "is_correct": false
+      },
+      {
+        "id": "3",
+        "label": "Netral",
+        "is_correct": false
+      },
+      {
+        "id": "4",
+        "label": "Mudah",
+        "is_correct": true
+      },
+      {
+        "id": "5",
+        "label": "Sangat mudah",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "9",
+    "discussion": "Pertanyaan ini menguji bagaimana Anda menghadapi perubahan.",
+    "question": "Seberapa mudah Anda beradaptasi dengan perubahan?",
+    "options": [
+      {
+        "id": "1",
+        "label": "Sangat sulit",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Sulit",
+        "is_correct": false
+      },
+      {
+        "id": "3",
+        "label": "Netral",
+        "is_correct": false
+      },
+      {
+        "id": "4",
+        "label": "Mudah",
+        "is_correct": true
+      },
+      {
+        "id": "5",
+        "label": "Sangat mudah",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "10",
+    "discussion": "Pertanyaan ini menguji bagaimana Anda mengelola emosi.",
+    "question": "Seberapa sering Anda merasa kewalahan oleh emosi Anda?",
+    "options": [
+      {
+        "id": "1",
+        "label": "Tidak pernah",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Jarang",
+        "is_correct": false
+      },
+      {
+        "id": "3",
+        "label": "Kadang-kadang",
+        "is_correct": false
+      },
+      {
+        "id": "4",
+        "label": "Sering",
+        "is_correct": true
+      },
+      {
+        "id": "5",
+        "label": "Selalu",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "11",
+    "discussion": "Pertanyaan ini menguji preferensi Anda dalam bekerja.",
+    "question": "Apakah Anda lebih suka bekerja sendiri atau dalam tim?",
+    "options": [
+      {
+        "id": "1",
+        "label": "Lebih suka bekerja sendiri",
+        "is_correct": true
+      },
+      {
+        "id": "2",
+        "label": "Lebih suka bekerja dalam tim",
+        "is_correct": false
+      },
+      {
+        "id": "3",
+        "label": "Keduanya sama saja",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "12",
+    "discussion": "Pertanyaan ini menguji bagaimana Anda mengambil keputusan.",
+    "question": "Ketika membuat keputusan, apakah Anda lebih mengandalkan logika atau intuisi?",
+    "options": [
+      {
+        "id": "1",
+        "label": "Lebih mengandalkan logika",
+        "is_correct": true
+      },
+      {
+        "id": "2",
+        "label": "Lebih mengandalkan intuisi",
+        "is_correct": false
+      },
+      {
+        "id": "3",
+        "label": "Keduanya sama saja",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "13",
+    "discussion": "Pertanyaan ini menguji bagaimana Anda menghadapi tantangan.",
+    "question": "Seberapa gigih Anda dalam mencapai tujuan Anda?",
+    "options": [
+      {
+        "id": "1",
+        "label": "Mudah menyerah",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Cukup gigih",
+        "is_correct": false
+      },
+      {
+        "id": "3",
+        "label": "Sangat gigih",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "14",
+    "discussion": "Pertanyaan ini menguji bagaimana Anda memandang dunia.",
+    "question": "Apakah Anda cenderung melihat sisi baik atau sisi buruk dari sesuatu?",
+    "options": [
+      {
+        "id": "1",
+        "label": "Cenderung melihat sisi baik",
+        "is_correct": true
+      },
+      {
+        "id": "2",
+        "label": "Cenderung melihat sisi buruk",
+        "is_correct": false
+      },
+      {
+        "id": "3",
+        "label": "Keduanya sama saja",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "15",
+    "discussion": "Pertanyaan ini menguji bagaimana Anda merespons kritik.",
+    "question": "Bagaimana Anda bereaksi terhadap kritik?",
+    "options": [
+      {
+        "id": "1",
+        "label": "Menjadi defensif",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Menerima dan mencoba belajar",
+        "is_correct": true
+      },
+      {
+        "id": "3",
+        "label": "Mengabaikannya",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "16",
+    "discussion": "Pertanyaan ini menguji bagaimana Anda mengatur prioritas.",
+    "question": "Bagaimana Anda mengatur prioritas dalam pekerjaan atau kegiatan sehari-hari?",
+    "options": [
+      {
+        "id": "1",
+        "label": "Mengerjakan yang paling mudah dulu",
+        "is_correct": false
+      },
+      {
+        "id": "2",
+        "label": "Mengerjakan yang paling penting dulu",
+        "is_correct": true
+      },
+      {
+        "id": "3",
+        "label": "Mengerjakan semuanya sekaligus",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "17",
+    "discussion": "Pertanyaan ini menguji bagaimana Anda mengekspresikan diri.",
+    "question": "Apakah Anda cenderung berbicara atau lebih suka diam?",
+    "options": [
+      {
+        "id": "1",
+        "label": "Lebih suka berbicara",
+        "is_correct": true
+      },
+      {
+        "id": "2",
+        "label": "Lebih suka diam",
+        "is_correct": false
+      },
+      {
+        "id": "3",
+        "label": "Keduanya sama saja",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "18",
+    "discussion": "Pertanyaan ini menguji bagaimana Anda merespons aturan.",
+    "question": "Apakah Anda cenderung mengikuti aturan atau lebih suka melakukan sesuatu dengan cara Anda sendiri?",
+    "options": [
+      {
+        "id": "1",
+        "label": "Mengikuti aturan",
+        "is_correct": true
+      },
+      {
+        "id": "2",
+        "label": "Melakukan sesuatu dengan cara sendiri",
+        "is_correct": false
+      },
+      {
+        "id": "3",
+        "label": "Tergantung situasi",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "19",
+    "discussion": "Pertanyaan ini menguji bagaimana Anda menghadapi rutinitas.",
+    "question": "Apakah Anda menyukai rutinitas atau lebih suka spontanitas?",
+    "options": [
+      {
+        "id": "1",
+        "label": "Menyukai rutinitas",
+        "is_correct": true
+      },
+      {
+        "id": "2",
+        "label": "Lebih suka spontanitas",
+        "is_correct": false
+      },
+      {
+        "id": "3",
+        "label": "Keduanya sama saja",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "20",
+    "discussion": "Pertanyaan ini menguji bagaimana Anda melihat masa depan.",
+    "question": "Apakah Anda cenderung optimis atau pesimis tentang masa depan?",
+    "options": [
+      {
+        "id": "1",
+        "label": "Optimis",
+        "is_correct": true
+      },
+      {
+        "id": "2",
+        "label": "Pesimis",
+        "is_correct": false
+      },
+      {
+        "id": "3",
+        "label": "Netral",
+        "is_correct": false
+      }
+    ]
+  }
+]
