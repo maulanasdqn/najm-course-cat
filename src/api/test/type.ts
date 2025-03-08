@@ -28,6 +28,7 @@ export type TTestPaginateResponse = TResponsePaginate<TTestItem>;
 export type TTestDetailResponse = TResponseData<{
   created_at: string;
   id: string;
+  next_test_id?: string;
   questions: {
     discussion: string;
     id: string;

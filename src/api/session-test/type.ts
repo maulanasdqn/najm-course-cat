@@ -9,9 +9,15 @@ export type TSessionTestItem = {
   session_name: string;
   student_type: string;
   test_count: number;
-  start_date: string;
   description: string;
-  end_date: string;
+  is_active: boolean;
+  tests: {
+    id?: string;
+    weight?: string;
+    multiplier?: string;
+    start_date?: string;
+    end_date?: string;
+  }[];
   created_at: string;
   updated_at: string;
 };

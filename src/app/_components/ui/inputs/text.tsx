@@ -25,7 +25,7 @@ export const InputText = <T extends FieldValues>(props: TInputText<T>): ReactEle
   );
 
   return (
-    <InputWrap {...props} message={fieldState.error?.message}>
+    <InputWrap message={fieldState.error?.message} {...props}>
       <input
         className={className}
         {...props}
