@@ -20,7 +20,12 @@ export const usePostLogin = () => {
     },
     onError: (err) => {
       if (err.status === 403) {
-        return navigate("/auth/verify-email");
+        navigate("/student/dashboard");
+        toast.info('Please check your email to verify your account', {
+          position: 'top-center',
+          autoClose: 5000,
+        });
+        return;
       }
       toast.error(err.response?.data.message || "Terjadi Kesalahan");
     },
