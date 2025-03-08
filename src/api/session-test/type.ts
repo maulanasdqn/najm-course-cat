@@ -14,6 +14,8 @@ export type TSessionTestItem = {
   is_active: boolean;
   tests: {
     id?: string;
+    test_name: string;
+    question_count: number;
     weight?: string;
     multiplier?: string;
     start_date?: string;

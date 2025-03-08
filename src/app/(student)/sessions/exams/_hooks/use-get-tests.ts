@@ -12,7 +12,8 @@ export const useGetTests = (params: TGetTestsParams) => {
       params.search,
       params.sort,
       params.order,
-      params.session_id,
+      params.filter_by,
+      params.filter,
     ],
     queryFn: () => getTests(params),
   });
