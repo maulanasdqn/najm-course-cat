@@ -18,11 +18,11 @@ export const usePostLogin = () => {
       UserLocalStorage.set(res.data.user);
       navigate(0);
     },
-    onError: (err: any) => {
+    onError: (err) => {
       if (err.response?.status === 403) {
         navigate("/student/dashboard");
-        toast('Please check your email to verify your account', {
-          position: 'top-center',
+        toast("Please check your email to verify your account", {
+          position: "top-center",
           duration: 5000,
         });
         return;
