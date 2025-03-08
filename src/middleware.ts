@@ -36,7 +36,7 @@ export const middleware = async ({ request }: LoaderFunctionArgs) => {
   const pathname = url.pathname;
 
   // Allow public routes
-  if (mappingPublicRoutes.includes(pathname) && (!session || !userData?.role)) {
+  if (mappingPublicRoutes.includes(pathname)) {
     return null;
   }
 
