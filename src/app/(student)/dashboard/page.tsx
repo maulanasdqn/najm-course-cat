@@ -5,11 +5,6 @@ export const Component: FC = (): ReactElement => {
   const userData = UserLocalStorage.get();
   const needsEmailVerification = !userData?.is_active;
   
-  // Redirect to verify email if not active
-  if (needsEmailVerification) {
-    window.location.href = "/auth/verify-email";
-    return null;
-  }
   return (
     <div className="min-h-screen w-full bg-gray-100">
       {needsEmailVerification && (
