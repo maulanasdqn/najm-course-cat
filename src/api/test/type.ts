@@ -62,10 +62,10 @@ export type TTestDeleteResponse = {
 };
 
 export type TExamAnswerRequest = {
-  id: string;
+  test_id: string;
   questions: Array<{
-    id: string;
-    option_id: string; // option id
+    question_id: string;
+    option_id: string;
   }>;
 };
 

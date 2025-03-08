@@ -38,3 +38,4 @@ devenv.local.nix
 
 tsconfig.node.tsbuildinfo
 tsconfig.app.tsbuildinfo
+.aider*

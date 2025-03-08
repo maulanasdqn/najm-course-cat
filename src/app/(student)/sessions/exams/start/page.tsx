@@ -1,11 +1,11 @@
 import { FC, ReactElement, useState, useEffect } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { TExamAnswerRequest } from "@/api/exams/type";
 import { useExam } from "../detail/_hooks/use-exam";
 import toast from "react-hot-toast";
 import { useAnswerExamMutation } from "./_hooks/use-answer-exam-mutation";
 import { useGetTest } from "./_hooks/use-get-tests-query";
 import { ArrowRightIcon } from "@/app/_components/ui/icons/ic-arrow-right";
+import { TExamAnswerRequest } from "@/api/test/type";
 
 // Left arrow icon component
 const ArrowLeftIcon = () => (
@@ -41,7 +41,7 @@ export const Component: FC = (): ReactElement => {
     onFinish: () => {
       answerExamMutation.mutate(
         {
-          id: params.examId!,
+          test_id: params.examId!,
           questions: answers.filter((answer) => answer !== null),
         },
         {
@@ -50,6 +50,9 @@ export const Component: FC = (): ReactElement => {
               replace: true,
             });
             toast.success("Ujian telah selesai. Jawaban Anda telah disimpan.");
+          },
+          onError: () => {
+            toast.error("Terjadi kesalahan saat menjawab ujian.");
           },
         },
       );
@@ -62,7 +65,11 @@ export const Component: FC = (): ReactElement => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
+      const newTimer = timeLeft > 0 ? timeLeft - 1 : 0;
+      setTimeLeft(newTimer);
+      if (newTimer === 0) {
+        finishExam();
+      }
     }, 1000);
     return () => clearInterval(timer);
   }, []);
@@ -140,7 +147,7 @@ export const Component: FC = (): ReactElement => {
                 className={`w-10 h-10 rounded-md ${
                   currentQuestion === index
                     ? "bg-blue-500 text-white"
-                    : answers[index]?.id && currentQuestion !== index
+                    : answers[index]?.question_id && currentQuestion !== index
                       ? "bg-green-500 text-white"
                       : "bg-red-500"
                 }`}
@@ -173,7 +180,7 @@ export const Component: FC = (): ReactElement => {
                     value={option.id}
                     onChange={() =>
                       handleAnswer({
-                        id: testQuery.data?.data.questions[currentQuestion].id,
+                        question_id: testQuery.data?.data.questions[currentQuestion].id,
                         option_id: option.id,
                       })
                     }
@@ -190,7 +197,9 @@ export const Component: FC = (): ReactElement => {
                 disabled={currentQuestion === 0}
                 className="px-4 py-2 bg-gray-300 text-gray-700 rounded disabled:opacity-50 flex items-center"
               >
-                <span className="mr-2"><ArrowLeftIcon /></span>
+                <span className="mr-2">
+                  <ArrowLeftIcon />
+                </span>
                 Kembali
               </button>
               <button
@@ -199,7 +208,9 @@ export const Component: FC = (): ReactElement => {
                 className="px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-50 flex items-center"
               >
                 Simpan dan Lanjutkan
-                <span className="ml-2"><ArrowRightIcon /></span>
+                <span className="ml-2">
+                  <ArrowRightIcon />
+                </span>
               </button>
             </div>
           </div>
