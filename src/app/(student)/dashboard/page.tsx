@@ -4,6 +4,7 @@ import { UserLocalStorage } from "@/libs/cookies";
 export const Component: FC = (): ReactElement => {
   const userData = UserLocalStorage.get();
   const needsEmailVerification = !userData?.is_active;
+  console.log(userData);
   return (
     <div className="min-h-screen w-full bg-gray-100">
       {needsEmailVerification && (
@@ -12,10 +13,7 @@ export const Component: FC = (): ReactElement => {
             Please check your email to verify your account. If you didn't receive the email, you can
             request a new verification link.
           </p>
-          <a
-            href="/auth/verify-email"
-            className="text-blue-600 hover:text-blue-800 underline"
-          >
+          <a href="/auth/verify-email" className="text-blue-600 hover:text-blue-800 underline">
             Go to Email Verification Page
           </a>
         </div>
