@@ -2,12 +2,12 @@ import { FC, ReactElement, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useExam } from "./_hooks/use-exam";
 import toast from "react-hot-toast";
-import { useSession } from "../../_hooks/use-session";
+import { useGetSessionTest } from "../../_hooks/use-get-session-test";
 
 export const Component: FC = (): ReactElement => {
   const navigate = useNavigate();
   const params = useParams<{ examId: string; sessionId: string }>();
-  const { data: session } = useSession({ sessionId: params.sessionId! });
+  const { data: session } = useGetSessionTest(params.sessionId!);
   const { startExam } = useExam({
     onExitFullscreen: () => {
       // TODO: mutate finish exam
@@ -29,16 +29,18 @@ export const Component: FC = (): ReactElement => {
 
   const handleStart = () => {
     startExam();
-    
+
     if (!session) {
       toast.error("Gagal memuat data sesi");
       return;
     }
 
-    if (session.category === 'akademik') {
+    if (session.data.category === "akademik") {
       navigate(`/student/sessions/${params.sessionId}/exams/${params.examId}/start`);
-    } else if (session.category === 'psikolog') {
+    } else if (session.data.category === "psikolog") {
       navigate(`/student/sessions/${params.sessionId}/exams/${params.examId}/start-sequence`);
+    } else {
+      toast.error("Sesi tidak ditemukan");
     }
   };
 
@@ -72,11 +74,7 @@ export const Component: FC = (): ReactElement => {
           className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
           disabled={!session}
         >
-          {session ? (
-            session.category === 'akademik' ? 'Mulai Ujian Akademik' : 'Mulai Ujian Psikolog'
-          ) : (
-            'Memuat...'
-          )}
+          {session ? "Mulai Ujian" : "Memuat..."}
         </button>
       </div>
     </div>
