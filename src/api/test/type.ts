@@ -21,7 +21,8 @@ export type TGetTestsParams = {
   sort?: string;
   order?: string;
   search?: string;
-  session_id?: string;
+  filter?: string;
+  filter_by?: string;
 };
 
 export type TTestPaginateResponse = TResponsePaginate<TTestItem>;
