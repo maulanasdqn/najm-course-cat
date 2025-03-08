@@ -8,10 +8,16 @@ export const Component: FC = (): ReactElement => {
     <div className="min-h-screen w-full bg-gray-100">
       {needsEmailVerification && (
         <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4">
-          <p>
+          <p className="mb-2">
             Please check your email to verify your account. If you didn't receive the email, you can
             request a new verification link.
           </p>
+          <a
+            href="/auth/verify-email"
+            className="text-blue-600 hover:text-blue-800 underline"
+          >
+            Go to Email Verification Page
+          </a>
         </div>
       )}
       {/* Main Content */}
