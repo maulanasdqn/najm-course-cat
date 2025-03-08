@@ -72,3 +72,16 @@ export type TExamAnswerRequest = {
 export type TExamAnswerResponse = {
   message: string;
 };
+
+export type TTestAnswerDetailResponse = TResponseData<{
+  id: string;
+  test_id: string;
+  user_id: string;
+  created_at: string;
+  updated_at: string;
+  answers: Array<{
+    question_id: string;
+    option_id: string;
+    is_correct: boolean;
+  }>;
+}>;

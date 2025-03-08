@@ -44,3 +44,8 @@ export const answerExam = async (payload: TExamAnswerRequest): Promise<TExamAnsw
   const { data } = await api.post(`/v1/tests/answer/create`, payload);
   return data;
 };
+
+export const getTestAnswer = async (id: string): Promise<TTestAnswerDetailResponse> => {
+  const { data } = await api.get(`/v1/tests/answer/${id}`);
+  return data;
+};
