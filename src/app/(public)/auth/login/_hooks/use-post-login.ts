@@ -20,9 +20,7 @@ export const usePostLogin = () => {
     },
     onError: (err) => {
       if (err.response?.status === 403) {
-        navigate("/student/dashboard", {
-          state: { needsEmailVerification: true }
-        });
+        navigate("/student/dashboard");
         return;
       }
       toast.error(err.response?.data?.message || "Terjadi Kesalahan");

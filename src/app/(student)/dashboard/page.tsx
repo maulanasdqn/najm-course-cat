@@ -1,9 +1,9 @@
 import { FC, ReactElement } from "react";
-import { useLocation } from "react-router-dom";
+import { UserLocalStorage } from "@/libs/cookies";
 
 export const Component: FC = (): ReactElement => {
-  const location = useLocation();
-  const needsEmailVerification = location.state?.needsEmailVerification;
+  const userData = UserLocalStorage.get();
+  const needsEmailVerification = !userData?.is_active;
   return (
     <div className="min-h-screen w-full bg-gray-100">
       {needsEmailVerification && (
