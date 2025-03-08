@@ -79,9 +79,15 @@ export type TTestAnswerDetailResponse = TResponseData<{
   user_id: string;
   created_at: string;
   updated_at: string;
-  answers: Array<{
-    question_id: string;
-    option_id: string;
-    is_correct: boolean;
+  questions: Array<{
+    discussion: string;
+    id: string;
+    options: Array<{
+      id: string;
+      label: string;
+      is_selected: boolean;
+      is_correct: boolean;
+    }>;
+    question: string;
   }>;
 }>;
