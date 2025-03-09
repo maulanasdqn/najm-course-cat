@@ -50,24 +50,24 @@ export const Component: FC = (): ReactElement => {
               {
                 id: "option-1",
                 label: "Sangat baik",
-                is_correct: true
+                is_correct: true,
               },
               {
                 id: "option-2",
                 label: "Baik",
-                is_correct: false
+                is_correct: false,
               },
               {
                 id: "option-3",
                 label: "Biasa saja",
-                is_correct: false
+                is_correct: false,
               },
               {
                 id: "option-4",
                 label: "Tidak baik",
-                is_correct: false
-              }
-            ]
+                is_correct: false,
+              },
+            ],
           },
           {
             id: "question-2",
@@ -77,31 +77,31 @@ export const Component: FC = (): ReactElement => {
               {
                 id: "option-5",
                 label: "Tidak pernah",
-                is_correct: true
+                is_correct: true,
               },
               {
                 id: "option-6",
                 label: "Jarang",
-                is_correct: false
+                is_correct: false,
               },
               {
                 id: "option-7",
                 label: "Kadang-kadang",
-                is_correct: false
+                is_correct: false,
               },
               {
                 id: "option-8",
                 label: "Sering",
-                is_correct: false
-              }
-            ]
-          }
-        ]
-      }
+                is_correct: false,
+              },
+            ],
+          },
+        ],
+      },
     },
     isLoading: false,
     isError: false,
-    error: null
+    error: null,
   };
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -115,7 +115,7 @@ export const Component: FC = (): ReactElement => {
     if (testQuery.data?.data.end_date) {
       const endDate = new Date(testQuery.data.data.end_date).getTime();
       const now = new Date().getTime();
-      
+
       // If end_date is in the past, redirect to exam list
       if (endDate - now <= 0) {
         navigate(`/student/sessions/${params.sessionId}/exams`, { replace: true });
@@ -155,7 +155,7 @@ export const Component: FC = (): ReactElement => {
 
     const startDate = new Date(testQuery.data.data.start_date).getTime();
     const now = new Date().getTime();
-    
+
     // If current time is before start date, show countdown
     if (startDate - now > 0) {
       const timeDiff = Math.max(0, Math.floor((startDate - now) / 1000));
@@ -180,7 +180,7 @@ export const Component: FC = (): ReactElement => {
 
     const endDate = new Date(testQuery.data.data.end_date).getTime();
     const now = new Date().getTime();
-    
+
     // Only set timer if end_date is in the future
     if (endDate - now > 0) {
       const timeDiff = Math.max(0, Math.floor((endDate - now) / 1000));
@@ -258,12 +258,8 @@ export const Component: FC = (): ReactElement => {
       <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
         <div className="bg-white p-8 rounded-lg shadow-md text-center">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Ujian Belum Dimulai</h2>
-          <p className="text-gray-600 mb-6">
-            Ujian akan dimulai dalam:
-          </p>
-          <div className="text-4xl font-bold text-blue-600">
-            {formatTime(timeUntilStart)}
-          </div>
+          <p className="text-gray-600 mb-6">Ujian akan dimulai dalam:</p>
+          <div className="text-4xl font-bold text-blue-600">{formatTime(timeUntilStart)}</div>
         </div>
       </div>
     );
@@ -288,98 +284,96 @@ export const Component: FC = (): ReactElement => {
             </div>
           </div>
           <div className="text-lg font-semibold text-red-600">
-            {testQuery.isLoading ? (
-              "Memuat waktu..."
-            ) : timeUntilStart > 0 ? (
-              `Ujian dimulai dalam: ${formatTime(timeUntilStart)}`
-            ) : (
-              `Waktu Tersisa: ${formatTime(timeLeft)}`
-            )}
+            {testQuery.isLoading
+              ? "Memuat waktu..."
+              : timeUntilStart > 0
+                ? `Ujian dimulai dalam: ${formatTime(timeUntilStart)}`
+                : `Waktu Tersisa: ${formatTime(timeLeft)}`}
           </div>
         </div>
       </div>
 
       {timeUntilStart > 0 ? null : (
-      <section className="flex flex-1 w-full max-w-7xl">
-        <aside className="w-1/4 order-2 bg-white mt-6 p-4 rounded-lg shadow-md h-fit">
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">Navigasi Soal</h3>
-          <div className="grid grid-cols-5 gap-2">
-            {testQuery.data?.data.questions.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => goToQuestion(index)}
-                className={`w-10 h-10 rounded-md ${
-                  currentQuestion === index
-                    ? "bg-blue-500 text-white"
-                    : answers[index]?.question_id && currentQuestion !== index
-                      ? "bg-green-500 text-white"
-                      : "bg-red-500"
-                }`}
-              >
-                {index + 1}
-              </button>
-            ))}
-          </div>
-          <button
-            onClick={finishExam}
-            className="w-full mt-4 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
-          >
-            Selesaikan Ujian
-          </button>
-        </aside>
-        <main className="flex-1 order-1 p-6 pl-0">
-          <div className="bg-white shadow rounded-lg p-6">
-            <h3 className="text-lg text-gray-800 mb-2">
-              Soal Nomor {currentQuestion + 1} dari {testQuery.data?.data.questions.length} :
-            </h3>
-            <h2 className="text-lg font-semibold  mb-4">
-              {testQuery.data?.data.questions[currentQuestion].question}
-            </h2>
-            <div className="flex flex-col gap-2">
-              {testQuery.data?.data.questions[currentQuestion].options.map((option, optIndex) => (
-                <label key={optIndex} className="flex items-center gap-2">
-                  <input
-                    type="radio"
-                    name={`question-${currentQuestion}`}
-                    value={option.id}
-                    onChange={() =>
-                      handleAnswer({
-                        question_id: testQuery.data?.data.questions[currentQuestion].id,
-                        option_id: option.id,
-                      })
-                    }
-                    checked={answers[currentQuestion]?.option_id === option.id}
-                    className="w-4 h-4 text-blue-600 focus:ring-blue-500 focus:ring-2"
-                  />
-                  <span className="text-gray-700">{option.label}</span>
-                </label>
+        <section className="flex flex-1 w-full max-w-7xl">
+          <aside className="w-1/4 order-2 bg-white mt-6 p-4 rounded-lg shadow-md h-fit">
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">Navigasi Soal</h3>
+            <div className="grid grid-cols-5 gap-2">
+              {testQuery.data?.data.questions.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => goToQuestion(index)}
+                  className={`w-10 h-10 rounded-md ${
+                    currentQuestion === index
+                      ? "bg-blue-500 text-white"
+                      : answers[index]?.question_id && currentQuestion !== index
+                        ? "bg-green-500 text-white"
+                        : "bg-red-500"
+                  }`}
+                >
+                  {index + 1}
+                </button>
               ))}
             </div>
-            <div className="flex justify-between mt-6">
-              <button
-                onClick={prevQuestion}
-                disabled={currentQuestion === 0}
-                className="px-4 py-2 bg-gray-300 text-gray-700 rounded disabled:opacity-50 flex items-center"
-              >
-                <span className="mr-2">
-                  <ArrowLeftIcon />
-                </span>
-                Kembali
-              </button>
-              <button
-                onClick={nextQuestion}
-                disabled={currentQuestion === (testQuery.data?.data.questions.length || 1) - 1}
-                className="px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-50 flex items-center"
-              >
-                Simpan dan Lanjutkan
-                <span className="ml-2">
-                  <ArrowRightIcon />
-                </span>
-              </button>
+            <button
+              onClick={finishExam}
+              className="w-full mt-4 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+            >
+              Selesaikan Ujian
+            </button>
+          </aside>
+          <main className="flex-1 order-1 p-6 pl-0">
+            <div className="bg-white shadow rounded-lg p-6">
+              <h3 className="text-lg text-gray-800 mb-2">
+                Soal Nomor {currentQuestion + 1} dari {testQuery.data?.data.questions.length} :
+              </h3>
+              <h2 className="text-lg font-semibold  mb-4">
+                {testQuery.data?.data.questions[currentQuestion].question}
+              </h2>
+              <div className="flex flex-col gap-2">
+                {testQuery.data?.data.questions[currentQuestion].options.map((option, optIndex) => (
+                  <label key={optIndex} className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      name={`question-${currentQuestion}`}
+                      value={option.id}
+                      onChange={() =>
+                        handleAnswer({
+                          question_id: testQuery.data?.data.questions[currentQuestion].id,
+                          option_id: option.id,
+                        })
+                      }
+                      checked={answers[currentQuestion]?.option_id === option.id}
+                      className="w-4 h-4 text-blue-600 focus:ring-blue-500 focus:ring-2"
+                    />
+                    <span className="text-gray-700">{option.label}</span>
+                  </label>
+                ))}
+              </div>
+              <div className="flex justify-between mt-6">
+                <button
+                  onClick={prevQuestion}
+                  disabled={currentQuestion === 0}
+                  className="px-4 py-2 bg-gray-300 text-gray-700 rounded disabled:opacity-50 flex items-center"
+                >
+                  <span className="mr-2">
+                    <ArrowLeftIcon />
+                  </span>
+                  Kembali
+                </button>
+                <button
+                  onClick={nextQuestion}
+                  disabled={currentQuestion === (testQuery.data?.data.questions.length || 1) - 1}
+                  className="px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-50 flex items-center"
+                >
+                  Simpan dan Lanjutkan
+                  <span className="ml-2">
+                    <ArrowRightIcon />
+                  </span>
+                </button>
+              </div>
             </div>
-          </div>
-        </main>
-      </section>
+          </main>
+        </section>
       )}
     </div>
   );
