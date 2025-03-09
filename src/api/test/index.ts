@@ -10,6 +10,7 @@ import {
   TTestCreateResponse,
   TExamAnswerRequest,
   TExamAnswerResponse,
+  TTestAnswerDetailResponse,
 } from "./type";
 
 export const getTests = async (params: TGetTestsParams): Promise<TTestPaginateResponse> => {

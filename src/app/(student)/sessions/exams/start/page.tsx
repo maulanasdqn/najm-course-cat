@@ -73,7 +73,7 @@ export const Component: FC = (): ReactElement => {
   }, [testQuery.data?.data.end_date]);
 
   useEffect(() => {
-    if (timeLeft <= 0) {
+    if (timeLeft <= 0 && testQuery.data?.data.end_date) {
       finishExam();
       return;
     }
@@ -142,11 +142,7 @@ export const Component: FC = (): ReactElement => {
             </div>
           </div>
           <div className="text-lg font-semibold text-red-600">
-            {testQuery.isLoading ? (
-              "Memuat waktu..."
-            ) : (
-              `Waktu Tersisa: ${formatTime(timeLeft)}`
-            )}
+            {testQuery.isLoading ? "Memuat waktu..." : `Waktu Tersisa: ${formatTime(timeLeft)}`}
           </div>
         </div>
       </div>

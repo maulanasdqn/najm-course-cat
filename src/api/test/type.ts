@@ -42,6 +42,8 @@ export type TTestDetailResponse = TResponseData<{
   }[];
   session_id: string;
   test_name: string;
+  start_date: string;
+  end_date: string;
   updated_at: string;
 }>;
 
