@@ -151,62 +151,17 @@ export const Component: FC = (): ReactElement => {
     setAnswers(Array(testQuery.data?.data.questions.length).fill(null));
   }, [testQuery.data?.data.questions]);
 
-  useEffect(() => {
-    if (!testQuery.data?.data.start_date) return;
-
-    const startDate = new Date(testQuery.data.data.start_date).getTime();
-    const now = new Date().getTime();
-
-    // If current time is before start date, show countdown
-    if (startDate - now > 0) {
-      const timeDiff = Math.max(0, Math.floor((startDate - now) / 1000));
-      setTimeUntilStart(timeDiff);
-    }
-
-    if (timeUntilStart > 0) {
-      timerRef.current = setInterval(() => {
-        setTimeUntilStart((prev) => Math.max(0, prev - 1));
-      }, 1000);
-    }
-
-    return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
-    };
-  }, [testQuery.data?.data.start_date]);
-
-  useEffect(() => {
-    if (!testQuery.data?.data.end_date) return;
-
-    const endDate = new Date(testQuery.data.data.end_date).getTime();
-    const now = new Date().getTime();
-
-    // Only set timer if end_date is in the future
-    if (endDate - now > 0) {
-      const timeDiff = Math.max(0, Math.floor((endDate - now) / 1000));
-      setTimeLeft(timeDiff);
-    }
-  }, [testQuery.data?.data.end_date]);
+  const { timeUntilStart, timeLeft } = useTimer(
+    testQuery.data?.data.start_date,
+    testQuery.data?.data.end_date,
+    params.sessionId
+  );
 
   useEffect(() => {
     if (timeLeft <= 0 && testQuery.data?.data.end_date) {
       finishExam();
-      return;
     }
-
-    if (timeLeft > 0) {
-      timerRef.current = setInterval(() => {
-        setTimeLeft((prev) => Math.max(0, prev - 1));
-      }, 1000);
-    }
-
-    return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
-    };
-  }, [timeLeft, finishExam]);
+  }, [timeLeft, finishExam, testQuery.data?.data.end_date]);
 
   const nextQuestion = () => {
     if (!testQuery.data) return;
