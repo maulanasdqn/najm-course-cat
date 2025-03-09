@@ -50,6 +50,13 @@ export default function TestDetailPage() {
                         {index + 1}
                       </span>
                       {question.question}
+                      {question.image_url && (
+                        <img
+                          src={question.image_url}
+                          alt="Question"
+                          className="mt-4 max-w-full h-48 object-contain"
+                        />
+                      )}
                     </h3>
                   </div>
 
@@ -66,6 +73,13 @@ export default function TestDetailPage() {
                         <div className="flex-1">
                           <div className="flex items-center">
                             <span className="mr-2 text-sm">{option.label}</span>
+                            {option.image_url && (
+                              <img
+                                src={option.image_url}
+                                alt="Option"
+                                className="mt-2 max-w-full h-32 object-contain"
+                              />
+                            )}
                             {option.is_correct && (
                               <span className="rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">
                                 Correct Answer
