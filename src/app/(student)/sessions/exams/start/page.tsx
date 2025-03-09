@@ -34,7 +34,7 @@ export const Component: FC = (): ReactElement => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const currentQuestion = parseInt(searchParams.get("page") || "1", 10) - 1;
-  const [timeLeft, setTimeLeft] = useState(600); // 10 minutes in seconds
+  const [timeLeft, setTimeLeft] = useState<number>(0);
   const [answers, setAnswers] = useState<TExamAnswerRequest["questions"]>([]);
 
   const { finishExam } = useExam({
@@ -64,15 +64,26 @@ export const Component: FC = (): ReactElement => {
   }, [testQuery.data?.data.questions]);
 
   useEffect(() => {
+    if (testQuery.data?.data.end_date) {
+      const endDate = new Date(testQuery.data.data.end_date).getTime();
+      const now = new Date().getTime();
+      const timeDiff = Math.max(0, Math.floor((endDate - now) / 1000));
+      setTimeLeft(timeDiff);
+    }
+  }, [testQuery.data?.data.end_date]);
+
+  useEffect(() => {
+    if (timeLeft <= 0) {
+      finishExam();
+      return;
+    }
+
     const timer = setInterval(() => {
-      const newTimer = timeLeft > 0 ? timeLeft - 1 : 0;
-      setTimeLeft(newTimer);
-      if (newTimer === 0) {
-        finishExam();
-      }
+      setTimeLeft((prev) => Math.max(0, prev - 1));
     }, 1000);
+
     return () => clearInterval(timer);
-  }, []);
+  }, [timeLeft, finishExam]);
 
   const nextQuestion = () => {
     if (!testQuery.data) return;
@@ -131,7 +142,11 @@ export const Component: FC = (): ReactElement => {
             </div>
           </div>
           <div className="text-lg font-semibold text-red-600">
-            Waktu Tersisa: {formatTime(timeLeft)}
+            {testQuery.isLoading ? (
+              "Memuat waktu..."
+            ) : (
+              `Waktu Tersisa: ${formatTime(timeLeft)}`
+            )}
           </div>
         </div>
       </div>
