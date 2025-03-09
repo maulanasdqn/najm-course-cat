@@ -1,11 +1,11 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 export const useTimer = (startDateStr: string, endDateStr: string, sessionId: string) => {
   const navigate = useNavigate();
-  const [timeUntilStart, setTimeUntilStart] = useState<number>(0);
-  const [timeLeft, setTimeLeft] = useState<number>(0);
+  const [timeUntilStart, setTimeUntilStart] = useState<number>(-1);
+  const [timeLeft, setTimeLeft] = useState<number>(-1);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
@@ -47,5 +47,9 @@ export const useTimer = (startDateStr: string, endDateStr: string, sessionId: st
     };
   }, [startDateStr, endDateStr, sessionId, navigate, timeUntilStart, timeLeft]);
 
-  return { timeUntilStart, timeLeft };
+  const clearTimer = useCallback(() => {
+    if (timerRef.current) clearInterval(timerRef.current);
+  }, []);
+
+  return { timeUntilStart, timeLeft, clearTimer };
 };

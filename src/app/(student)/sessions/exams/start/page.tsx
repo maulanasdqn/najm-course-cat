@@ -6,6 +6,7 @@ import { useAnswerExamMutation } from "./_hooks/use-answer-exam-mutation";
 import { ArrowRightIcon } from "@/app/_components/ui/icons/ic-arrow-right";
 import { TExamAnswerRequest } from "@/api/test/type";
 import { useTimer } from "../_hooks/use-timer";
+import { useDidEffect } from "@/app/_hooks/use-did-effect";
 
 // Left arrow icon component
 const ArrowLeftIcon = () => (
@@ -38,8 +39,8 @@ export const Component: FC = (): ReactElement => {
         id: "test-123",
         test_name: "Test Kesehatan Mental Dummy",
         session_id: "session-456",
-        start_date: "2024-01-01T09:00:00Z",
-        end_date: "2024-01-01T12:00:00Z",
+        start_date: "2025-03-09T04:26:00Z",
+        end_date: "2025-03-09T05:00:00Z",
         created_at: "2023-12-01T00:00:00Z",
         updated_at: "2023-12-01T00:00:00Z",
         questions: [
@@ -122,31 +123,28 @@ export const Component: FC = (): ReactElement => {
     }
   }, [testQuery.data?.data.end_date, navigate, params.sessionId]);
 
-  const { finishExam } = useExam({
-    onFinish: () => {
-      answerExamMutation.mutate(
-        {
-          test_id: params.examId!,
-          questions: answers.filter((answer) => answer !== null),
-        },
-        {
-          onSuccess: () => {
-            navigate(`/student/sessions/${params.sessionId}/exams/${params.examId}/result`, {
-              replace: true,
-            });
-            toast.success("Ujian telah selesai. Jawaban Anda telah disimpan.");
-          },
-          onError: () => {
-            toast.error("Terjadi kesalahan saat menjawab ujian.");
-          },
-        },
-      );
-    },
-  });
+  const { finishExam } = useExam();
 
-  const [answers, setAnswers] = useState<TExamAnswerRequest["questions"]>(
-    Array(testQuery.data?.data.questions?.length || 0).fill(null)
-  );
+  const handleSubmit = async () => {
+    answerExamMutation.mutate(
+      {
+        test_id: params.examId!,
+        questions: answers.filter((answer) => answer !== null),
+      },
+      {
+        onSuccess: () => {
+          finishExam();
+          navigate(`/student/sessions/${params.sessionId}/exams/${params.examId}/result`, {
+            replace: true,
+          });
+          toast.success("Ujian telah selesai. Jawaban Anda telah disimpan.");
+        },
+        onError: () => {
+          toast.error("Terjadi kesalahan saat menjawab ujian.");
+        },
+      },
+    );
+  };
 
   useEffect(() => {
     const questionCount = testQuery.data?.data.questions?.length || 0;
@@ -155,18 +153,25 @@ export const Component: FC = (): ReactElement => {
     }
   }, [testQuery.data?.data.questions?.length, answers.length]);
 
-  const { timeUntilStart, timeLeft } = useTimer(
+  const { timeUntilStart, timeLeft, clearTimer } = useTimer(
     testQuery.data?.data.start_date,
     testQuery.data?.data.end_date,
     params.sessionId!,
   );
 
   // Handle exam timeout
-  useEffect(() => {
-    if (timeLeft <= 0 && testQuery.data?.data.end_date && !testQuery.isLoading) {
-      finishExam();
+  useDidEffect(() => {
+    if (
+      timeLeft === 0 &&
+      timeUntilStart === 0 &&
+      testQuery.data?.data.end_date &&
+      !testQuery.isLoading &&
+      (!answerExamMutation.isSuccess || !answerExamMutation.isError)
+    ) {
+      clearTimer();
+      handleSubmit();
     }
-  }, [timeLeft, finishExam, testQuery.data?.data.end_date, testQuery.isLoading]);
+  }, [timeLeft, testQuery.data?.data.end_date, testQuery.isLoading]);
 
   const nextQuestion = () => {
     if (!testQuery.data) return;
@@ -292,7 +297,7 @@ export const Component: FC = (): ReactElement => {
               ))}
             </div>
             <button
-              onClick={finishExam}
+              onClick={handleSubmit}
               className="w-full mt-4 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
             >
               Selesaikan Ujian
