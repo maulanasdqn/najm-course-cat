@@ -1,4 +1,4 @@
-import { FC, ReactElement, useState, useEffect } from "react";
+import { FC, ReactElement, useState, useEffect, useRef } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useExam } from "../detail/_hooks/use-exam";
 import toast from "react-hot-toast";
@@ -109,6 +109,7 @@ export const Component: FC = (): ReactElement => {
   const [timeLeft, setTimeLeft] = useState<number>(0);
   const [timeUntilStart, setTimeUntilStart] = useState<number>(0);
   const [answers, setAnswers] = useState<TExamAnswerRequest["questions"]>([]);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if (testQuery.data?.data.end_date) {
@@ -159,14 +160,19 @@ export const Component: FC = (): ReactElement => {
     if (startDate - now > 0) {
       const timeDiff = Math.max(0, Math.floor((startDate - now) / 1000));
       setTimeUntilStart(timeDiff);
-      
-      // Start countdown timer
-      const timer = setInterval(() => {
+    }
+
+    if (timeUntilStart > 0) {
+      timerRef.current = setInterval(() => {
         setTimeUntilStart((prev) => Math.max(0, prev - 1));
       }, 1000);
-      
-      return () => clearInterval(timer);
     }
+
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
   }, [testQuery.data?.data.start_date]);
 
   useEffect(() => {
@@ -188,11 +194,17 @@ export const Component: FC = (): ReactElement => {
       return;
     }
 
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => Math.max(0, prev - 1));
-    }, 1000);
+    if (timeLeft > 0) {
+      timerRef.current = setInterval(() => {
+        setTimeLeft((prev) => Math.max(0, prev - 1));
+      }, 1000);
+    }
 
-    return () => clearInterval(timer);
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
   }, [timeLeft, finishExam]);
 
   const nextQuestion = () => {
@@ -223,6 +235,14 @@ export const Component: FC = (): ReactElement => {
     updatedAnswers[currentQuestion] = answer;
     setAnswers(updatedAnswers);
   };
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
+  }, []);
 
   const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60);
