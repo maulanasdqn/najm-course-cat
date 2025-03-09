@@ -22,7 +22,7 @@ export const TestForm = ({ type, defaultValues }: TestFormProps) => {
   const { mutate: createTest } = useCreateTest();
   const { mutate: updateTest } = useUpdateTest(defaultValues?.id ?? "");
 
-  const { control, handleSubmit } = useForm<CreateTestFormData>({
+  const { control, handleSubmit, setValue } = useForm<CreateTestFormData>({
     resolver: zodResolver(createTestFormSchema),
     defaultValues: defaultValues
       ? {
@@ -142,9 +142,8 @@ const Question = ({ index, control }: { index: number; control: Control<CreateTe
       <div className="mt-4">
         <FileUpload
           label="Question Image"
-          onUpload={(url) => {
-            control.setValue(`questions.${index}.image_url`, url);
-          }}
+          control={control}
+          name={`questions.${index}.image_url`}
           defaultFile={control._formValues.questions[index]?.image_url}
         />
       </div>
@@ -183,13 +182,9 @@ const Question = ({ index, control }: { index: number; control: Control<CreateTe
                 />
                 <div className="mt-2">
                   <FileUpload
+                    control={control}
+                    name={`questions.${index}.options.${fieldIndex}.image_url`}
                     label="Option Image"
-                    onUpload={(url) => {
-                      control.setValue(
-                        `questions.${index}.options.${fieldIndex}.image_url`,
-                        url,
-                      );
-                    }}
                     defaultFile={
                       control._formValues.questions[index]?.options[fieldIndex]?.image_url
                     }

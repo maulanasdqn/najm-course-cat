@@ -1,15 +1,21 @@
 import { useState } from "react";
 import { upload } from "@/api/storage";
-import { Button } from "../button";
 import { TrashIcon } from "../icons/ic-trash";
+import { FieldValues, useController, UseControllerProps } from "react-hook-form";
 
-interface FileUploadProps {
+interface FileUploadProps<T extends FieldValues> extends UseControllerProps<T> {
   label: string;
-  onUpload: (url: string) => void;
+  onUpload?: (url: string) => void;
   defaultFile?: string;
 }
 
-export const FileUpload = ({ label, onUpload, defaultFile }: FileUploadProps) => {
+export const FileUpload = <T extends FieldValues>({
+  label,
+  onUpload,
+  defaultFile,
+  ...props
+}: FileUploadProps<T>) => {
+  const { field } = useController<T>(props);
   const [file, setFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [previewUrl, setPreviewUrl] = useState(defaultFile || "");
@@ -21,8 +27,9 @@ export const FileUpload = ({ label, onUpload, defaultFile }: FileUploadProps) =>
       setPreviewUrl(URL.createObjectURL(selectedFile));
       setIsUploading(true);
       try {
-        const { url } = await upload(selectedFile);
-        onUpload(url);
+        const { data } = await upload(selectedFile);
+        field.onChange(data.file_url);
+        onUpload?.(data.file_url);
       } catch (error) {
         console.error("Upload failed:", error);
       } finally {
@@ -34,7 +41,7 @@ export const FileUpload = ({ label, onUpload, defaultFile }: FileUploadProps) =>
   const handleRemove = () => {
     setFile(null);
     setPreviewUrl("");
-    onUpload("");
+    onUpload?.("");
   };
 
   return (
@@ -43,7 +50,7 @@ export const FileUpload = ({ label, onUpload, defaultFile }: FileUploadProps) =>
       {previewUrl ? (
         <div className="relative">
           <img
-            src={previewUrl}
+            src={previewUrl || field.value}
             alt="Preview"
             className="h-32 w-32 object-cover rounded-md"
           />
@@ -51,6 +58,7 @@ export const FileUpload = ({ label, onUpload, defaultFile }: FileUploadProps) =>
             type="button"
             onClick={handleRemove}
             className="absolute -top-2 -right-2 p-1 bg-red-100 rounded-full text-red-600 hover:bg-red-200"
+            disabled={field.disabled}
           >
             <TrashIcon className="h-4 w-4" />
           </button>
