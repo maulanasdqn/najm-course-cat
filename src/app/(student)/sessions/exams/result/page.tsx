@@ -1,22 +1,17 @@
-import { FC, ReactElement, useState, useEffect } from "react";
+import { FC, ReactElement } from "react";
 import { useParams } from "react-router-dom";
-import { TExamAnswerRequest } from "@/api/exams/type";
 import { useGetTestAnswer } from "./_hooks/use-get-tests-query";
 
 export const Component: FC = (): ReactElement => {
   const params = useParams<{ examId: string; sessionId: string }>();
   const testQuery = useGetTestAnswer(params.examId!);
-  const [answers, setAnswers] = useState<TExamAnswerRequest["questions"]>([]);
-
-  useEffect(() => {
-    setAnswers(Array(testQuery.data?.data.questions.length).fill(null));
-  }, [testQuery.data?.data.questions]);
 
   // Calculate correct answers and score
-  const correctAnswers = testQuery.data?.data.questions.reduce((acc, question) => {
-    const selectedOption = question.options.find((option) => option.is_selected);
-    return selectedOption?.is_correct ? acc + 1 : acc;
-  }, 0) || 0;
+  const correctAnswers =
+    testQuery.data?.data.questions.reduce((acc, question) => {
+      const selectedOption = question.options.find((option) => option.is_selected);
+      return selectedOption?.is_correct ? acc + 1 : acc;
+    }, 0) || 0;
 
   const totalQuestions = testQuery.data?.data.questions.length || 0;
   const scorePercentage = totalQuestions > 0 ? (correctAnswers / totalQuestions) * 100 : 0;
