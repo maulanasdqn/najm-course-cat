@@ -5,11 +5,11 @@ export const Component: FC = (): ReactElement => {
   const { data, isLoading } = useGetSessionTests({});
   
   if (isLoading) {
-    return <div className="w-full text-center p-4 text-gray-600">Memuat sesi ujian...</div>;
+    return <div className="w-full text-center p-6 text-gray-600 animate-pulse">Memuat sesi ujian...</div>;
   }
   
   if (!data?.data?.length) {
-    return <div className="w-full text-center p-4 text-gray-600">Tidak ada sesi ujian tersedia</div>;
+    return <div className="w-full text-center p-6 text-gray-600 border rounded-lg bg-white">Tidak ada sesi ujian tersedia</div>;
   }
   
   return (
