@@ -35,6 +35,7 @@ export const Component: FC = (): ReactElement => {
   const [searchParams] = useSearchParams();
   const currentQuestion = parseInt(searchParams.get("page") || "1", 10) - 1;
   const [timeLeft, setTimeLeft] = useState<number>(0);
+  const [timeUntilStart, setTimeUntilStart] = useState<number>(0);
   const [answers, setAnswers] = useState<TExamAnswerRequest["questions"]>([]);
 
   useEffect(() => {
@@ -75,6 +76,26 @@ export const Component: FC = (): ReactElement => {
   useEffect(() => {
     setAnswers(Array(testQuery.data?.data.questions.length).fill(null));
   }, [testQuery.data?.data.questions]);
+
+  useEffect(() => {
+    if (!testQuery.data?.data.start_date) return;
+
+    const startDate = new Date(testQuery.data.data.start_date).getTime();
+    const now = new Date().getTime();
+    
+    // If current time is before start date, show countdown
+    if (startDate - now > 0) {
+      const timeDiff = Math.max(0, Math.floor((startDate - now) / 1000));
+      setTimeUntilStart(timeDiff);
+      
+      // Start countdown timer
+      const timer = setInterval(() => {
+        setTimeUntilStart((prev) => Math.max(0, prev - 1));
+      }, 1000);
+      
+      return () => clearInterval(timer);
+    }
+  }, [testQuery.data?.data.start_date]);
 
   useEffect(() => {
     if (!testQuery.data?.data.end_date) return;
@@ -140,6 +161,22 @@ export const Component: FC = (): ReactElement => {
   const answeredCount = answers.filter((answer) => answer !== null).length;
   const unansweredCount = (testQuery.data?.data.questions.length || 0) - answeredCount;
 
+  if (timeUntilStart > 0) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
+        <div className="bg-white p-8 rounded-lg shadow-md text-center">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">Ujian Belum Dimulai</h2>
+          <p className="text-gray-600 mb-6">
+            Ujian akan dimulai dalam:
+          </p>
+          <div className="text-4xl font-bold text-blue-600">
+            {formatTime(timeUntilStart)}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col items-center justify-center w-full bg-gray-100">
       {/* Status section moved to top */}
@@ -159,11 +196,18 @@ export const Component: FC = (): ReactElement => {
             </div>
           </div>
           <div className="text-lg font-semibold text-red-600">
-            {testQuery.isLoading ? "Memuat waktu..." : `Waktu Tersisa: ${formatTime(timeLeft)}`}
+            {testQuery.isLoading ? (
+              "Memuat waktu..."
+            ) : timeUntilStart > 0 ? (
+              `Ujian dimulai dalam: ${formatTime(timeUntilStart)}`
+            ) : (
+              `Waktu Tersisa: ${formatTime(timeLeft)}`
+            )}
           </div>
         </div>
       </div>
 
+      {timeUntilStart > 0 ? null : (
       <section className="flex flex-1 w-full max-w-7xl">
         <aside className="w-1/4 order-2 bg-white mt-6 p-4 rounded-lg shadow-md h-fit">
           <h3 className="text-lg font-semibold text-gray-800 mb-4">Navigasi Soal</h3>
@@ -244,6 +288,7 @@ export const Component: FC = (): ReactElement => {
           </div>
         </main>
       </section>
+      )}
     </div>
   );
 };
