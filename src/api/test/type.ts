@@ -33,8 +33,10 @@ export type TTestDetailResponse = TResponseData<{
   questions: {
     discussion: string;
     id: string;
+    image_url: string;
     options: {
       id: string;
+      image_url: string;
       label: string;
       is_correct: boolean;
     }[];
