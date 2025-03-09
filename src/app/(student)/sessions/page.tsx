@@ -2,13 +2,22 @@ import { FC, ReactElement } from "react";
 import { useGetSessionTests } from "@/app/(admin)/session-tests/_hooks/use-get-session-tests";
 
 export const Component: FC = (): ReactElement => {
-  const { data } = useGetSessionTests({});
+  const { data, isLoading } = useGetSessionTests({});
+  
+  if (isLoading) {
+    return <div className="w-full text-center p-6 text-gray-600 animate-pulse">Memuat sesi ujian...</div>;
+  }
+  
+  if (!data?.data?.length) {
+    return <div className="w-full text-center p-6 text-gray-600 border rounded-lg bg-white">Tidak ada sesi ujian tersedia</div>;
+  }
+  
   return (
     <div className="flex flex-col items-center justify-center w-full bg-gray-100">
       <section className="flex flex-1 w-full max-w-7xl">
         <main className="col-span-2 w-full p-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {data?.data?.map((session) => (
+            {data.data.map((session) => (
               <div
                 key={session.id}
                 className="flex flex-col border bg-white rounded-lg p-4 hover:shadow-md transition"
