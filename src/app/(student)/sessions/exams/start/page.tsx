@@ -51,38 +51,41 @@ export const Component: FC = (): ReactElement => {
     }
   }, [testQuery.data?.data.end_date, navigate, params.sessionId]);
 
-  const { startExam, finishExam } = useExam({
-    onExitFullscreen: () => {
-      finishExam();
-      toast.success("Ujian telah selesai. Jawaban Anda telah disimpan.");
-    },
-    onFallback: () => {
-      finishExam();
+  const handleSubmit = async (navigateToResult: boolean = true, showSuccessToast: boolean = true) => {
+    try {
+      const res = await answerExamMutation.mutateAsync({
+        test_id: params.examId!,
+        questions: answers.filter((answer) => answer !== null),
+      });
+      if (showSuccessToast) {
+        toast.success("Ujian telah selesai. Jawaban Anda telah disimpan.");
+      }
+      if (navigateToResult) {
+        navigate(`/student/sessions/${params.sessionId}/result/${res.data.id}`, {
+          replace: true,
+        });
+      } else {
+        navigate(`/student/sessions/${params.sessionId}/exams`, {
+          replace: true,
+        });
+      }
+    } catch (error) {
+      toast.error("Terjadi kesalahan saat menjawab ujian.");
       navigate(`/student/sessions/${params.sessionId}/exams`, {
         replace: true,
       });
-    },
-  });
-
-  const handleSubmit = () => {
-    answerExamMutation.mutate(
-      {
-        test_id: params.examId!,
-        questions: answers.filter((answer) => answer !== null),
-      },
-      {
-        onSuccess: (res) => {
-          finishExam();
-          navigate(`/student/sessions/${params.sessionId}/result/${res.data.id}`, {
-            replace: true,
-          });
-        },
-        onError: () => {
-          toast.error("Terjadi kesalahan saat menjawab ujian.");
-        },
-      },
-    );
+    } finally {
+      finishExam();
+    }
   };
+
+  const handleExitFullscreen = () => handleSubmit(true, true);
+  const handleFallback = () => handleSubmit(false, false);
+
+  const { startExam, finishExam } = useExam({
+    onExitFullscreen: handleExitFullscreen,
+    onFallback: handleFallback,
+  });
 
   useDidEffect(() => {
     startExam();
@@ -115,7 +118,7 @@ export const Component: FC = (): ReactElement => {
       (!answerExamMutation.isSuccess || !answerExamMutation.isError)
     ) {
       clearTimer();
-      handleSubmit();
+      handleSubmit(true, true);
     }
   }, [timeLeft, testQuery.data?.data.end_date, testQuery.isLoading]);
 
@@ -244,7 +247,7 @@ export const Component: FC = (): ReactElement => {
               ))}
             </div>
             <button
-              onClick={handleSubmit}
+              onClick={() => handleSubmit(true, true)}
               className="w-full mt-4 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
             >
               Selesaikan Ujian
