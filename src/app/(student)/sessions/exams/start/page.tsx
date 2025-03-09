@@ -61,6 +61,7 @@ export const Component: FC = (): ReactElement => {
         "showSuccessToast:",
         showSuccessToast,
       );
+      console.log("Answers at submission:", answers);
       try {
         const res = await answerExamMutation.mutateAsync({
           test_id: params.examId!,
@@ -88,18 +89,20 @@ export const Component: FC = (): ReactElement => {
         finishExam();
       }
     },
-    [answerExamMutation, answers, navigate, params.examId, params.sessionId],
+    [answerExamMutation, answers, navigate, params.examId, params.sessionId, finishExam],
   );
 
   const handleExitFullscreen = useCallback(() => {
     console.log("handleExitFullscreen called");
+    console.log("Current answers in handleExitFullscreen:", answers);
     handleSubmit(true, true);
-  }, [handleSubmit]);
+  }, [handleSubmit, answers]);
 
   const handleFallback = useCallback(() => {
     console.log("handleFallback called");
+    console.log("Current answers in handleFallback:", answers);
     handleSubmit(false, false);
-  }, [handleSubmit]);
+  }, [handleSubmit, answers]);
 
   const { startExam, finishExam } = useExam({
     onExitFullscreen: handleExitFullscreen,
