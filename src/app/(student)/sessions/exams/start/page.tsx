@@ -89,7 +89,7 @@ export const Component: FC = (): ReactElement => {
         finishExam();
       }
     },
-    [answerExamMutation, answers, navigate, params.examId, params.sessionId, finishExam],
+    [answerExamMutation, answers, navigate, params.examId, params.sessionId],
   );
 
   const handleExitFullscreen = useCallback(() => {
@@ -180,7 +180,7 @@ export const Component: FC = (): ReactElement => {
     return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
   };
 
-  const isSubmitting = answerExamMutation.isLoading;
+  const isSubmitting = answerExamMutation.isPending;
   const answeredCount = answers.filter((answer) => answer !== null).length;
   const unansweredCount = (testQuery.data?.data.questions.length || 0) - answeredCount;
 
