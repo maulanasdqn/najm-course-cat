@@ -27,7 +27,7 @@ export const Component: FC = (): ReactElement => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-screen bg-gray-100">
+    <div className="flex-1 flex flex-col items-center justify-center w-full bg-gray-100">
       <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
         <h2 className="text-2xl font-bold text-gray-800 mb-4">Pemberitahuan</h2>
         <p className="text-gray-600 mb-6">

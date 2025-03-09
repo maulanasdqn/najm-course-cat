@@ -37,6 +37,8 @@ export const Component: FC = (): ReactElement => {
   const [searchParams] = useSearchParams();
   const currentQuestion = parseInt(searchParams.get("page") || "1", 10) - 1;
   const [answers, setAnswers] = useState<TExamAnswerRequest["questions"]>([]);
+  const startDateRef = useRef<Date | null>(new Date(new Date().getTime() + 5 * 1000));
+  const endDateRef = useRef<Date | null>(new Date(new Date().getTime() + 60 * 1000));
   const answersRef = useRef<TExamAnswerRequest["questions"]>([]);
 
   const handleExitFullscreen = useCallback(async () => {
@@ -74,16 +76,14 @@ export const Component: FC = (): ReactElement => {
   const { timeUntilStart, timeLeft, clearTimer } = useTimer(
     typeof testQuery.data?.data.start_date === "undefined"
       ? undefined
-      : testQuery.data?.data.start_date,
+      : startDateRef.current?.toString(),
     typeof testQuery.data?.data.end_date === "undefined"
       ? undefined
-      : testQuery.data?.data.end_date,
+      : endDateRef.current?.toString(),
     params.sessionId!,
   );
 
   useDidEffect(() => {
-    console.log("useDidEffect called");
-    console.log("timeUntilStart:", timeUntilStart, testQuery.data?.data.end_date);
     if (!testQuery.data?.data.end_date) return;
     if (timeUntilStart === 0) {
       startExam();

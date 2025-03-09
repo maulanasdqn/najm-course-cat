@@ -27,7 +27,7 @@ const StudentLayout: FC = (): ReactElement => {
     <section className="flex h-full flex-col w-full min-h-screen justify-start items-start bg-gray-100">
       <div className="flex w-full justify-start items-start">
         {!isFullscreen && <Sidebar />}
-        <div className="w-full flex flex-col items-center h-screen">
+        <div className="w-full flex flex-col items-center h-screen overflow-auto">
           {!isFullscreen && <Navbar />}
           <div className="w-full flex flex-1 max-w-8xl px-16">
             <main className="flex flex-col max-w-7xl justify-start gap-y-4 mt-1 py-6 w-full">
