@@ -155,9 +155,11 @@ export const Component: FC = (): ReactElement => {
   // Show loading state while fetching exam data
   if (testQuery.isLoading) {
     return (
-      <div className="flex-1 flex flex-col items-center justify-center self-center bg-gray-100">
+      <div className="flex-1 flex flex-col items-center justify-center self-center bg-gray-100 min-h-screen">
         <div className="bg-white p-8 rounded-lg shadow-md text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Memuat Ujian...</h2>
+          <p className="text-gray-600">Mohon tunggu sebentar</p>
         </div>
       </div>
     );
@@ -166,10 +168,21 @@ export const Component: FC = (): ReactElement => {
   // Show error state if exam data fails to load
   if (testQuery.isError) {
     return (
-      <div className="flex-1 flex flex-col items-center justify-center self-center bg-gray-100">
+      <div className="flex-1 flex flex-col items-center justify-center self-center bg-gray-100 min-h-screen">
         <div className="bg-white p-8 rounded-lg shadow-md text-center">
+          <div className="text-red-500 text-5xl mb-4">⚠️</div>
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Gagal Memuat Ujian</h2>
-          <p className="text-gray-600 mb-6">Silakan coba lagi nanti.</p>
+          <p className="text-gray-600 mb-6">
+            {testQuery.error instanceof Error 
+              ? testQuery.error.message 
+              : "Terjadi kesalahan saat memuat data ujian."}
+          </p>
+          <button 
+            onClick={() => testQuery.refetch()} 
+            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          >
+            Coba Lagi
+          </button>
         </div>
       </div>
     );
@@ -178,11 +191,17 @@ export const Component: FC = (): ReactElement => {
   // Show countdown if exam hasn't started yet
   if (timeUntilStart > 0) {
     return (
-      <div className="flex-1 flex flex-col items-center justify-center self-center bg-gray-100">
+      <div className="flex-1 flex flex-col items-center justify-center self-center bg-gray-100 min-h-screen">
         <div className="bg-white p-8 rounded-lg shadow-md text-center">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Ujian Belum Dimulai</h2>
           <p className="text-gray-600 mb-6">Ujian akan dimulai dalam:</p>
           <div className="text-4xl font-bold text-blue-600">{formatTime(timeUntilStart)}</div>
+          <div className="mt-6 text-sm text-gray-500">
+            {testQuery.data?.data.title && (
+              <p className="font-medium">Ujian: {testQuery.data.data.title}</p>
+            )}
+            <p>Halaman akan otomatis diperbarui saat ujian dimulai</p>
+          </div>
         </div>
       </div>
     );
@@ -242,7 +261,14 @@ export const Component: FC = (): ReactElement => {
               disabled={isSubmitting}
               className="w-full mt-4 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isSubmitting ? "Mengirim..." : "Selesaikan Ujian"}
+              {isSubmitting ? (
+                <span className="flex items-center justify-center">
+                  <span className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full mr-2"></span>
+                  Mengirim...
+                </span>
+              ) : (
+                "Selesaikan Ujian"
+              )}
             </button>
           </aside>
           <main className="flex-1 order-1 p-6 pl-0">
@@ -289,10 +315,19 @@ export const Component: FC = (): ReactElement => {
                   disabled={currentQuestion === (testQuery.data?.data.questions.length || 1) - 1}
                   className="px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-50 flex items-center"
                 >
-                  Simpan dan Lanjutkan
-                  <span className="ml-2">
-                    <ArrowRightIcon />
-                  </span>
+                  {isSubmitting ? (
+                    <span className="flex items-center">
+                      <span className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full mr-2"></span>
+                      Menyimpan...
+                    </span>
+                  ) : (
+                    <>
+                      Simpan dan Lanjutkan
+                      <span className="ml-2">
+                        <ArrowRightIcon />
+                      </span>
+                    </>
+                  )}
                 </button>
               </div>
             </div>
