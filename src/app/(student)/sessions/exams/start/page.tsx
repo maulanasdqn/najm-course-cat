@@ -53,46 +53,51 @@ export const Component: FC = (): ReactElement => {
     }
   }, [testQuery.data?.data.end_date, navigate, params.sessionId]);
 
-  const handleSubmit = useCallback(async (
-    navigateToResult: boolean = true,
-    showSuccessToast: boolean = true,
-  ) => {
-    console.log('handleSubmit called with navigateToResult:', navigateToResult, 'showSuccessToast:', showSuccessToast);
-    try {
-      const res = await answerExamMutation.mutateAsync({
-        test_id: params.examId!,
-        questions: answers.filter((answer) => answer !== null),
-      });
-      if (showSuccessToast) {
-        toast.success("Ujian telah selesai. Jawaban Anda telah disimpan.");
-      }
-      if (navigateToResult) {
-        navigate(`/student/sessions/${params.sessionId}/result/${res.data.id}`, {
-          replace: true,
+  const handleSubmit = useCallback(
+    async (navigateToResult: boolean = true, showSuccessToast: boolean = true) => {
+      console.log(
+        "handleSubmit called with navigateToResult:",
+        navigateToResult,
+        "showSuccessToast:",
+        showSuccessToast,
+      );
+      try {
+        const res = await answerExamMutation.mutateAsync({
+          test_id: params.examId!,
+          questions: answers.filter((answer) => answer !== null),
         });
-      } else {
+        if (showSuccessToast) {
+          toast.success("Ujian telah selesai. Jawaban Anda telah disimpan.");
+        }
+        if (navigateToResult) {
+          navigate(`/student/sessions/${params.sessionId}/result/${res.data.id}`, {
+            replace: true,
+          });
+        } else {
+          navigate(`/student/sessions/${params.sessionId}/exams`, {
+            replace: true,
+          });
+        }
+      } catch (error) {
+        console.error(error);
+        toast.error("Terjadi kesalahan saat menjawab ujian.");
         navigate(`/student/sessions/${params.sessionId}/exams`, {
           replace: true,
         });
+      } finally {
+        finishExam();
       }
-    } catch (error) {
-      console.error(error);
-      toast.error("Terjadi kesalahan saat menjawab ujian.");
-      navigate(`/student/sessions/${params.sessionId}/exams`, {
-        replace: true,
-      });
-    } finally {
-      finishExam();
-    }
-  }, [answerExamMutation, answers, finishExam, navigate, params.examId, params.sessionId]);
+    },
+    [answerExamMutation, answers, navigate, params.examId, params.sessionId],
+  );
 
   const handleExitFullscreen = useCallback(() => {
-    console.log('handleExitFullscreen called');
+    console.log("handleExitFullscreen called");
     handleSubmit(true, true);
   }, [handleSubmit]);
-  
+
   const handleFallback = useCallback(() => {
-    console.log('handleFallback called');
+    console.log("handleFallback called");
     handleSubmit(false, false);
   }, [handleSubmit]);
 
@@ -266,7 +271,7 @@ export const Component: FC = (): ReactElement => {
               disabled={isSubmitting}
               className="w-full mt-4 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isSubmitting ? 'Mengirim...' : 'Selesaikan Ujian'}
+              {isSubmitting ? "Mengirim..." : "Selesaikan Ujian"}
             </button>
           </aside>
           <main className="flex-1 order-1 p-6 pl-0">
