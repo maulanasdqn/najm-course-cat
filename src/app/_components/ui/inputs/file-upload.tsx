@@ -17,6 +17,7 @@ export const FileUpload = <T extends FieldValues>({
 }: FileUploadProps<T>) => {
   const { field } = useController<T>(props);
   const [file, setFile] = useState<File | null>(null);
+  console.log(file);
   const [isUploading, setIsUploading] = useState(false);
   const [previewUrl, setPreviewUrl] = useState(defaultFile || "");
 
@@ -60,7 +61,7 @@ export const FileUpload = <T extends FieldValues>({
             className="absolute -top-2 -right-2 p-1 bg-red-100 rounded-full text-red-600 hover:bg-red-200"
             disabled={field.disabled}
           >
-            <TrashIcon className="h-4 w-4" />
+            <TrashIcon />
           </button>
         </div>
       ) : (

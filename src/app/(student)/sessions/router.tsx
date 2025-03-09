@@ -20,8 +20,8 @@ export const SessionsRouter = [
     lazy: () => import("./exams/start-sequence/page"),
   },
   {
-    path: ":sessionId/exams/:examId/result",
-    lazy: () => import("./exams/result/page"),
+    path: ":sessionId/result/:answerId",
+    lazy: () => import("./result/page"),
   },
   {
     path: ":sessionId/exams/results",

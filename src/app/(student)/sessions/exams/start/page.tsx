@@ -53,24 +53,8 @@ export const Component: FC = (): ReactElement => {
 
   const { startExam, finishExam } = useExam({
     onExitFullscreen: () => {
-      answerExamMutation.mutate(
-        {
-          test_id: params.examId!,
-          questions: answers.filter((answer) => answer !== null),
-        },
-        {
-          onSuccess: () => {
-            finishExam();
-            navigate(`/student/sessions/${params.sessionId}/exams/${params.examId}/result`, {
-              replace: true,
-            });
-            toast.success("Ujian telah selesai. Jawaban Anda telah disimpan.");
-          },
-          onError: () => {
-            toast.error("Terjadi kesalahan saat menjawab ujian.");
-          },
-        },
-      );
+      finishExam();
+      toast.success("Ujian telah selesai. Jawaban Anda telah disimpan.");
     },
     onFallback: () => {
       finishExam();
@@ -79,6 +63,26 @@ export const Component: FC = (): ReactElement => {
       });
     },
   });
+
+  const handleSubmit = () => {
+    answerExamMutation.mutate(
+      {
+        test_id: params.examId!,
+        questions: answers.filter((answer) => answer !== null),
+      },
+      {
+        onSuccess: (res) => {
+          finishExam();
+          navigate(`/student/sessions/${params.sessionId}/result/${res.data.id}`, {
+            replace: true,
+          });
+        },
+        onError: () => {
+          toast.error("Terjadi kesalahan saat menjawab ujian.");
+        },
+      },
+    );
+  };
 
   useDidEffect(() => {
     startExam();
@@ -107,7 +111,7 @@ export const Component: FC = (): ReactElement => {
       (!answerExamMutation.isSuccess || !answerExamMutation.isError)
     ) {
       clearTimer();
-      finishExam();
+      handleSubmit();
     }
   }, [timeLeft, testQuery.data?.data.end_date, testQuery.isLoading]);
 
@@ -153,7 +157,7 @@ export const Component: FC = (): ReactElement => {
   // Show loading state while fetching exam data
   if (testQuery.isLoading) {
     return (
-      <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
+      <div className="flex flex-col items-center justify-center self-center h-screen bg-gray-100">
         <div className="bg-white p-8 rounded-lg shadow-md text-center">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Memuat Ujian...</h2>
         </div>
@@ -164,7 +168,7 @@ export const Component: FC = (): ReactElement => {
   // Show error state if exam data fails to load
   if (testQuery.isError) {
     return (
-      <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
+      <div className="flex flex-col items-center justify-center self-center  h-screen bg-gray-100">
         <div className="bg-white p-8 rounded-lg shadow-md text-center">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Gagal Memuat Ujian</h2>
           <p className="text-gray-600 mb-6">Silakan coba lagi nanti.</p>
@@ -236,7 +240,7 @@ export const Component: FC = (): ReactElement => {
               ))}
             </div>
             <button
-              onClick={finishExam}
+              onClick={handleSubmit}
               className="w-full mt-4 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
             >
               Selesaikan Ujian

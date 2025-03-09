@@ -71,9 +71,11 @@ export type TExamAnswerRequest = {
   }>;
 };
 
-export type TExamAnswerResponse = {
-  message: string;
-};
+export type TExamAnswerResponse = TResponseData<{
+  id: string;
+  test_id: string;
+  user_id: string;
+}>;
 
 export type TTestAnswerDetailResponse = TResponseData<{
   id: string;
