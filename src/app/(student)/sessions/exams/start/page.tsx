@@ -89,7 +89,7 @@ export const Component: FC = (): ReactElement => {
         finishExam();
       }
     },
-    [answerExamMutation, answers, navigate, params.examId, params.sessionId],
+    [answerExamMutation, answers, navigate, params.examId, params.sessionId, finishExam],
   );
 
   const handleExitFullscreen = useCallback(() => {
@@ -168,9 +168,11 @@ export const Component: FC = (): ReactElement => {
   };
 
   const handleAnswer = (answer: TExamAnswerRequest["questions"][number]) => {
-    const updatedAnswers = [...answers];
-    updatedAnswers[currentQuestion] = answer;
-    setAnswers(updatedAnswers);
+    setAnswers(prevAnswers => {
+      const updatedAnswers = [...prevAnswers];
+      updatedAnswers[currentQuestion] = answer;
+      return updatedAnswers;
+    });
   };
 
   const formatTime = (time: number) => {
