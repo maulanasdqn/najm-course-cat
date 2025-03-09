@@ -144,9 +144,16 @@ export const Component: FC = (): ReactElement => {
     },
   });
 
+  const [answers, setAnswers] = useState<TExamAnswerRequest["questions"]>(
+    Array(testQuery.data?.data.questions?.length || 0).fill(null)
+  );
+
   useEffect(() => {
-    setAnswers(Array(testQuery.data?.data.questions.length).fill(null));
-  }, [testQuery.data?.data.questions]);
+    const questionCount = testQuery.data?.data.questions?.length || 0;
+    if (questionCount !== answers.length) {
+      setAnswers(Array(questionCount).fill(null));
+    }
+  }, [testQuery.data?.data.questions?.length, answers.length]);
 
   const { timeUntilStart, timeLeft } = useTimer(
     testQuery.data?.data.start_date,
