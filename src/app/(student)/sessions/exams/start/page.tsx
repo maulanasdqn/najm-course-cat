@@ -1,5 +1,6 @@
-import { FC, ReactElement, useState, useEffect, useRef } from "react";
+import { FC, ReactElement, useState, useEffect } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useTimer } from "./_hooks/use-timer";
 import { useExam } from "../detail/_hooks/use-exam";
 import toast from "react-hot-toast";
 import { useAnswerExamMutation } from "./_hooks/use-answer-exam-mutation";
