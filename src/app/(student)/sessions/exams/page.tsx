@@ -1,5 +1,5 @@
 import { FC, ReactElement } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useGetSessionTest } from "../_hooks/use-get-session-test";
 
 export const Component: FC = (): ReactElement => {
@@ -33,12 +33,12 @@ export const Component: FC = (): ReactElement => {
                 className="border bg-white rounded-lg p-4 hover:shadow-md transition"
               >
                 <h3 className="text-lg font-bold text-gray-800">{test.test_name}</h3>
-                <a
-                  href={`/student/sessions/${params.sessionId}/exams/${test.id}/detail`}
+                <Link
+                  to={`/student/sessions/${params.sessionId}/exams/${test.id}/detail`}
                   className="text-sm text-blue-600 font-bold hover:underline"
                 >
                   Kerjakan Tes →
-                </a>
+                </Link>
               </div>
             ))}
           </div>
