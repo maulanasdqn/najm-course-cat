@@ -30,7 +30,6 @@ export const useTimer = (startDateStr?: string, endDateStr?: string, sessionId?:
       setTimeLeft(0);
     } else if (endDate - now === 0) {
       navigate(`/student/sessions/${sessionId}/exams`, { replace: true });
-      console.log("timeLeft:", timeLeft);
       toast.error("Waktu ujian telah berakhir.");
       return;
     }
