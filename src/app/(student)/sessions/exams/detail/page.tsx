@@ -1,6 +1,5 @@
 import { FC, ReactElement, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useExam } from "./_hooks/use-exam";
 import toast from "react-hot-toast";
 import { useGetSessionTest } from "../../_hooks/use-get-session-test";
 
@@ -8,40 +7,23 @@ export const Component: FC = (): ReactElement => {
   const navigate = useNavigate();
   const params = useParams<{ examId: string; sessionId: string }>();
   const { data: session } = useGetSessionTest(params.sessionId!);
-  const { startExam } = useExam({
-    onExitFullscreen: () => {
-      // TODO: mutate finish exam
-
-      const isNotNumber = isNaN(Number(params.examId));
-      if (isNotNumber) {
-        navigate(`/student/sessions/${params.sessionId}/exams/${params.examId}/result`, {
-          replace: true,
-        });
-      } else {
-        navigate(`/student/sessions/${params.sessionId}/exams/results`, {
-          replace: true,
-        });
-      }
-      toast.success("Ujian telah selesai. Jawaban Anda telah disimpan.");
-    },
-  });
   const [sessionNumber, setSessionNumber] = useState("");
 
   const handleStart = () => {
-    startExam();
-
     if (!session) {
       toast.error("Gagal memuat data sesi");
       return;
     }
 
-    if (session.data.category === "akademik") {
-      navigate(`/student/sessions/${params.sessionId}/exams/${params.examId}/start`);
-    } else if (session.data.category === "psikolog") {
-      navigate(`/student/sessions/${params.sessionId}/exams/${params.examId}/start-sequence`);
-    } else {
-      toast.error("Sesi tidak ditemukan");
-    }
+    navigate(`/student/sessions/${params.sessionId}/exams/${params.examId}/start`);
+    return;
+    //    if (session.data.category === "akademik") {
+    //      navigate(`/student/sessions/${params.sessionId}/exams/${params.examId}/start`);
+    //    } else if (session.data.category === "psikolog") {
+    //      navigate(`/student/sessions/${params.sessionId}/exams/${params.examId}/start-sequence`);
+    //    } else {
+    //      toast.error("Sesi tidak ditemukan");
+    //    }
   };
 
   return (

@@ -156,8 +156,8 @@ export const Component: FC = (): ReactElement => {
                                   ? "border-green-500 bg-green-500" // Correct answer selected
                                   : "border-red-500 bg-red-500" // Wrong answer selected
                                 : isCorrectOption
-                                ? "border-green-500 bg-green-500" // Correct answer not selected
-                                : "border-gray-300" // Neutral state
+                                  ? "border-green-500 bg-green-500" // Correct answer not selected
+                                  : "border-gray-300" // Neutral state
                             }`}
                           >
                             {(isSelected || isCorrectOption) && (
@@ -221,7 +221,7 @@ export const Component: FC = (): ReactElement => {
                 {/* Explanation - would come from the API in a real implementation */}
                 {!isCorrect && (
                   <div className="mt-4 p-4 bg-blue-50 rounded-lg text-blue-800 ml-10">
-                    <p className="font-medium mb-1">Explanation:</p>
+                    <p className="font-medium mb-1">Penjelasan:</p>
                     <p className="text-sm">{question.discussion}</p>
                   </div>
                 )}

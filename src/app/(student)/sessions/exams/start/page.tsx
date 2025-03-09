@@ -39,7 +39,7 @@ export const Component: FC = (): ReactElement => {
         id: "test-123",
         test_name: "Test Kesehatan Mental Dummy",
         session_id: "session-456",
-        start_date: "2025-03-09T04:26:00Z",
+        start_date: "2025-03-09T04:50:00Z",
         end_date: "2025-03-09T05:00:00Z",
         created_at: "2023-12-01T00:00:00Z",
         updated_at: "2023-12-01T00:00:00Z",
@@ -123,28 +123,38 @@ export const Component: FC = (): ReactElement => {
     }
   }, [testQuery.data?.data.end_date, navigate, params.sessionId]);
 
-  const { finishExam } = useExam();
+  const { startExam, finishExam } = useExam({
+    onExitFullscreen: () => {
+      answerExamMutation.mutate(
+        {
+          test_id: params.examId!,
+          questions: answers.filter((answer) => answer !== null),
+        },
+        {
+          onSuccess: () => {
+            finishExam();
+            navigate(`/student/sessions/${params.sessionId}/exams/${params.examId}/result`, {
+              replace: true,
+            });
+            toast.success("Ujian telah selesai. Jawaban Anda telah disimpan.");
+          },
+          onError: () => {
+            toast.error("Terjadi kesalahan saat menjawab ujian.");
+          },
+        },
+      );
+    },
+    onFallback: () => {
+      finishExam();
+      navigate(`/student/sessions/${params.sessionId}/exams`, {
+        replace: true,
+      });
+    },
+  });
 
-  const handleSubmit = async () => {
-    answerExamMutation.mutate(
-      {
-        test_id: params.examId!,
-        questions: answers.filter((answer) => answer !== null),
-      },
-      {
-        onSuccess: () => {
-          finishExam();
-          navigate(`/student/sessions/${params.sessionId}/exams/${params.examId}/result`, {
-            replace: true,
-          });
-          toast.success("Ujian telah selesai. Jawaban Anda telah disimpan.");
-        },
-        onError: () => {
-          toast.error("Terjadi kesalahan saat menjawab ujian.");
-        },
-      },
-    );
-  };
+  useDidEffect(() => {
+    startExam();
+  }, []);
 
   useEffect(() => {
     const questionCount = testQuery.data?.data.questions?.length || 0;
@@ -169,7 +179,7 @@ export const Component: FC = (): ReactElement => {
       (!answerExamMutation.isSuccess || !answerExamMutation.isError)
     ) {
       clearTimer();
-      handleSubmit();
+      finishExam();
     }
   }, [timeLeft, testQuery.data?.data.end_date, testQuery.isLoading]);
 
@@ -238,7 +248,7 @@ export const Component: FC = (): ReactElement => {
   // Show countdown if exam hasn't started yet
   if (timeUntilStart > 0) {
     return (
-      <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
+      <div className="flex flex-col items-center justify-center self-center h-screen bg-gray-100">
         <div className="bg-white p-8 rounded-lg shadow-md text-center">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Ujian Belum Dimulai</h2>
           <p className="text-gray-600 mb-6">Ujian akan dimulai dalam:</p>
@@ -298,7 +308,7 @@ export const Component: FC = (): ReactElement => {
               ))}
             </div>
             <button
-              onClick={handleSubmit}
+              onClick={finishExam}
               className="w-full mt-4 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
             >
               Selesaikan Ujian
