@@ -8,6 +8,7 @@ import { useUpdateTest } from "../_hooks/use-update-test";
 import { TTestDetailResponse } from "@/api/test/type";
 import { InputText } from "@/app/_components/ui/inputs/text";
 import { InputCheckbox } from "@/app/_components/ui/inputs/checkbox";
+import { FileUpload } from "@/app/_components/ui/inputs/file-upload";
 import { TrashIcon } from "@/app/_components/ui/icons/ic-trash";
 import { Button } from "../../_components/button";
 
@@ -138,6 +139,15 @@ const Question = ({ index, control }: { index: number; control: Control<CreateTe
         label="Pembahasan"
         placeholder="Masukan Pembahasan"
       />
+      <div className="mt-4">
+        <FileUpload
+          label="Question Image"
+          onUpload={(url) => {
+            control.setValue(`questions.${index}.image_url`, url);
+          }}
+          defaultFile={control._formValues.questions[index]?.image_url}
+        />
+      </div>
 
       <div className="pl-4 border-l-2 border-gray-200">
         <div className="flex items-center justify-between mb-4">
@@ -171,6 +181,20 @@ const Question = ({ index, control }: { index: number; control: Control<CreateTe
                   label="Pilih Opsi"
                   placeholder="Masukan Opsi"
                 />
+                <div className="mt-2">
+                  <FileUpload
+                    label="Option Image"
+                    onUpload={(url) => {
+                      control.setValue(
+                        `questions.${index}.options.${fieldIndex}.image_url`,
+                        url,
+                      );
+                    }}
+                    defaultFile={
+                      control._formValues.questions[index]?.options[fieldIndex]?.image_url
+                    }
+                  />
+                </div>
                 <div className="mt-2">
                   <InputCheckbox
                     name={`questions.${index}.options.${fieldIndex}.is_correct`}
