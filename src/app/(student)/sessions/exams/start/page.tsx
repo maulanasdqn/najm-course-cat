@@ -1,4 +1,4 @@
-import { FC, ReactElement, useState, useEffect, useRef } from "react";
+import { FC, ReactElement, useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useExam } from "../detail/_hooks/use-exam";
 import toast from "react-hot-toast";
@@ -53,10 +53,11 @@ export const Component: FC = (): ReactElement => {
     }
   }, [testQuery.data?.data.end_date, navigate, params.sessionId]);
 
-  const handleSubmit = async (
+  const handleSubmit = useCallback(async (
     navigateToResult: boolean = true,
     showSuccessToast: boolean = true,
   ) => {
+    console.log('handleSubmit called with navigateToResult:', navigateToResult, 'showSuccessToast:', showSuccessToast);
     try {
       const res = await answerExamMutation.mutateAsync({
         test_id: params.examId!,
@@ -83,10 +84,17 @@ export const Component: FC = (): ReactElement => {
     } finally {
       finishExam();
     }
-  };
+  }, [answerExamMutation, answers, finishExam, navigate, params.examId, params.sessionId]);
 
-  const handleExitFullscreen = () => handleSubmit(true, true);
-  const handleFallback = () => handleSubmit(false, false);
+  const handleExitFullscreen = useCallback(() => {
+    console.log('handleExitFullscreen called');
+    handleSubmit(true, true);
+  }, [handleSubmit]);
+  
+  const handleFallback = useCallback(() => {
+    console.log('handleFallback called');
+    handleSubmit(false, false);
+  }, [handleSubmit]);
 
   const { startExam, finishExam } = useExam({
     onExitFullscreen: handleExitFullscreen,
@@ -164,6 +172,7 @@ export const Component: FC = (): ReactElement => {
     return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
   };
 
+  const isSubmitting = answerExamMutation.isLoading;
   const answeredCount = answers.filter((answer) => answer !== null).length;
   const unansweredCount = (testQuery.data?.data.questions.length || 0) - answeredCount;
 
@@ -254,9 +263,10 @@ export const Component: FC = (): ReactElement => {
             </div>
             <button
               onClick={() => handleSubmit(true, true)}
-              className="w-full mt-4 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+              disabled={isSubmitting}
+              className="w-full mt-4 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Selesaikan Ujian
+              {isSubmitting ? 'Mengirim...' : 'Selesaikan Ujian'}
             </button>
           </aside>
           <main className="flex-1 order-1 p-6 pl-0">
