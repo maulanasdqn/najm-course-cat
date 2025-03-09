@@ -156,8 +156,8 @@ export const Component: FC = (): ReactElement => {
                                   ? "border-green-500 bg-green-500" // Correct answer selected
                                   : "border-red-500 bg-red-500" // Wrong answer selected
                                 : isCorrectOption
-                                ? "border-green-500 bg-green-500" // Correct answer not selected
-                                : "border-gray-300" // Neutral state
+                                  ? "border-green-500 bg-green-500" // Correct answer not selected
+                                  : "border-gray-300" // Neutral state
                             }`}
                           >
                             {(isSelected || isCorrectOption) && (

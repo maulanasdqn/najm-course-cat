@@ -22,7 +22,7 @@ export const TestForm = ({ type, defaultValues }: TestFormProps) => {
   const { mutate: createTest } = useCreateTest();
   const { mutate: updateTest } = useUpdateTest(defaultValues?.id ?? "");
 
-  const { control, handleSubmit, setValue } = useForm<CreateTestFormData>({
+  const { control, handleSubmit } = useForm<CreateTestFormData>({
     resolver: zodResolver(createTestFormSchema),
     defaultValues: defaultValues
       ? {
