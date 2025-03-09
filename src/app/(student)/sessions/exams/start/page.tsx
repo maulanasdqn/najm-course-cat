@@ -37,8 +37,6 @@ export const Component: FC = (): ReactElement => {
   const [searchParams] = useSearchParams();
   const currentQuestion = parseInt(searchParams.get("page") || "1", 10) - 1;
   const [answers, setAnswers] = useState<TExamAnswerRequest["questions"]>([]);
-  const startDateRef = useRef<Date | null>(new Date(new Date().getTime() + 5 * 1000));
-  const endDateRef = useRef<Date | null>(new Date(new Date().getTime() + 60 * 1000));
   const answersRef = useRef<TExamAnswerRequest["questions"]>([]);
 
   const handleExitFullscreen = useCallback(async () => {
@@ -76,10 +74,10 @@ export const Component: FC = (): ReactElement => {
   const { timeUntilStart, timeLeft, clearTimer } = useTimer(
     typeof testQuery.data?.data.start_date === "undefined"
       ? undefined
-      : startDateRef.current?.toString(),
+      : testQuery.data?.data.start_date,
     typeof testQuery.data?.data.end_date === "undefined"
       ? undefined
-      : endDateRef.current?.toString(),
+      : testQuery.data?.data.end_date,
     params.sessionId!,
   );
 
