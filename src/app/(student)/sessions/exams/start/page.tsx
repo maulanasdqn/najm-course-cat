@@ -1,4 +1,4 @@
-import { FC, ReactElement, useState, useEffect, useRef } from "react";
+import { FC, ReactElement, useState, useEffect } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useExam } from "../detail/_hooks/use-exam";
 import toast from "react-hot-toast";
@@ -37,8 +37,6 @@ export const Component: FC = (): ReactElement => {
   const [searchParams] = useSearchParams();
   const currentQuestion = parseInt(searchParams.get("page") || "1", 10) - 1;
   const [answers, setAnswers] = useState<TExamAnswerRequest["questions"]>([]);
-  const dateStartRef = useRef<Date | null>(new Date(new Date().getTime() + 10 * 1000));
-  const dateEndRef = useRef<Date | null>(new Date(new Date().getTime() + 60 * 60000));
 
   useEffect(() => {
     if (testQuery.data?.data.end_date) {
@@ -100,10 +98,10 @@ export const Component: FC = (): ReactElement => {
   const { timeUntilStart, timeLeft, clearTimer } = useTimer(
     typeof testQuery.data?.data.start_date === "undefined"
       ? undefined
-      : dateStartRef.current?.toString(),
+      : testQuery.data.data.start_date,
     typeof testQuery.data?.data.end_date === "undefined"
       ? undefined
-      : dateEndRef.current?.toString(),
+      : testQuery.data?.data.start_date,
     params.sessionId!,
   );
 
