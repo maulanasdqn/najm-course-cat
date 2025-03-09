@@ -1,4 +1,4 @@
-import { FC, ReactElement, useState, useEffect } from "react";
+import { FC, ReactElement, useState, useEffect, useRef } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useExam } from "../detail/_hooks/use-exam";
 import toast from "react-hot-toast";
@@ -37,6 +37,8 @@ export const Component: FC = (): ReactElement => {
   const [searchParams] = useSearchParams();
   const currentQuestion = parseInt(searchParams.get("page") || "1", 10) - 1;
   const [answers, setAnswers] = useState<TExamAnswerRequest["questions"]>([]);
+  const startDateRef = useRef<Date | null>(new Date(new Date().getTime() + 5 * 1000));
+  const endDateRef = useRef<Date | null>(new Date(new Date().getTime() + 60 * 1000));
 
   useEffect(() => {
     if (testQuery.data?.data.end_date) {
@@ -51,7 +53,10 @@ export const Component: FC = (): ReactElement => {
     }
   }, [testQuery.data?.data.end_date, navigate, params.sessionId]);
 
-  const handleSubmit = async (navigateToResult: boolean = true, showSuccessToast: boolean = true) => {
+  const handleSubmit = async (
+    navigateToResult: boolean = true,
+    showSuccessToast: boolean = true,
+  ) => {
     try {
       const res = await answerExamMutation.mutateAsync({
         test_id: params.examId!,
@@ -70,6 +75,7 @@ export const Component: FC = (): ReactElement => {
         });
       }
     } catch (error) {
+      console.error(error);
       toast.error("Terjadi kesalahan saat menjawab ujian.");
       navigate(`/student/sessions/${params.sessionId}/exams`, {
         replace: true,
@@ -101,10 +107,10 @@ export const Component: FC = (): ReactElement => {
   const { timeUntilStart, timeLeft, clearTimer } = useTimer(
     typeof testQuery.data?.data.start_date === "undefined"
       ? undefined
-      : testQuery.data.data.start_date,
+      : startDateRef.current?.toString(),
     typeof testQuery.data?.data.end_date === "undefined"
       ? undefined
-      : testQuery.data?.data.start_date,
+      : endDateRef.current?.toString(),
     params.sessionId!,
   );
 
