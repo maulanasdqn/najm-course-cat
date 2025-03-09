@@ -1,22 +1,26 @@
 import { FC, ReactElement, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { TExamAnswerRequest } from "@/api/exams/type";
-import { useGetTest } from "./_hooks/use-get-tests-query";
+import { useGetTestAnswer } from "./_hooks/use-get-tests-query";
 
 export const Component: FC = (): ReactElement => {
   const params = useParams<{ examId: string; sessionId: string }>();
-  const testQuery = useGetTest(params.examId!);
+  const testQuery = useGetTestAnswer(params.examId!);
   const [answers, setAnswers] = useState<TExamAnswerRequest["questions"]>([]);
 
   useEffect(() => {
     setAnswers(Array(testQuery.data?.data.questions.length).fill(null));
   }, [testQuery.data?.data.questions]);
 
-  // Mock data for demonstration - in a real app, this would come from the API
-  const correctAnswers = 10;
+  // Calculate correct answers and score
+  const correctAnswers = testQuery.data?.data.questions.reduce((acc, question) => {
+    const selectedOption = question.options.find((option) => option.is_selected);
+    return selectedOption?.is_correct ? acc + 1 : acc;
+  }, 0) || 0;
+
   const totalQuestions = testQuery.data?.data.questions.length || 0;
   const scorePercentage = totalQuestions > 0 ? (correctAnswers / totalQuestions) * 100 : 0;
-  const finalScore = 50;
+  const finalScore = Math.round(scorePercentage);
 
   return (
     <div className="flex flex-col items-center justify-center w-full bg-gray-100 min-h-screen">
@@ -106,9 +110,8 @@ export const Component: FC = (): ReactElement => {
           <h3 className="text-xl font-semibold text-gray-800 mt-4 mb-2">Ulasan Pertanyaan</h3>
 
           {testQuery.data?.data.questions.map((question, index) => {
-            // Mock data - in a real app, you would compare with actual correct answers
-            const isCorrect = index % 3 === 0; // Just for demonstration
-            const selectedOptionId = answers[index]?.option_id;
+            const selectedOption = question.options.find((option) => option.is_selected);
+            const isCorrect = selectedOption?.is_correct;
 
             return (
               <div
@@ -134,10 +137,8 @@ export const Component: FC = (): ReactElement => {
 
                 <div className="flex flex-col gap-3 ml-10">
                   {question.options.map((option, optIndex) => {
-                    // Determine styling based on correct answer and selection
-                    const isSelected = selectedOptionId === option.id;
-                    // Mock data - in a real app, you would know which option is correct
-                    const isCorrectOption = optIndex === 0;
+                    const isSelected = option.is_selected;
+                    const isCorrectOption = option.is_correct;
 
                     let optionClass = "border rounded-lg p-3 transition-all";
                     if (isSelected) {
