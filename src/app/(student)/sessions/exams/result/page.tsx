@@ -136,14 +136,14 @@ export const Component: FC = (): ReactElement => {
                     const isCorrectOption = option.is_correct;
 
                     let optionClass = "border rounded-lg p-3 transition-all";
-                    if (isSelected) {
-                      optionClass += isCorrectOption
-                        ? " bg-green-50 border-green-300"
-                        : " bg-red-50 border-red-300";
-                    } else if (isCorrectOption) {
-                      optionClass += " bg-green-50 border-green-300";
+                    if (isSelected && isCorrectOption) {
+                      optionClass += " bg-green-50 border-green-300"; // Correct answer selected
+                    } else if (isSelected && !isCorrectOption) {
+                      optionClass += " bg-red-50 border-red-300"; // Wrong answer selected
+                    } else if (!isSelected && isCorrectOption) {
+                      optionClass += " bg-green-50 border-green-300"; // Correct answer not selected
                     } else {
-                      optionClass += " border-gray-200 hover:bg-gray-50";
+                      optionClass += " border-gray-200 hover:bg-gray-50"; // Neutral state
                     }
 
                     return (
@@ -153,11 +153,11 @@ export const Component: FC = (): ReactElement => {
                             className={`flex items-center justify-center w-6 h-6 rounded-full border ${
                               isSelected
                                 ? isCorrectOption
-                                  ? "border-green-500 bg-green-500"
-                                  : "border-red-500 bg-red-500"
+                                  ? "border-green-500 bg-green-500" // Correct answer selected
+                                  : "border-red-500 bg-red-500" // Wrong answer selected
                                 : isCorrectOption
-                                  ? "border-green-500 bg-green-500"
-                                  : "border-gray-300"
+                                ? "border-green-500 bg-green-500" // Correct answer not selected
+                                : "border-gray-300" // Neutral state
                             }`}
                           >
                             {(isSelected || isCorrectOption) && (
@@ -196,7 +196,7 @@ export const Component: FC = (): ReactElement => {
                             </span>
                           )}
 
-                          {isCorrectOption && (
+                          {isCorrectOption && !isSelected && (
                             <span className="ml-auto text-green-500">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
