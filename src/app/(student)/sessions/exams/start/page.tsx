@@ -37,6 +37,19 @@ export const Component: FC = (): ReactElement => {
   const [timeLeft, setTimeLeft] = useState<number>(0);
   const [answers, setAnswers] = useState<TExamAnswerRequest["questions"]>([]);
 
+  useEffect(() => {
+    if (testQuery.data?.data.end_date) {
+      const endDate = new Date(testQuery.data.data.end_date).getTime();
+      const now = new Date().getTime();
+      
+      // If end_date is in the past, redirect to exam list
+      if (endDate - now <= 0) {
+        navigate(`/student/sessions/${params.sessionId}/exams`, { replace: true });
+        toast.error("Waktu ujian telah berakhir.");
+      }
+    }
+  }, [testQuery.data?.data.end_date, navigate, params.sessionId]);
+
   const { finishExam } = useExam({
     onFinish: () => {
       answerExamMutation.mutate(
@@ -64,9 +77,13 @@ export const Component: FC = (): ReactElement => {
   }, [testQuery.data?.data.questions]);
 
   useEffect(() => {
-    if (testQuery.data?.data.end_date) {
-      const endDate = new Date(testQuery.data.data.end_date).getTime();
-      const now = new Date().getTime();
+    if (!testQuery.data?.data.end_date) return;
+
+    const endDate = new Date(testQuery.data.data.end_date).getTime();
+    const now = new Date().getTime();
+    
+    // Only set timer if end_date is in the future
+    if (endDate - now > 0) {
       const timeDiff = Math.max(0, Math.floor((endDate - now) / 1000));
       setTimeLeft(timeDiff);
     }
