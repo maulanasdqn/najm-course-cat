@@ -37,8 +37,7 @@ export const Component: FC = (): ReactElement => {
   const [searchParams] = useSearchParams();
   const currentQuestion = parseInt(searchParams.get("page") || "1", 10) - 1;
   const [answers, setAnswers] = useState<TExamAnswerRequest["questions"]>([]);
-  const startDateRef = useRef<Date | null>(new Date(new Date().getTime() + 5 * 1000));
-  const endDateRef = useRef<Date | null>(new Date(new Date().getTime() + 60 * 1000));
+  const answersRef = useRef<TExamAnswerRequest["questions"]>([]);
 
   useEffect(() => {
     if (testQuery.data?.data.end_date) {
@@ -53,56 +52,32 @@ export const Component: FC = (): ReactElement => {
     }
   }, [testQuery.data?.data.end_date, navigate, params.sessionId]);
 
-  const handleSubmit = useCallback(
-    async (navigateToResult: boolean = true, showSuccessToast: boolean = true) => {
-      console.log(
-        "handleSubmit called with navigateToResult:",
-        navigateToResult,
-        "showSuccessToast:",
-        showSuccessToast,
-      );
-      console.log("Answers at submission:", answers);
-      try {
-        const res = await answerExamMutation.mutateAsync({
-          test_id: params.examId!,
-          questions: answers.filter((answer) => answer !== null),
-        });
-        if (showSuccessToast) {
-          toast.success("Ujian telah selesai. Jawaban Anda telah disimpan.");
-        }
-        if (navigateToResult) {
-          navigate(`/student/sessions/${params.sessionId}/result/${res.data.id}`, {
-            replace: true,
-          });
-        } else {
-          navigate(`/student/sessions/${params.sessionId}/exams`, {
-            replace: true,
-          });
-        }
-      } catch (error) {
-        console.error(error);
-        toast.error("Terjadi kesalahan saat menjawab ujian.");
-        navigate(`/student/sessions/${params.sessionId}/exams`, {
-          replace: true,
-        });
-      } finally {
-        finishExam();
-      }
-    },
-    [answerExamMutation, answers, navigate, params.examId, params.sessionId, finishExam],
-  );
-
-  const handleExitFullscreen = useCallback(() => {
-    console.log("handleExitFullscreen called");
-    console.log("Current answers in handleExitFullscreen:", answers);
-    handleSubmit(true, true);
-  }, [handleSubmit, answers]);
+  const handleExitFullscreen = useCallback(async () => {
+    try {
+      const res = await answerExamMutation.mutateAsync({
+        test_id: params.examId!,
+        questions: answersRef.current.filter((answer) => answer !== null),
+      });
+      toast.success("Ujian telah selesai. Jawaban Anda telah disimpan.");
+      navigate(`/student/sessions/${params.sessionId}/result/${res.data.id}`, {
+        replace: true,
+      });
+    } catch (error) {
+      console.error(error);
+      toast.error("Terjadi kesalahan saat menjawab ujian.");
+      navigate(`/student/sessions/${params.sessionId}/exams`, {
+        replace: true,
+      });
+    } finally {
+      finishExam();
+    }
+  }, [answers]);
 
   const handleFallback = useCallback(() => {
-    console.log("handleFallback called");
-    console.log("Current answers in handleFallback:", answers);
-    handleSubmit(false, false);
-  }, [handleSubmit, answers]);
+    navigate(`/student/sessions/${params.sessionId}/exams`, {
+      replace: true,
+    });
+  }, [answers]);
 
   const { startExam, finishExam } = useExam({
     onExitFullscreen: handleExitFullscreen,
@@ -123,10 +98,10 @@ export const Component: FC = (): ReactElement => {
   const { timeUntilStart, timeLeft, clearTimer } = useTimer(
     typeof testQuery.data?.data.start_date === "undefined"
       ? undefined
-      : startDateRef.current?.toString(),
+      : testQuery.data?.data.start_date,
     typeof testQuery.data?.data.end_date === "undefined"
       ? undefined
-      : endDateRef.current?.toString(),
+      : testQuery.data?.data.end_date,
     params.sessionId!,
   );
 
@@ -140,7 +115,7 @@ export const Component: FC = (): ReactElement => {
       (!answerExamMutation.isSuccess || !answerExamMutation.isError)
     ) {
       clearTimer();
-      handleSubmit(true, true);
+      finishExam();
     }
   }, [timeLeft, testQuery.data?.data.end_date, testQuery.isLoading]);
 
@@ -168,9 +143,10 @@ export const Component: FC = (): ReactElement => {
   };
 
   const handleAnswer = (answer: TExamAnswerRequest["questions"][number]) => {
-    setAnswers(prevAnswers => {
+    setAnswers((prevAnswers) => {
       const updatedAnswers = [...prevAnswers];
       updatedAnswers[currentQuestion] = answer;
+      answersRef.current = updatedAnswers;
       return updatedAnswers;
     });
   };
@@ -272,7 +248,7 @@ export const Component: FC = (): ReactElement => {
               ))}
             </div>
             <button
-              onClick={() => handleSubmit(true, true)}
+              onClick={() => finishExam()}
               disabled={isSubmitting}
               className="w-full mt-4 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
             >
