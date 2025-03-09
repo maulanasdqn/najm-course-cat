@@ -5,19 +5,23 @@ import { useGetSessionTest } from "../_hooks/use-get-session-test";
 export const Component: FC = (): ReactElement => {
   const params = useParams<{ sessionId: string }>();
   const { data, isLoading } = useGetSessionTest(params.sessionId!);
-  
+
   if (isLoading) {
-    return <div className="w-full text-center p-6 text-gray-600 animate-pulse">Memuat daftar tes...</div>;
-  }
-  
-  if (!data?.data?.tests?.length) {
     return (
-      <div className="w-full text-center p-6 text-gray-600 border rounded-lg bg-white">
-        Tidak ada tes tersedia dalam sesi ini
+      <div className="w-full text-center p-6 text-gray-600 animate-pulse">
+        Memuat daftar ujian...
       </div>
     );
   }
-  
+
+  if (!data?.data?.tests?.length) {
+    return (
+      <div className="w-full text-center p-6 text-gray-600 border rounded-lg bg-white">
+        Tidak ada ujian tersedia dalam sesi ini
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col items-center justify-center w-full bg-gray-100">
       <section className="flex flex-1 w-full max-w-7xl">
@@ -29,9 +33,6 @@ export const Component: FC = (): ReactElement => {
                 className="border bg-white rounded-lg p-4 hover:shadow-md transition"
               >
                 <h3 className="text-lg font-bold text-gray-800">{test.test_name}</h3>
-                <p className="text-sm text-gray-600 mb-2">
-                  {test.status ? `Status: ${test.status}` : 'Belum dikerjakan'}
-                </p>
                 <a
                   href={`/student/sessions/${params.sessionId}/exams/${test.id}/detail`}
                   className="text-sm text-blue-600 font-bold hover:underline"
