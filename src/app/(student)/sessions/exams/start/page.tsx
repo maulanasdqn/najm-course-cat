@@ -107,10 +107,7 @@ export const Component: FC = (): ReactElement => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const currentQuestion = parseInt(searchParams.get("page") || "1", 10) - 1;
-  const [timeLeft, setTimeLeft] = useState<number>(0);
-  const [timeUntilStart, setTimeUntilStart] = useState<number>(0);
   const [answers, setAnswers] = useState<TExamAnswerRequest["questions"]>([]);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if (testQuery.data?.data.end_date) {
@@ -157,11 +154,12 @@ export const Component: FC = (): ReactElement => {
     params.sessionId
   );
 
+  // Handle exam timeout
   useEffect(() => {
-    if (timeLeft <= 0 && testQuery.data?.data.end_date) {
+    if (timeLeft <= 0 && testQuery.data?.data.end_date && !testQuery.isLoading) {
       finishExam();
     }
-  }, [timeLeft, finishExam, testQuery.data?.data.end_date]);
+  }, [timeLeft, finishExam, testQuery.data?.data.end_date, testQuery.isLoading]);
 
   const nextQuestion = () => {
     if (!testQuery.data) return;
@@ -209,6 +207,30 @@ export const Component: FC = (): ReactElement => {
   const answeredCount = answers.filter((answer) => answer !== null).length;
   const unansweredCount = (testQuery.data?.data.questions.length || 0) - answeredCount;
 
+  // Show loading state while fetching exam data
+  if (testQuery.isLoading) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
+        <div className="bg-white p-8 rounded-lg shadow-md text-center">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">Memuat Ujian...</h2>
+        </div>
+      </div>
+    );
+  }
+
+  // Show error state if exam data fails to load
+  if (testQuery.isError) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
+        <div className="bg-white p-8 rounded-lg shadow-md text-center">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">Gagal Memuat Ujian</h2>
+          <p className="text-gray-600 mb-6">Silakan coba lagi nanti.</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show countdown if exam hasn't started yet
   if (timeUntilStart > 0) {
     return (
       <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
