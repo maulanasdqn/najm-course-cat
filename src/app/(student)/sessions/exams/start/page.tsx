@@ -39,19 +39,6 @@ export const Component: FC = (): ReactElement => {
   const [answers, setAnswers] = useState<TExamAnswerRequest["questions"]>([]);
   const answersRef = useRef<TExamAnswerRequest["questions"]>([]);
 
-  useEffect(() => {
-    if (testQuery.data?.data.end_date) {
-      const endDate = new Date(testQuery.data.data.end_date).getTime();
-      const now = new Date().getTime();
-
-      // If end_date is in the past, redirect to exam list
-      if (endDate - now <= 0) {
-        navigate(`/student/sessions/${params.sessionId}/exams`, { replace: true });
-        toast.error("Waktu ujian telah berakhir.");
-      }
-    }
-  }, [testQuery.data?.data.end_date, navigate, params.sessionId]);
-
   const handleExitFullscreen = useCallback(async () => {
     try {
       const res = await answerExamMutation.mutateAsync({
@@ -84,17 +71,6 @@ export const Component: FC = (): ReactElement => {
     onFallback: handleFallback,
   });
 
-  useDidEffect(() => {
-    startExam();
-  }, []);
-
-  useEffect(() => {
-    const questionCount = testQuery.data?.data.questions?.length || 0;
-    if (questionCount !== answers.length) {
-      setAnswers(Array(questionCount).fill(null));
-    }
-  }, [testQuery.data?.data.questions?.length, answers.length]);
-
   const { timeUntilStart, timeLeft, clearTimer } = useTimer(
     typeof testQuery.data?.data.start_date === "undefined"
       ? undefined
@@ -104,6 +80,22 @@ export const Component: FC = (): ReactElement => {
       : testQuery.data?.data.end_date,
     params.sessionId!,
   );
+
+  useDidEffect(() => {
+    console.log("useDidEffect called");
+    console.log("timeUntilStart:", timeUntilStart, testQuery.data?.data.end_date);
+    if (!testQuery.data?.data.end_date) return;
+    if (timeUntilStart === 0) {
+      startExam();
+    }
+  }, [testQuery.data?.data.end_date, timeUntilStart === 0]);
+
+  useEffect(() => {
+    const questionCount = testQuery.data?.data.questions?.length || 0;
+    if (questionCount !== answers.length) {
+      setAnswers(Array(questionCount).fill(null));
+    }
+  }, [testQuery.data?.data.questions?.length, answers.length]);
 
   // Handle exam timeout
   useDidEffect(() => {
@@ -165,7 +157,7 @@ export const Component: FC = (): ReactElement => {
   // Show loading state while fetching exam data
   if (testQuery.isLoading) {
     return (
-      <div className="flex flex-col items-center justify-center self-center h-screen bg-gray-100">
+      <div className="flex-1 flex flex-col items-center justify-center self-center bg-gray-100">
         <div className="bg-white p-8 rounded-lg shadow-md text-center">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Memuat Ujian...</h2>
         </div>
@@ -176,7 +168,7 @@ export const Component: FC = (): ReactElement => {
   // Show error state if exam data fails to load
   if (testQuery.isError) {
     return (
-      <div className="flex flex-col items-center justify-center self-center  h-screen bg-gray-100">
+      <div className="flex-1 flex flex-col items-center justify-center self-center bg-gray-100">
         <div className="bg-white p-8 rounded-lg shadow-md text-center">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Gagal Memuat Ujian</h2>
           <p className="text-gray-600 mb-6">Silakan coba lagi nanti.</p>
@@ -188,7 +180,7 @@ export const Component: FC = (): ReactElement => {
   // Show countdown if exam hasn't started yet
   if (timeUntilStart > 0) {
     return (
-      <div className="flex flex-col items-center justify-center self-center h-screen bg-gray-100">
+      <div className="flex-1 flex flex-col items-center justify-center self-center bg-gray-100">
         <div className="bg-white p-8 rounded-lg shadow-md text-center">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Ujian Belum Dimulai</h2>
           <p className="text-gray-600 mb-6">Ujian akan dimulai dalam:</p>

@@ -26,9 +26,11 @@ export const useTimer = (startDateStr?: string, endDateStr?: string, sessionId?:
     if (endDate - now > 0) {
       const timeDiff = Math.max(0, Math.floor((endDate - now) / 1000));
       setTimeLeft(timeDiff);
-    } else if (endDate - now <= 0) {
+    } else if (endDate - now < 0) {
       setTimeLeft(0);
+    } else if (endDate - now === 0) {
       navigate(`/student/sessions/${sessionId}/exams`, { replace: true });
+      console.log("timeLeft:", timeLeft);
       toast.error("Waktu ujian telah berakhir.");
       return;
     }
