@@ -29,16 +29,27 @@ export const useExam = (props?: {
 
     await props?.onFinish?.();
 
-    if (document.exitFullscreen!) {
-      document.exitFullscreen();
+    // Check if document is in fullscreen mode before trying to exit
+    if (
+      document.fullscreenElement ||
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } else if ((document as any).mozCancelFullScreen) {
+      (document as any).mozFullScreenElement ||
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (document as any).mozCancelFullScreen();
+      (document as any).webkitFullscreenElement ||
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } else if ((document as any).webkitExitFullscreen) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (document as any).webkitExitFullscreen();
+      (document as any).msFullscreenElement
+    ) {
+      if (document.exitFullscreen) {
+        await document.exitFullscreen();
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } else if ((document as any).mozCancelFullScreen) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        await (document as any).mozCancelFullScreen();
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } else if ((document as any).webkitExitFullscreen) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        await (document as any).webkitExitFullscreen();
+      }
     }
   };
 
