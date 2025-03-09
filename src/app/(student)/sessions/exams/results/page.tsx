@@ -3,8 +3,6 @@ import { useParams } from "react-router-dom";
 import { TExamAnswerRequest } from "@/api/exams/type";
 import { useGetTest } from "./_hooks/use-get-tests-query";
 
-import questionCognitive from "@/api/test/questions-cognitive.json";
-import questionPersonality from "@/api/test/questions-personality.json";
 import { TTestDetailResponse } from "@/api/test/type";
 import { Tabs } from "@/app/_components/ui/tabs";
 
@@ -37,12 +35,12 @@ export const Component: FC = (): ReactElement => {
     {
       key: "kognitif",
       label: "Kognitif",
-      children: <QuestionsReviewTab questions={questionCognitive} answers={answers} />,
+      children: <QuestionsReviewTab questions={[]} answers={answers} />,
     },
     {
       key: "kepribadian",
       label: "Kepribadian",
-      children: <QuestionsReviewTab questions={questionPersonality} answers={answers} />,
+      children: <QuestionsReviewTab questions={[]} answers={answers} />,
     },
   ];
 
