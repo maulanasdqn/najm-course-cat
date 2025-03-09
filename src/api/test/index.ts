@@ -10,6 +10,7 @@ import {
   TTestCreateResponse,
   TExamAnswerRequest,
   TExamAnswerResponse,
+  TTestAnswerDetailResponse,
 } from "./type";
 
 export const getTests = async (params: TGetTestsParams): Promise<TTestPaginateResponse> => {
@@ -42,5 +43,10 @@ export const deleteTest = async (id: string): Promise<TTestDeleteResponse> => {
 
 export const answerExam = async (payload: TExamAnswerRequest): Promise<TExamAnswerResponse> => {
   const { data } = await api.post(`/v1/tests/answer/create`, payload);
+  return data;
+};
+
+export const getTestAnswer = async (id: string): Promise<TTestAnswerDetailResponse> => {
+  const { data } = await api.get(`/v1/tests/answer/${id}`);
   return data;
 };

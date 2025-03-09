@@ -42,6 +42,8 @@ export type TTestDetailResponse = TResponseData<{
   }[];
   session_id: string;
   test_name: string;
+  start_date: string;
+  end_date: string;
   updated_at: string;
 }>;
 
@@ -72,3 +74,22 @@ export type TExamAnswerRequest = {
 export type TExamAnswerResponse = {
   message: string;
 };
+
+export type TTestAnswerDetailResponse = TResponseData<{
+  id: string;
+  test_id: string;
+  user_id: string;
+  created_at: string;
+  updated_at: string;
+  questions: Array<{
+    discussion: string;
+    id: string;
+    options: Array<{
+      id: string;
+      label: string;
+      is_selected: boolean;
+      is_correct: boolean;
+    }>;
+    question: string;
+  }>;
+}>;
