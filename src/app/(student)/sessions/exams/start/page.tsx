@@ -6,6 +6,7 @@ import { useAnswerExamMutation } from "./_hooks/use-answer-exam-mutation";
 import { ArrowRightIcon } from "@/app/_components/ui/icons/ic-arrow-right";
 import { TExamAnswerRequest } from "@/api/test/type";
 import { useTimer } from "../_hooks/use-timer";
+import { useGetTest } from "./_hooks/use-get-tests-query";
 import { useDidEffect } from "@/app/_hooks/use-did-effect";
 
 // Left arrow icon component
@@ -31,80 +32,7 @@ const ArrowLeftIcon = () => (
 export const Component: FC = (): ReactElement => {
   const params = useParams<{ examId: string; sessionId: string }>();
   const answerExamMutation = useAnswerExamMutation();
-  const testQuery = {
-    data: {
-      status_code: 200,
-      version: "1.0",
-      data: {
-        id: "test-123",
-        test_name: "Test Kesehatan Mental Dummy",
-        session_id: "session-456",
-        start_date: "2025-03-09T04:50:00Z",
-        end_date: "2025-03-09T05:00:00Z",
-        created_at: "2023-12-01T00:00:00Z",
-        updated_at: "2023-12-01T00:00:00Z",
-        questions: [
-          {
-            id: "question-1",
-            question: "Bagaimana perasaan Anda akhir-akhir ini?",
-            discussion: "Pertanyaan ini mengukur kondisi emosional Anda",
-            options: [
-              {
-                id: "option-1",
-                label: "Sangat baik",
-                is_correct: true,
-              },
-              {
-                id: "option-2",
-                label: "Baik",
-                is_correct: false,
-              },
-              {
-                id: "option-3",
-                label: "Biasa saja",
-                is_correct: false,
-              },
-              {
-                id: "option-4",
-                label: "Tidak baik",
-                is_correct: false,
-              },
-            ],
-          },
-          {
-            id: "question-2",
-            question: "Seberapa sering Anda merasa cemas?",
-            discussion: "Pertanyaan ini mengukur tingkat kecemasan Anda",
-            options: [
-              {
-                id: "option-5",
-                label: "Tidak pernah",
-                is_correct: true,
-              },
-              {
-                id: "option-6",
-                label: "Jarang",
-                is_correct: false,
-              },
-              {
-                id: "option-7",
-                label: "Kadang-kadang",
-                is_correct: false,
-              },
-              {
-                id: "option-8",
-                label: "Sering",
-                is_correct: false,
-              },
-            ],
-          },
-        ],
-      },
-    },
-    isLoading: false,
-    isError: false,
-    error: null,
-  };
+  const testQuery = useGetTest(params.examId!);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const currentQuestion = parseInt(searchParams.get("page") || "1", 10) - 1;

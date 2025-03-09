@@ -2,13 +2,14 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
-export const useTimer = (startDateStr: string, endDateStr: string, sessionId: string) => {
+export const useTimer = (startDateStr?: string, endDateStr?: string, sessionId?: string) => {
   const navigate = useNavigate();
   const [timeUntilStart, setTimeUntilStart] = useState<number>(-1);
   const [timeLeft, setTimeLeft] = useState<number>(-1);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
+    console.log(startDateStr, endDateStr);
     if (!startDateStr || !endDateStr) return;
 
     const startDate = new Date(startDateStr).getTime();
@@ -26,6 +27,7 @@ export const useTimer = (startDateStr: string, endDateStr: string, sessionId: st
       const timeDiff = Math.max(0, Math.floor((endDate - now) / 1000));
       setTimeLeft(timeDiff);
     } else if (endDate - now <= 0) {
+      setTimeLeft(0);
       navigate(`/student/sessions/${sessionId}/exams`, { replace: true });
       toast.error("Waktu ujian telah berakhir.");
       return;
@@ -37,6 +39,9 @@ export const useTimer = (startDateStr: string, endDateStr: string, sessionId: st
         setTimeUntilStart((prev) => Math.max(0, prev - 1));
       } else if (timeLeft > 0) {
         setTimeLeft((prev) => Math.max(0, prev - 1));
+      } else {
+        setTimeUntilStart(0);
+        setTimeLeft(0);
       }
     }, 1000);
 
