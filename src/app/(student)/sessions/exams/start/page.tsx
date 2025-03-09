@@ -1,11 +1,11 @@
 import { FC, ReactElement, useState, useEffect } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { useTimer } from "./_hooks/use-timer";
 import { useExam } from "../detail/_hooks/use-exam";
 import toast from "react-hot-toast";
 import { useAnswerExamMutation } from "./_hooks/use-answer-exam-mutation";
 import { ArrowRightIcon } from "@/app/_components/ui/icons/ic-arrow-right";
 import { TExamAnswerRequest } from "@/api/test/type";
+import { useTimer } from "../_hooks/use-timer";
 
 // Left arrow icon component
 const ArrowLeftIcon = () => (
@@ -151,7 +151,7 @@ export const Component: FC = (): ReactElement => {
   const { timeUntilStart, timeLeft } = useTimer(
     testQuery.data?.data.start_date,
     testQuery.data?.data.end_date,
-    params.sessionId
+    params.sessionId!,
   );
 
   // Handle exam timeout
@@ -189,14 +189,6 @@ export const Component: FC = (): ReactElement => {
     updatedAnswers[currentQuestion] = answer;
     setAnswers(updatedAnswers);
   };
-
-  useEffect(() => {
-    return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
-    };
-  }, []);
 
   const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60);
