@@ -59,6 +59,7 @@ export const Component: FC = (): ReactElement => {
             <InputText
               label="Nama"
               control={form.control}
+              disabled={isPending}
               name="fullname"
               placeholder="Masukan Nama Lengkap"
             />
@@ -66,6 +67,7 @@ export const Component: FC = (): ReactElement => {
           <InputText
             type="email"
             label="Email"
+            disabled={isPending}
             control={form.control}
             name="email"
             placeholder="Masukan Email Aktif"
@@ -73,6 +75,7 @@ export const Component: FC = (): ReactElement => {
           <InputText
             type="number"
             label="Nomor Telp."
+            disabled={isPending}
             control={form.control}
             name="phoneNumber"
             placeholder="08xxxxxxxxxx"
@@ -80,6 +83,7 @@ export const Component: FC = (): ReactElement => {
           <div className="flex w-full gap-x-4">
             <InputText
               type={showPassword ? "text" : "password"}
+              disabled={isPending}
               label="Password"
               control={form.control}
               name="password"
@@ -96,6 +100,7 @@ export const Component: FC = (): ReactElement => {
             />
             <InputText
               type={showConfirmPassword ? "text" : "password"}
+              disabled={isPending}
               label="Masukan Ulang Password"
               control={form.control}
               name="confirmPassword"
@@ -111,14 +116,21 @@ export const Component: FC = (): ReactElement => {
               }
             />
           </div>
-          <InputText label="Tau dari mana?" name="interests" control={form.control} />
           <InputText
+            disabled={isPending}
+            label="Tau dari mana?"
+            name="interests"
+            control={form.control}
+          />
+          <InputText
+            disabled={isPending}
             label="Kode Referal"
             control={form.control}
             name="referralCode"
             placeholder="Masukan Kode Referal"
           />
           <Select
+            disabled={isPending}
             label="Kategori"
             control={form.control}
             name="studentType"
@@ -126,7 +138,12 @@ export const Component: FC = (): ReactElement => {
             options={studentTypeOption}
           />
           <div className="flex w-full justify-between gap-x-4 items-center">
-            <InputCheckbox label={checkboxLabel} name="terms" control={form.control} />
+            <InputCheckbox
+              label={checkboxLabel}
+              name="terms"
+              control={form.control}
+              disabled={isPending}
+            />
             <button
               disabled={isPending}
               className="w-auto text-sm flex bg-blue-900 text-white px-6 py-2 rounded-full font-medium items-center justify-center hover:bg-blue-800"
