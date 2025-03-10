@@ -3,29 +3,25 @@ import { OtpInput } from "@/app/_components/ui/inputs/otp-input";
 import { useVerifyEmail } from "./_hooks/use-verify-email";
 import { useEffect } from "react";
 import { UserLocalStorage } from "@/libs/cookies";
-import { Navigate } from "react-router-dom";
+import { Navigate, useSearchParams } from "react-router-dom";
 import { ROUTES } from "@/commons/constants/routes";
 import { useCountdown } from "@/app/_hooks/use-countdown";
 
 export const Component = () => {
   const { form, handler } = useVerifyEmail();
   const countdown = useCountdown(60 * 1000);
+  const [searchParams] = useSearchParams();
   const userData = UserLocalStorage.get();
 
   useEffect(() => {
-    if (userData?.email) {
-      form.setValue("email", userData.email);
+    if (userData.email || searchParams.get("email")) {
+      form.setValue("email", userData.email || searchParams.get("email") || "");
     }
   }, [userData]);
 
   // Redirect to dashboard if already verified
   if (userData?.is_active) {
     return <Navigate to={ROUTES.STUDENT.DASHBOARD.URL} />;
-  }
-
-  // Redirect to login if no user data
-  if (!userData) {
-    return <Navigate to={ROUTES.AUTH.LOGIN.URL} />;
   }
 
   return (

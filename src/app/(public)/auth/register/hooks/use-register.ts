@@ -20,7 +20,9 @@ export const useRegister = () => {
     },
   });
 
-  const { mutate: mutatePostRegister, isPending } = usePostRegister();
+  const email = form.getValues("email");
+
+  const { mutate: mutatePostRegister, isPending } = usePostRegister({ email });
 
   const onSubmit = form.handleSubmit((data) => {
     mutatePostRegister({
