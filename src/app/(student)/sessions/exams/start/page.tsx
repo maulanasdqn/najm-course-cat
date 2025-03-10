@@ -1,4 +1,4 @@
-import { FC, ReactElement, useState, useEffect } from "react";
+import { FC, ReactElement, useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useExam } from "../detail/_hooks/use-exam";
 import toast from "react-hot-toast";
@@ -37,56 +37,56 @@ export const Component: FC = (): ReactElement => {
   const [searchParams] = useSearchParams();
   const currentQuestion = parseInt(searchParams.get("page") || "1", 10) - 1;
   const [answers, setAnswers] = useState<TExamAnswerRequest["questions"]>([]);
+  const answersRef = useRef<TExamAnswerRequest["questions"]>([]);
 
-  useEffect(() => {
-    if (testQuery.data?.data.end_date) {
-      const endDate = new Date(testQuery.data.data.end_date).getTime();
-      const now = new Date().getTime();
-
-      // If end_date is in the past, redirect to exam list
-      if (endDate - now <= 0) {
-        navigate(`/student/sessions/${params.sessionId}/exams`, { replace: true });
-        toast.error("Waktu ujian telah berakhir.");
-      }
-    }
-  }, [testQuery.data?.data.end_date, navigate, params.sessionId]);
-
-  const { startExam, finishExam } = useExam({
-    onExitFullscreen: () => {
-      finishExam();
+  const handleExitFullscreen = useCallback(async () => {
+    try {
+      const res = await answerExamMutation.mutateAsync({
+        test_id: params.examId!,
+        questions: answersRef.current.filter((answer) => answer !== null),
+      });
       toast.success("Ujian telah selesai. Jawaban Anda telah disimpan.");
-    },
-    onFallback: () => {
-      finishExam();
+      navigate(`/student/sessions/${params.sessionId}/result/${res.data.id}`, {
+        replace: true,
+      });
+    } catch (error) {
+      console.error(error);
+      toast.error("Terjadi kesalahan saat menjawab ujian.");
       navigate(`/student/sessions/${params.sessionId}/exams`, {
         replace: true,
       });
-    },
+    } finally {
+      finishExam();
+    }
+  }, [answers]);
+
+  const handleFallback = useCallback(() => {
+    navigate(`/student/sessions/${params.sessionId}/exams`, {
+      replace: true,
+    });
+  }, [answers]);
+
+  const { startExam, finishExam } = useExam({
+    onExitFullscreen: handleExitFullscreen,
+    onFallback: handleFallback,
   });
 
-  const handleSubmit = () => {
-    answerExamMutation.mutate(
-      {
-        test_id: params.examId!,
-        questions: answers.filter((answer) => answer !== null),
-      },
-      {
-        onSuccess: (res) => {
-          finishExam();
-          navigate(`/student/sessions/${params.sessionId}/result/${res.data.id}`, {
-            replace: true,
-          });
-        },
-        onError: () => {
-          toast.error("Terjadi kesalahan saat menjawab ujian.");
-        },
-      },
-    );
-  };
+  const { timeUntilStart, timeLeft, clearTimer } = useTimer(
+    typeof testQuery.data?.data.start_date === "undefined"
+      ? undefined
+      : testQuery.data?.data.start_date,
+    typeof testQuery.data?.data.end_date === "undefined"
+      ? undefined
+      : testQuery.data?.data.end_date,
+    params.sessionId!,
+  );
 
   useDidEffect(() => {
-    startExam();
-  }, []);
+    if (!testQuery.data?.data.end_date) return;
+    if (timeUntilStart === 0) {
+      startExam();
+    }
+  }, [testQuery.data?.data.end_date, timeUntilStart === 0]);
 
   useEffect(() => {
     const questionCount = testQuery.data?.data.questions?.length || 0;
@@ -94,16 +94,6 @@ export const Component: FC = (): ReactElement => {
       setAnswers(Array(questionCount).fill(null));
     }
   }, [testQuery.data?.data.questions?.length, answers.length]);
-
-  const { timeUntilStart, timeLeft, clearTimer } = useTimer(
-    typeof testQuery.data?.data.start_date === "undefined"
-      ? undefined
-      : testQuery.data.data.start_date,
-    typeof testQuery.data?.data.end_date === "undefined"
-      ? undefined
-      : testQuery.data?.data.start_date,
-    params.sessionId!,
-  );
 
   // Handle exam timeout
   useDidEffect(() => {
@@ -115,7 +105,7 @@ export const Component: FC = (): ReactElement => {
       (!answerExamMutation.isSuccess || !answerExamMutation.isError)
     ) {
       clearTimer();
-      handleSubmit();
+      finishExam();
     }
   }, [timeLeft, testQuery.data?.data.end_date, testQuery.isLoading]);
 
@@ -143,9 +133,12 @@ export const Component: FC = (): ReactElement => {
   };
 
   const handleAnswer = (answer: TExamAnswerRequest["questions"][number]) => {
-    const updatedAnswers = [...answers];
-    updatedAnswers[currentQuestion] = answer;
-    setAnswers(updatedAnswers);
+    setAnswers((prevAnswers) => {
+      const updatedAnswers = [...prevAnswers];
+      updatedAnswers[currentQuestion] = answer;
+      answersRef.current = updatedAnswers;
+      return updatedAnswers;
+    });
   };
 
   const formatTime = (time: number) => {
@@ -155,15 +148,18 @@ export const Component: FC = (): ReactElement => {
     return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
   };
 
+  const isSubmitting = answerExamMutation.isPending;
   const answeredCount = answers.filter((answer) => answer !== null).length;
   const unansweredCount = (testQuery.data?.data.questions.length || 0) - answeredCount;
 
   // Show loading state while fetching exam data
   if (testQuery.isLoading) {
     return (
-      <div className="flex flex-col items-center justify-center self-center h-screen bg-gray-100">
+      <div className="flex-1 flex flex-col items-center justify-center self-center bg-gray-100">
         <div className="bg-white p-8 rounded-lg shadow-md text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Memuat Ujian...</h2>
+          <p className="text-gray-600">Mohon tunggu sebentar</p>
         </div>
       </div>
     );
@@ -172,10 +168,21 @@ export const Component: FC = (): ReactElement => {
   // Show error state if exam data fails to load
   if (testQuery.isError) {
     return (
-      <div className="flex flex-col items-center justify-center self-center  h-screen bg-gray-100">
+      <div className="flex-1 flex flex-col items-center justify-center self-center bg-gray-100">
         <div className="bg-white p-8 rounded-lg shadow-md text-center">
+          <div className="text-red-500 text-5xl mb-4">⚠️</div>
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Gagal Memuat Ujian</h2>
-          <p className="text-gray-600 mb-6">Silakan coba lagi nanti.</p>
+          <p className="text-gray-600 mb-6">
+            {testQuery.error instanceof Error
+              ? testQuery.error.message
+              : "Terjadi kesalahan saat memuat data ujian."}
+          </p>
+          <button
+            onClick={() => testQuery.refetch()}
+            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          >
+            Coba Lagi
+          </button>
         </div>
       </div>
     );
@@ -184,11 +191,17 @@ export const Component: FC = (): ReactElement => {
   // Show countdown if exam hasn't started yet
   if (timeUntilStart > 0) {
     return (
-      <div className="flex flex-col items-center justify-center self-center h-screen bg-gray-100">
+      <div className="flex-1 flex flex-col items-center justify-center self-center bg-gray-100">
         <div className="bg-white p-8 rounded-lg shadow-md text-center">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Ujian Belum Dimulai</h2>
           <p className="text-gray-600 mb-6">Ujian akan dimulai dalam:</p>
           <div className="text-4xl font-bold text-blue-600">{formatTime(timeUntilStart)}</div>
+          <div className="mt-6 text-sm text-gray-500">
+            {testQuery.data?.data.test_name && (
+              <p className="font-medium">Ujian: {testQuery.data.data.test_name}</p>
+            )}
+            <p>Halaman akan otomatis diperbarui saat ujian dimulai</p>
+          </div>
         </div>
       </div>
     );
@@ -244,10 +257,18 @@ export const Component: FC = (): ReactElement => {
               ))}
             </div>
             <button
-              onClick={handleSubmit}
-              className="w-full mt-4 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+              onClick={() => finishExam()}
+              disabled={isSubmitting}
+              className="w-full mt-4 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Selesaikan Ujian
+              {isSubmitting ? (
+                <span className="flex items-center justify-center">
+                  <span className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full mr-2"></span>
+                  Mengirim...
+                </span>
+              ) : (
+                "Selesaikan Ujian"
+              )}
             </button>
           </aside>
           <main className="flex-1 order-1 p-6 pl-0">
@@ -294,10 +315,19 @@ export const Component: FC = (): ReactElement => {
                   disabled={currentQuestion === (testQuery.data?.data.questions.length || 1) - 1}
                   className="px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-50 flex items-center"
                 >
-                  Simpan dan Lanjutkan
-                  <span className="ml-2">
-                    <ArrowRightIcon />
-                  </span>
+                  {isSubmitting ? (
+                    <span className="flex items-center">
+                      <span className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full mr-2"></span>
+                      Menyimpan...
+                    </span>
+                  ) : (
+                    <>
+                      Simpan dan Lanjutkan
+                      <span className="ml-2">
+                        <ArrowRightIcon />
+                      </span>
+                    </>
+                  )}
                 </button>
               </div>
             </div>
