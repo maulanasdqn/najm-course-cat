@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useDidEffect } from "@/app/_hooks/use-did-effect";
 
 export const useTimer = (startDateStr?: string, endDateStr?: string, sessionId?: string) => {
   const navigate = useNavigate();
@@ -8,9 +9,8 @@ export const useTimer = (startDateStr?: string, endDateStr?: string, sessionId?:
   const [timeLeft, setTimeLeft] = useState<number>(-1);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  useEffect(() => {
-    console.log(startDateStr, endDateStr);
-    if (!startDateStr || !endDateStr) return;
+  useDidEffect(() => {
+    if (!startDateStr || !endDateStr || !sessionId) return;
 
     const startDate = new Date(startDateStr).getTime();
     const endDate = new Date(endDateStr).getTime();
@@ -26,9 +26,8 @@ export const useTimer = (startDateStr?: string, endDateStr?: string, sessionId?:
     if (endDate - now > 0) {
       const timeDiff = Math.max(0, Math.floor((endDate - now) / 1000));
       setTimeLeft(timeDiff);
-    } else if (endDate - now < 0) {
+    } else if (endDate - now <= 0) {
       setTimeLeft(0);
-    } else if (endDate - now === 0) {
       navigate(`/student/sessions/${sessionId}/exams`, { replace: true });
       toast.error("Waktu ujian telah berakhir.");
       return;
@@ -51,7 +50,7 @@ export const useTimer = (startDateStr?: string, endDateStr?: string, sessionId?:
         clearInterval(timerRef.current);
       }
     };
-  }, [startDateStr, endDateStr, sessionId, navigate, timeUntilStart, timeLeft]);
+  }, [startDateStr, endDateStr, sessionId]);
 
   const clearTimer = useCallback(() => {
     if (timerRef.current) clearInterval(timerRef.current);

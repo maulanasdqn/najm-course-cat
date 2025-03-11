@@ -17,6 +17,9 @@ import { categoryOptions } from "./constants";
 import { InputCheckbox } from "@/app/_components/ui/inputs/checkbox";
 import { useGetTestsOption } from "./use-get-tests-option";
 import { Button } from "../../../_components/button";
+import { format, parseISO } from "date-fns";
+import { TZDate } from "@date-fns/tz";
+import { useDidEffect } from "@/app/_hooks/use-did-effect";
 
 type SessionTestFormProps = {
   type: "create" | "update";
@@ -52,17 +55,23 @@ export const SessionTestForm = ({ type, defaultValues }: SessionTestFormProps) =
   });
 
   const onSubmit = (data: CreateSessionTestFormData) => {
+    const payload = {
+      ...data,
+      tests: data.tests?.map((test) => {
+        return {
+          ...test,
+          start_date: format(test.start_date, "yyyy-MM-dd HH:mm"),
+          end_date: format(test.end_date, "yyyy-MM-dd HH:mm"),
+        };
+      }),
+    };
     if (type === "create") {
-      createSessionTest(data, {
-        onSuccess: () => {
-          navigate(ROUTES.ADMIN.SESSION_TESTS.LIST.URL);
-        },
+      createSessionTest(payload, {
+        onSuccess: () => {},
       });
     } else {
-      updateSessionTest(data, {
-        onSuccess: () => {
-          navigate(ROUTES.ADMIN.SESSION_TESTS.LIST.URL);
-        },
+      updateSessionTest(payload, {
+        onSuccess: () => {},
       });
     }
   };

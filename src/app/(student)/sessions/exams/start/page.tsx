@@ -213,7 +213,7 @@ export const Component: FC = (): ReactElement => {
       <div className="w-full max-w-7xl bg-white mt-6 p-4 rounded-lg shadow-md">
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-6">
-            <h2 className="text-xl font-bold text-gray-700">Test Kesehatan Mental</h2>
+            <h2 className="text-xl font-bold text-gray-700">{testQuery.data?.data.test_name}</h2>
             <div className="flex items-center space-x-4">
               <div className="flex items-center">
                 <div className="w-4 h-4 bg-green-500 rounded-sm mr-2"></div>
