@@ -61,8 +61,8 @@ export const TestForm = ({ type, defaultValues }: TestFormProps) => {
         <InputText
           name="test_name"
           control={control}
-          label="Pertanyaan"
-          placeholder="Masukan Pertanyaan"
+          label="Nama Ujian"
+          placeholder="Masukan Nama Ujian"
         />
       </div>
 

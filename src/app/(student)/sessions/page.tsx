@@ -1,17 +1,24 @@
 import { FC, ReactElement } from "react";
 import { useGetSessionTests } from "@/app/(admin)/session-tests/_hooks/use-get-session-tests";
+import { Link } from "react-router-dom";
 
 export const Component: FC = (): ReactElement => {
   const { data, isLoading } = useGetSessionTests({});
-  
+
   if (isLoading) {
-    return <div className="w-full text-center p-6 text-gray-600 animate-pulse">Memuat sesi ujian...</div>;
+    return (
+      <div className="w-full text-center p-6 text-gray-600 animate-pulse">Memuat sesi ujian...</div>
+    );
   }
-  
+
   if (!data?.data?.length) {
-    return <div className="w-full text-center p-6 text-gray-600 border rounded-lg bg-white">Tidak ada sesi ujian tersedia</div>;
+    return (
+      <div className="w-full text-center p-6 text-gray-600 border rounded-lg bg-white">
+        Tidak ada sesi ujian tersedia
+      </div>
+    );
   }
-  
+
   return (
     <div className="flex flex-col items-center justify-center w-full bg-gray-100">
       <section className="flex flex-1 w-full max-w-7xl">
@@ -24,12 +31,12 @@ export const Component: FC = (): ReactElement => {
               >
                 <h3 className="text-lg font-bold text-gray-800">{session.session_name}</h3>
                 <p className="text-sm text-gray-600 mb-2 flex-1">{session.description}</p>
-                <a
-                  href={`/student/sessions/${session.id}/exams`}
+                <Link
+                  to={`/student/sessions/${session.id}/exams`}
                   className="text-sm text-blue-600 font-bold hover:underline"
                 >
                   Lihat sesi →
-                </a>
+                </Link>
               </div>
             ))}
           </div>
