@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
-import { TLogin } from "../entities/type";
+import { TLogin } from "../_entities/type";
+import { loginSchema } from "../_entities/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema } from "../entities/schema";
 import { usePostLogin } from "./use-post-login";
 
 export const useLogin = () => {

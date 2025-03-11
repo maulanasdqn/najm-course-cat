@@ -1,4 +1,4 @@
-import { PermissionForm } from "../components/permission-form";
+import { PermissionForm } from "../_components/permission-form";
 import { useCreatePermission } from "../_hooks/use-create-permission";
 
 export default function CreatePermissionPage() {
