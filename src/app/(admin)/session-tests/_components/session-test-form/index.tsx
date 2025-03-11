@@ -131,33 +131,6 @@ export const SessionTestForm = ({ type, defaultValues }: SessionTestFormProps) =
           <div>
             <h2 className="text-xl font-semibold">Tests</h2>
           </div>
-          <Button
-            type="button"
-            onClick={() =>
-              append({
-                end_date: "",
-                multiplier: "",
-                start_date: "",
-                test_id: "",
-                weight: "",
-              })
-            }
-            className="flex items-center"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5 mr-1"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                clipRule="evenodd"
-              />
-            </svg>
-            Tambah Test
-          </Button>
         </div>
 
         {/* Display form-level errors */}
@@ -168,10 +141,21 @@ export const SessionTestForm = ({ type, defaultValues }: SessionTestFormProps) =
         )}
 
         {fields.length === 0 ? (
-          <div className="text-center py-8 bg-gray-50 rounded-lg border border-dashed border-gray-300">
+          <div 
+            className="text-center py-8 bg-gray-50 rounded-lg border border-dashed border-gray-300 cursor-pointer hover:bg-gray-100 transition-colors"
+            onClick={() =>
+              append({
+                end_date: "",
+                multiplier: "",
+                start_date: "",
+                test_id: "",
+                weight: "",
+              })
+            }
+          >
             <p className="text-gray-500">Belum ada test yang ditambahkan</p>
             <p className="text-sm text-gray-400 mt-1">
-              Klik tombol "Tambah Test" untuk menambahkan test
+              Klik disini untuk menambahkan test
             </p>
           </div>
         ) : (
