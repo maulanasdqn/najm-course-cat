@@ -150,7 +150,7 @@ export const SessionTestForm = ({ type, defaultValues }: SessionTestFormProps) =
               />
             ))}
             <div
-              className="text-center py-8 bg-gray-50 rounded-lg border border-dashed border-gray-300 cursor-pointer hover:bg-gray-100 transition-colors h-[284px]"
+              className="flex flex-col items-center justify-center py-8 bg-gray-50 rounded-lg border border-dashed border-gray-300 cursor-pointer hover:bg-gray-100 hover:shadow-md transition-all h-[284px]"
               onClick={() =>
                 append({
                   end_date: "",
@@ -161,7 +161,21 @@ export const SessionTestForm = ({ type, defaultValues }: SessionTestFormProps) =
                 })
               }
             >
-              <p className="text-sm text-gray-400 mt-1">Klik disini untuk menambahkan test</p>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-10 w-10 text-gray-400 mb-2"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 4v16m8-8H4"
+                />
+              </svg>
+              <p className="text-sm text-gray-500 font-medium">Klik disini untuk menambahkan test</p>
             </div>
           </div>
         }
