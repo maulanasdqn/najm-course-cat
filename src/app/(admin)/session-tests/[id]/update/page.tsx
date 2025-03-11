@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { SessionTestForm } from "../../components/session-test-form";
+import { SessionTestForm } from "../../_components/session-test-form";
 import { useGetSessionTest } from "../../_hooks/use-get-session-test";
 
 export default function UpdateSessionTestPage() {

@@ -1,11 +1,11 @@
 import { FC, ReactElement, useEffect, useState } from "react";
-import { useRegister } from "./hooks/use-register";
+import { useRegister } from "./_hooks/use-register";
 import { InputText } from "@/app/_components/ui/inputs/text";
 import { InputCheckbox } from "@/app/_components/ui/inputs/checkbox";
 import { GoogleButton } from "@/app/_components/ui/button/google-button";
 import { Select } from "@/app/_components/ui/inputs/select";
 import { queryClient } from "@/libs/react-query/react-query-client";
-import { POST_REGISTER_MUTATION_KEY } from "./hooks/use-post-register";
+import { POST_REGISTER_MUTATION_KEY } from "./_hooks/use-post-register";
 import { IcEye } from "@/app/_components/ui/icons/ic-eye";
 
 const studentTypeOption = [

@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { createRole } from "../../../../api/role";
 import { ROUTES } from "../../../../commons/constants/routes";
-import { RoleForm } from "../components/role-form";
+import { RoleForm } from "../_components/role-form";
 import { CreateRoleFormData } from "../_schemas/role-form.schema";
 import toast from "react-hot-toast";
 import { TErrorResponse } from "@/commons/types/error";

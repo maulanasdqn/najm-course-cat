@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getRole, updateRole } from "../../../../../api/role";
 import { QUERY_KEY } from "../../../../../commons/constants/query-key";
 import { ROUTES } from "../../../../../commons/constants/routes";
-import { RoleForm } from "../../components/role-form";
+import { RoleForm } from "../../_components/role-form";
 import { UpdateRoleFormData } from "../../_schemas/role-form.schema";
 import toast from "react-hot-toast";
 import { TErrorResponse } from "@/commons/types/error";

@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { TestForm } from "../../components/test-form";
+import { TestForm } from "../../_components/test-form";
 import { useGetTest } from "../../_hooks/use-get-test";
 
 export default function UpdateTestPage() {

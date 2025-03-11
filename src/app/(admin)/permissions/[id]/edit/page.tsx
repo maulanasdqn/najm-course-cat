@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { PermissionForm } from "../../components/permission-form";
+import { PermissionForm } from "../../_components/permission-form";
 import { useUpdatePermission } from "../../_hooks/use-update-permission";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEY } from "@/commons/constants/query-key";

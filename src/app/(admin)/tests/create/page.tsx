@@ -1,4 +1,4 @@
-import { TestForm } from "../components/test-form";
+import { TestForm } from "../_components/test-form";
 
 export default function CreateTestPage() {
   return (

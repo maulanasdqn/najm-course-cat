@@ -1,6 +1,5 @@
 import StudentLayout from "./layout";
 import DashboardPage from "./dashboard/page";
-import { CourseRouter } from "./course/router";
 import { ProfileRouter } from "./profile/router";
 import { SessionsRouter } from "./sessions/router";
 
@@ -11,10 +10,6 @@ export const StudentRouter = [
       {
         path: "dashboard",
         element: <DashboardPage />,
-      },
-      {
-        path: "course",
-        children: CourseRouter,
       },
       {
         path: "sessions",

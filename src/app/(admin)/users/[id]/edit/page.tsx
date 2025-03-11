@@ -4,7 +4,7 @@ import { getUser, updateUser } from "../../../../../api/user";
 import { TUserUpdateRequest } from "../../../../../api/user/type";
 import { QUERY_KEY } from "../../../../../commons/constants/query-key";
 import { ROUTES } from "../../../../../commons/constants/routes";
-import { UserForm } from "../../components/user-form";
+import { UserForm } from "../../_components/user-form";
 import { UpdateUserFormData } from "../../_schemas/user-form.schema";
 import toast from "react-hot-toast";
 import { TErrorResponse } from "@/commons/types/error";

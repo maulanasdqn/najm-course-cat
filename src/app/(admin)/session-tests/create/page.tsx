@@ -1,4 +1,4 @@
-import { SessionTestForm } from "../components/session-test-form";
+import { SessionTestForm } from "../_components/session-test-form";
 
 export default function CreateSessionTestPage() {
   return (
