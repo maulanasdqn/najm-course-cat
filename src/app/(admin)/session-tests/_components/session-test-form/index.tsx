@@ -17,9 +17,7 @@ import { categoryOptions } from "./constants";
 import { InputCheckbox } from "@/app/_components/ui/inputs/checkbox";
 import { useGetTestsOption } from "./use-get-tests-option";
 import { Button } from "../../../_components/button";
-import { format, parseISO } from "date-fns";
-import { TZDate } from "@date-fns/tz";
-import { useDidEffect } from "@/app/_hooks/use-did-effect";
+import { format } from "date-fns";
 
 type SessionTestFormProps = {
   type: "create" | "update";
@@ -140,25 +138,7 @@ export const SessionTestForm = ({ type, defaultValues }: SessionTestFormProps) =
           </div>
         )}
 
-        {fields.length === 0 ? (
-          <div 
-            className="text-center py-8 bg-gray-50 rounded-lg border border-dashed border-gray-300 cursor-pointer hover:bg-gray-100 transition-colors"
-            onClick={() =>
-              append({
-                end_date: "",
-                multiplier: "",
-                start_date: "",
-                test_id: "",
-                weight: "",
-              })
-            }
-          >
-            <p className="text-gray-500">Belum ada test yang ditambahkan</p>
-            <p className="text-sm text-gray-400 mt-1">
-              Klik disini untuk menambahkan test
-            </p>
-          </div>
-        ) : (
+        {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {fields.map((field, index) => (
               <TestCard
@@ -169,8 +149,22 @@ export const SessionTestForm = ({ type, defaultValues }: SessionTestFormProps) =
                 errors={errors}
               />
             ))}
+            <div
+              className="text-center py-8 bg-gray-50 rounded-lg border border-dashed border-gray-300 cursor-pointer hover:bg-gray-100 transition-colors h-[284px]"
+              onClick={() =>
+                append({
+                  end_date: "",
+                  multiplier: "",
+                  start_date: "",
+                  test_id: "",
+                  weight: "",
+                })
+              }
+            >
+              <p className="text-sm text-gray-400 mt-1">Klik disini untuk menambahkan test</p>
+            </div>
           </div>
-        )}
+        }
       </div>
 
       <div className="flex justify-end space-x-4">
