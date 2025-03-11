@@ -87,7 +87,7 @@ export const TestForm = ({ type, defaultValues }: TestFormProps) => {
               </div>
             </div>
           ))}
-          
+
           <div
             className="flex flex-col items-center justify-center py-8 bg-gray-50 rounded-lg border border-dashed border-gray-300 cursor-pointer hover:bg-gray-100 hover:shadow-md transition-all"
             onClick={() =>
@@ -111,7 +111,9 @@ export const TestForm = ({ type, defaultValues }: TestFormProps) => {
                 d="M12 4v16m8-8H4"
               />
             </svg>
-            <p className="text-sm text-gray-500 font-medium">Klik disini untuk menambahkan pertanyaan</p>
+            <p className="text-sm text-gray-500 font-medium">
+              Klik disini untuk menambahkan pertanyaan
+            </p>
           </div>
         </div>
       </div>
@@ -210,9 +212,9 @@ const Question = ({ index, control }: { index: number; control: Control<CreateTe
               </button>
             </div>
           ))}
-          
+
           <div
-            className="flex flex-col items-center justify-center py-4 bg-gray-50 rounded-lg border border-dashed border-gray-300 cursor-pointer hover:bg-gray-100 hover:shadow-md transition-all"
+            className="flex flex-col items-center justify-center py-4 bg-gray-50 rounded-lg border border-dashed border-gray-300 cursor-pointer hover:bg-gray-100 hover:shadow-md transition-all h-[178px]"
             onClick={() =>
               append({
                 label: "",
