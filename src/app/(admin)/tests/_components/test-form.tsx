@@ -11,13 +11,15 @@ import { InputCheckbox } from "@/app/_components/ui/inputs/checkbox";
 import { FileUpload } from "@/app/_components/ui/inputs/file-upload";
 import { TrashIcon } from "@/app/_components/ui/icons/ic-trash";
 import { Button } from "../../_components/button";
+import LoadingOverlay from "@/app/_components/ui/loading-overlay";
 
 type TestFormProps = {
   type: "create" | "update";
   defaultValues?: TTestDetailResponse["data"];
+  isLoading?: boolean;
 };
 
-export const TestForm = ({ type, defaultValues }: TestFormProps) => {
+export const TestForm = ({ type, defaultValues, isLoading }: TestFormProps) => {
   const navigate = useNavigate();
   const { mutate: createTest } = useCreateTest();
   const { mutate: updateTest } = useUpdateTest(defaultValues?.id ?? "");
@@ -55,7 +57,8 @@ export const TestForm = ({ type, defaultValues }: TestFormProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 relative">
+      {isLoading && <LoadingOverlay message={type === "create" ? "Creating test..." : "Updating test..."} />}
       <div className="space-y-4">
         <InputText
           name="test_name"

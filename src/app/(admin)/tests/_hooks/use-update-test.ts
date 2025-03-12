@@ -11,7 +11,7 @@ export const useUpdateTest = (id: string) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  return useMutation({
+  const mutation = useMutation({
     mutationFn: (data: TTestUpdateRequest) => updateTest(id, data),
     onSuccess: (res) => {
       queryClient.invalidateQueries({
@@ -29,4 +29,9 @@ export const useUpdateTest = (id: string) => {
       toast.error(error.response?.data?.message || error.message);
     },
   });
+  
+  return {
+    mutate: mutation.mutate,
+    isLoading: mutation.isPending
+  };
 };
