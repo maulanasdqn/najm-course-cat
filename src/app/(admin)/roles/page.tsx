@@ -70,8 +70,18 @@ export default function RolesPage() {
     setParams({ page });
   };
 
+  const handleDelete = async (id: string) => {
+    try {
+      setIsSubmitting(true);
+      await handleDelete(id);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
-    <div className="p-6">
+    <div className="p-6 relative">
+      {isSubmitting && <LoadingOverlay message="Deleting role..." />}
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-2xl font-bold">Roles</h1>
         <Link
