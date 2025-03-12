@@ -15,7 +15,7 @@ import LoadingOverlay from "@/app/_components/ui/loading-overlay";
 export default function UsersPage() {
   const { params, setParams } = useTableParams();
   const { data, isLoading } = useGetUsers(params);
-  const { handleDelete } = useDeleteUser();
+  const { handleDelete, isDeleting } = useDeleteUser();
   const { handleActivate, isActivating } = useActivateUser();
 
   const columns: ColumnDef<TUserItem>[] = [
