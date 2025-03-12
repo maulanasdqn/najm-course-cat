@@ -8,11 +8,14 @@ import { useGetRoles } from "./_hooks/use-get-roles";
 import { useDeleteRole } from "./_hooks/use-delete-role";
 import { Guard } from "@/app/_components/ui/guard";
 import PermissionsEnum from "@/commons/enums/permission";
+import { useState } from "react";
+import LoadingOverlay from "@/app/_components/ui/loading-overlay";
 
 export default function RolesPage() {
   const { params, setParams } = useTableParams();
-  const { data, isLoading } = useGetRoles(params);
+  const { data, isLoading: isLoadingData } = useGetRoles(params);
   const { handleDelete } = useDeleteRole();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const columns: ColumnDef<TRoleItem>[] = [
     {
@@ -81,7 +84,7 @@ export default function RolesPage() {
       <DataTable
         columns={columns}
         data={data?.data ?? []}
-        isLoading={isLoading}
+        isLoading={isLoadingData}
         onSearch={handleSearch}
         onSort={handleSort}
         initialSearch={params.search}

@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+// This schema is used for both create and update forms
 const baseRoleSchema = z.object({
   name: z
     .string()
