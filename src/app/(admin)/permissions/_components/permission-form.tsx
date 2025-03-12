@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TPermissionForm, permissionFormSchema } from "../_schemas/permission-form.schema";
+import LoadingOverlay from "@/app/_components/ui/loading-overlay";
 
 interface PermissionFormProps {
   onSubmit: (data: TPermissionForm) => void;
@@ -25,7 +26,8 @@ export function PermissionForm({
   });
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 relative">
+      {isLoading && <LoadingOverlay message={isEditMode ? "Updating permission..." : "Creating permission..."} />}
       <div>
         <label htmlFor="name" className="block text-sm font-medium text-gray-700">
           Permission Name
