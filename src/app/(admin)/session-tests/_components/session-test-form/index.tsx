@@ -18,6 +18,7 @@ import { InputCheckbox } from "@/app/_components/ui/inputs/checkbox";
 import { useGetTestsOption } from "./use-get-tests-option";
 import { Button } from "../../../_components/button";
 import { format } from "date-fns";
+import LoadingOverlay from "@/app/_components/ui/loading-overlay";
 
 type SessionTestFormProps = {
   type: "create" | "update";
@@ -26,8 +27,11 @@ type SessionTestFormProps = {
 
 export const SessionTestForm = ({ type, defaultValues }: SessionTestFormProps) => {
   const navigate = useNavigate();
-  const { mutate: createSessionTest } = useCreateSessionTest();
-  const { mutate: updateSessionTest } = useUpdateSessionTest(defaultValues?.id ?? "");
+  const { mutate: createSessionTest, isPending: isCreating } = useCreateSessionTest();
+  const { mutate: updateSessionTest, isPending: isUpdating } = useUpdateSessionTest(
+    defaultValues?.id ?? "",
+  );
+  const isLoading = isCreating || isUpdating;
 
   const {
     control,
@@ -81,7 +85,12 @@ export const SessionTestForm = ({ type, defaultValues }: SessionTestFormProps) =
   });
 
   return (
-    <form onSubmit={handleSubmit(onSubmit, (a) => console.log(a))} className="space-y-6">
+    <form onSubmit={handleSubmit(onSubmit, (a) => console.log(a))} className="space-y-6 relative">
+      {isLoading && (
+        <LoadingOverlay
+          message={type === "create" ? "Creating session test..." : "Updating session test..."}
+        />
+      )}
       <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
         <h2 className="text-xl font-semibold mb-4">Session Information</h2>
         <div className="space-y-4">
@@ -175,7 +184,9 @@ export const SessionTestForm = ({ type, defaultValues }: SessionTestFormProps) =
                   d="M12 4v16m8-8H4"
                 />
               </svg>
-              <p className="text-sm text-gray-500 font-medium">Klik disini untuk menambahkan test</p>
+              <p className="text-sm text-gray-500 font-medium">
+                Klik disini untuk menambahkan test
+              </p>
             </div>
           </div>
         }
