@@ -19,10 +19,12 @@ type TestFormProps = {
   isLoading?: boolean;
 };
 
-export const TestForm = ({ type, defaultValues, isLoading }: TestFormProps) => {
+export const TestForm = ({ type, defaultValues }: TestFormProps) => {
   const navigate = useNavigate();
-  const { mutate: createTest } = useCreateTest();
-  const { mutate: updateTest } = useUpdateTest(defaultValues?.id ?? "");
+  const { mutate: createTest, isLoading: isCreating } = useCreateTest();
+  const { mutate: updateTest, isLoading: isUpdating } = useUpdateTest(defaultValues?.id ?? "");
+
+  const isLoading = isCreating || isUpdating;
 
   const { control, handleSubmit } = useForm<CreateTestFormData>({
     resolver: zodResolver(createTestFormSchema),
@@ -58,7 +60,9 @@ export const TestForm = ({ type, defaultValues, isLoading }: TestFormProps) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 relative">
-      {isLoading && <LoadingOverlay message={type === "create" ? "Creating test..." : "Updating test..."} />}
+      {isLoading && (
+        <LoadingOverlay message={type === "create" ? "Creating test..." : "Updating test..."} />
+      )}
       <div className="space-y-4">
         <InputText
           name="test_name"
