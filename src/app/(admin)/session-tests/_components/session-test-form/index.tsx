@@ -17,6 +17,7 @@ import { categoryOptions } from "./constants";
 import { InputCheckbox } from "@/app/_components/ui/inputs/checkbox";
 import { useGetTestsOption } from "./use-get-tests-option";
 import { Button } from "../../../_components/button";
+import { format } from "date-fns";
 
 type SessionTestFormProps = {
   type: "create" | "update";
@@ -52,17 +53,23 @@ export const SessionTestForm = ({ type, defaultValues }: SessionTestFormProps) =
   });
 
   const onSubmit = (data: CreateSessionTestFormData) => {
+    const payload = {
+      ...data,
+      tests: data.tests?.map((test) => {
+        return {
+          ...test,
+          start_date: format(test.start_date, "yyyy-MM-dd HH:mm"),
+          end_date: format(test.end_date, "yyyy-MM-dd HH:mm"),
+        };
+      }),
+    };
     if (type === "create") {
-      createSessionTest(data, {
-        onSuccess: () => {
-          navigate(ROUTES.ADMIN.SESSION_TESTS.LIST.URL);
-        },
+      createSessionTest(payload, {
+        onSuccess: () => {},
       });
     } else {
-      updateSessionTest(data, {
-        onSuccess: () => {
-          navigate(ROUTES.ADMIN.SESSION_TESTS.LIST.URL);
-        },
+      updateSessionTest(payload, {
+        onSuccess: () => {},
       });
     }
   };
@@ -122,33 +129,6 @@ export const SessionTestForm = ({ type, defaultValues }: SessionTestFormProps) =
           <div>
             <h2 className="text-xl font-semibold">Tests</h2>
           </div>
-          <Button
-            type="button"
-            onClick={() =>
-              append({
-                end_date: "",
-                multiplier: "",
-                start_date: "",
-                test_id: "",
-                weight: "",
-              })
-            }
-            className="flex items-center"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5 mr-1"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                clipRule="evenodd"
-              />
-            </svg>
-            Tambah Test
-          </Button>
         </div>
 
         {/* Display form-level errors */}
@@ -158,14 +138,7 @@ export const SessionTestForm = ({ type, defaultValues }: SessionTestFormProps) =
           </div>
         )}
 
-        {fields.length === 0 ? (
-          <div className="text-center py-8 bg-gray-50 rounded-lg border border-dashed border-gray-300">
-            <p className="text-gray-500">Belum ada test yang ditambahkan</p>
-            <p className="text-sm text-gray-400 mt-1">
-              Klik tombol "Tambah Test" untuk menambahkan test
-            </p>
-          </div>
-        ) : (
+        {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {fields.map((field, index) => (
               <TestCard
@@ -176,8 +149,36 @@ export const SessionTestForm = ({ type, defaultValues }: SessionTestFormProps) =
                 errors={errors}
               />
             ))}
+            <div
+              className="flex flex-col items-center justify-center py-8 bg-gray-50 rounded-lg border border-dashed border-gray-300 cursor-pointer hover:bg-gray-100 hover:shadow-md transition-all h-[284px]"
+              onClick={() =>
+                append({
+                  end_date: "",
+                  multiplier: "",
+                  start_date: "",
+                  test_id: "",
+                  weight: "",
+                })
+              }
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-10 w-10 text-gray-400 mb-2"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 4v16m8-8H4"
+                />
+              </svg>
+              <p className="text-sm text-gray-500 font-medium">Klik disini untuk menambahkan test</p>
+            </div>
           </div>
-        )}
+        }
       </div>
 
       <div className="flex justify-end space-x-4">

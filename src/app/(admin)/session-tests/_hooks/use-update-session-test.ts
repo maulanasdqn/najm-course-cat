@@ -14,6 +14,7 @@ export const useUpdateSessionTest = (id: string) => {
   return useMutation({
     mutationFn: (data: TSessionTestUpdateRequest) => updateSessionTest(id, data),
     onSuccess: (res) => {
+      return;
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEY.SESSION_TESTS.LIST],
       });

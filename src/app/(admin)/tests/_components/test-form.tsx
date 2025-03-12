@@ -36,7 +36,6 @@ export const TestForm = ({ type, defaultValues }: TestFormProps) => {
   const { fields, append, remove } = useFieldArray({
     name: "questions",
     control,
-    keyName: "index",
   });
 
   const onSubmit = (data: CreateTestFormData) => {
@@ -69,8 +68,28 @@ export const TestForm = ({ type, defaultValues }: TestFormProps) => {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-semibold flex items-center gap-2">Daftar Pertanyaan</h3>
-          <Button
-            type="button"
+        </div>
+
+        <div className="grid grid-cols-1 gap-4">
+          {fields.map((field, fieldIndex) => (
+            <div key={field.id} className="rounded-lg border border-gray-200 p-4">
+              <div className="flex gap-4">
+                <div className="flex-1">
+                  <Question index={fieldIndex} control={control} />
+                </div>
+                <button
+                  type="button"
+                  onClick={() => remove(fieldIndex)}
+                  className="h-10 w-10 flex items-center justify-center rounded-full bg-red-100 text-red-600 hover:bg-red-200"
+                >
+                  <TrashIcon />
+                </button>
+              </div>
+            </div>
+          ))}
+
+          <div
+            className="flex flex-col items-center justify-center py-8 bg-gray-50 rounded-lg border border-dashed border-gray-300 cursor-pointer hover:bg-gray-100 hover:shadow-md transition-all"
             onClick={() =>
               append({
                 question: "",
@@ -78,26 +97,25 @@ export const TestForm = ({ type, defaultValues }: TestFormProps) => {
               })
             }
           >
-            Tambah Pertanyaan
-          </Button>
-        </div>
-
-        {fields.map((field, fieldIndex) => (
-          <div key={field.index} className="rounded-lg border border-gray-200 p-4">
-            <div className="flex gap-4">
-              <div className="flex-1">
-                <Question index={fieldIndex} control={control} />
-              </div>
-              <button
-                type="button"
-                onClick={() => remove(fieldIndex)}
-                className="h-10 w-10 flex items-center justify-center rounded-full bg-red-100 text-red-600 hover:bg-red-200"
-              >
-                <TrashIcon />
-              </button>
-            </div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-10 w-10 text-gray-400 mb-2"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 4v16m8-8H4"
+              />
+            </svg>
+            <p className="text-sm text-gray-500 font-medium">
+              Klik disini untuk menambahkan pertanyaan
+            </p>
           </div>
-        ))}
+        </div>
       </div>
 
       <div className="flex justify-end space-x-4">
@@ -118,7 +136,6 @@ const Question = ({ index, control }: { index: number; control: Control<CreateTe
   const { fields, append, remove } = useFieldArray({
     control,
     name: `questions.${index}.options`,
-    keyName: "index",
   });
 
   return (
@@ -153,24 +170,12 @@ const Question = ({ index, control }: { index: number; control: Control<CreateTe
           <div className="flex items-center gap-2">
             <span className="font-medium">Opsi Jawaban</span>
           </div>
-          <Button
-            type="button"
-            onClick={() =>
-              append({
-                label: "",
-                is_correct: false,
-              })
-            }
-            className="bg-success hover:bg-success-dark text-white flex items-center gap-2"
-          >
-            Tambah Opsi
-          </Button>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           {fields.map((field, fieldIndex) => (
             <div
-              key={field.index}
+              key={field.id}
               className="flex items-start gap-4 p-3 rounded-lg border border-gray-100"
             >
               <div className="flex-1">
@@ -200,13 +205,39 @@ const Question = ({ index, control }: { index: number; control: Control<CreateTe
               </div>
               <button
                 type="button"
-                onClick={() => remove(field.index)}
+                onClick={() => remove(fieldIndex)}
                 className="h-8 w-8 flex items-center justify-center rounded-full bg-red-100 text-red-600 hover:bg-red-200"
               >
                 <TrashIcon />
               </button>
             </div>
           ))}
+
+          <div
+            className="flex flex-col items-center justify-center py-4 bg-gray-50 rounded-lg border border-dashed border-gray-300 cursor-pointer hover:bg-gray-100 hover:shadow-md transition-all h-[178px]"
+            onClick={() =>
+              append({
+                label: "",
+                is_correct: false,
+              })
+            }
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 text-gray-400 mb-2"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 4v16m8-8H4"
+              />
+            </svg>
+            <p className="text-xs text-gray-500 font-medium">Tambah Opsi</p>
+          </div>
         </div>
       </div>
     </div>
