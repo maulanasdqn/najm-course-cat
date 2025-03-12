@@ -13,7 +13,7 @@ import LoadingOverlay from "@/app/_components/ui/loading-overlay";
 export default function PermissionsPage() {
   const { params, setParams } = useTableParams();
   const { data, isLoading } = useGetPermissions(params);
-  const { handleDelete } = useDeletePermission();
+  const { handleDelete, isDeleting } = useDeletePermission();
 
   const columns: ColumnDef<TPermissionItem>[] = [
     {
