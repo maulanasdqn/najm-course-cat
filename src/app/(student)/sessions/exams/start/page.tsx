@@ -8,6 +8,7 @@ import { TExamAnswerRequest } from "@/api/test/type";
 import { useTimer } from "../_hooks/use-timer";
 import { useGetTest } from "./_hooks/use-get-tests-query";
 import { useDidEffect } from "@/app/_hooks/use-did-effect";
+import { ZoomableImage } from "@/app/_components/ui/zoomable-image";
 
 // Left arrow icon component
 const ArrowLeftIcon = () => (
