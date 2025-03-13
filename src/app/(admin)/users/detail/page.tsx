@@ -4,7 +4,6 @@ import { getUser } from "../../../../api/user";
 import { QUERY_KEY } from "../../../../commons/constants/query-key";
 import { ROUTES } from "../../../../commons/constants/routes";
 import { useDeleteUser } from "../_hooks/use-delete-user";
-import { useActivateUser } from "../_hooks/use-activate-user";
 import LoadingOverlay from "@/app/_components/ui/loading-overlay";
 
 const getUpdateUrl = (id: string) => ROUTES.ADMIN.IAM.USERS.UPDATE.URL.replace(":id", id);
@@ -20,7 +19,6 @@ export default function UserDetailPage() {
   });
 
   const { handleDelete, isDeleting } = useDeleteUser();
-  const { handleActivate, isActivating } = useActivateUser();
 
   if (isLoadingUser) {
     return <div>Loading...</div>;
@@ -35,7 +33,6 @@ export default function UserDetailPage() {
   return (
     <div className="p-6 relative">
       {isDeleting && <LoadingOverlay message="Deleting user..." />}
-      {isActivating && <LoadingOverlay message="Activating user..." />}
       <div className="mb-6 flex justify-between items-center">
         <h1 className="text-2xl font-bold">Detail User</h1>
         <div className="flex gap-2">
