@@ -16,17 +16,19 @@ export const useTimer = (startDateStr?: string, endDateStr?: string, sessionId?:
     const endDate = new Date(endDateStr).getTime();
     const now = new Date().getTime();
 
+    let timeUntilStartDiff = 0;
     // Handle start date
     if (startDate - now > 0) {
-      const timeDiff = Math.max(0, Math.floor((startDate - now) / 1000));
-      setTimeUntilStart(timeDiff);
+      timeUntilStartDiff = Math.max(0, Math.floor((startDate - now) / 1000));
+      setTimeUntilStart(timeUntilStartDiff);
     }
 
+    let timeDiff = 0;
     // Handle end date
-    if (endDate - now > 0) {
-      const timeDiff = Math.max(0, Math.floor((endDate - now) / 1000));
+    if (now - endDate > 0) {
+      timeDiff = Math.max(0, Math.floor((now - endDate) / 1000));
       setTimeLeft(timeDiff);
-    } else if (endDate - now <= 0) {
+    } else if (now - endDate <= 0) {
       setTimeLeft(0);
       navigate(`/student/sessions/${sessionId}/exams`, { replace: true });
       toast.error("Waktu ujian telah berakhir.");
@@ -35,9 +37,9 @@ export const useTimer = (startDateStr?: string, endDateStr?: string, sessionId?:
 
     // Start the appropriate timer
     timerRef.current = setInterval(() => {
-      if (timeUntilStart > 0) {
+      if (timeUntilStartDiff > 0) {
         setTimeUntilStart((prev) => Math.max(0, prev - 1));
-      } else if (timeLeft > 0) {
+      } else if (timeDiff > 0) {
         setTimeLeft((prev) => Math.max(0, prev - 1));
       } else {
         setTimeUntilStart(0);

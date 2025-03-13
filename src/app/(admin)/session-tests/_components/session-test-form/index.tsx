@@ -18,6 +18,7 @@ import { InputCheckbox } from "@/app/_components/ui/inputs/checkbox";
 import { useGetTestsOption } from "./use-get-tests-option";
 import { Button } from "../../../_components/button";
 import { format } from "date-fns";
+import { TZDate } from "@date-fns/tz";
 import LoadingOverlay from "@/app/_components/ui/loading-overlay";
 
 type SessionTestFormProps = {
@@ -62,8 +63,8 @@ export const SessionTestForm = ({ type, defaultValues }: SessionTestFormProps) =
       tests: data.tests?.map((test) => {
         return {
           ...test,
-          start_date: format(test.start_date, "yyyy-MM-dd HH:mm"),
-          end_date: format(test.end_date, "yyyy-MM-dd HH:mm"),
+          start_date: format(new TZDate(test.start_date, "UTC"), "yyyy-MM-dd'T'HH:mm"),
+          end_date: format(new TZDate(test.end_date, "UTC"), "yyyy-MM-dd'T'HH:mm"),
         };
       }),
     };
