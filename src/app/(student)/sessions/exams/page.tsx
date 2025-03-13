@@ -34,7 +34,7 @@ export const Component: FC = (): ReactElement => {
               >
                 <h3 className="text-lg font-bold text-gray-800">{test.test_name}</h3>
                 <Link
-                  to={`/student/sessions/${params.sessionId}/exams/${test.id}/detail`}
+                  to={`/student/sessions/${params.sessionId}/exams/${test.id}/start`}
                   className="text-sm text-blue-600 font-bold hover:underline"
                 >
                   Kerjakan Tes →

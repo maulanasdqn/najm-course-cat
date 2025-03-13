@@ -1,6 +1,6 @@
 import { FC, ReactElement, useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { useExam } from "../detail/_hooks/use-exam";
+import { useExam } from "../start/_hooks/use-exam";
 import toast from "react-hot-toast";
 import { useAnswerExamMutation } from "./_hooks/use-answer-exam-mutation";
 import { ArrowRightIcon } from "@/app/_components/ui/icons/ic-arrow-right";
@@ -74,19 +74,23 @@ export const Component: FC = (): ReactElement => {
   const { timeUntilStart, timeLeft, clearTimer } = useTimer(
     typeof testQuery.data?.data.start_date === "undefined"
       ? undefined
-      : testQuery.data?.data.start_date,
+      : testQuery.data.data.start_date,
     typeof testQuery.data?.data.end_date === "undefined"
       ? undefined
       : testQuery.data?.data.end_date,
     params.sessionId!,
   );
 
-  useDidEffect(() => {
-    if (!testQuery.data?.data.end_date) return;
-    if (timeUntilStart === 0) {
+  const [start, setStart] = useState(false);
+
+  useEffect(() => {
+    if (!testQuery.data) return;
+    const dateStart = Math.floor(new Date(testQuery.data.data.start_date).getTime() / 1000);
+    const dateNow = Math.floor(new Date().getTime() / 1000);
+    if (dateStart <= dateNow && start && timeUntilStart <= 0) {
       startExam();
     }
-  }, [testQuery.data?.data.end_date, timeUntilStart === 0]);
+  }, [testQuery.data?.data.start_date, start, timeUntilStart <= 0]);
 
   useEffect(() => {
     const questionCount = testQuery.data?.data.questions?.length || 0;
@@ -108,6 +112,36 @@ export const Component: FC = (): ReactElement => {
       finishExam();
     }
   }, [timeLeft, testQuery.data?.data.end_date, testQuery.isLoading]);
+
+  if (!start) {
+    return (
+      <div className="flex-1 flex flex-col items-center justify-center w-full bg-gray-100">
+        <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">Pemberitahuan</h2>
+          <p className="text-gray-600 mb-6">
+            Sebelum memulai ujian, pastikan Anda telah membaca petunjuk berikut:
+          </p>
+          <ul className="list-disc list-inside text-gray-600 mb-6">
+            <li style={{ textTransform: "uppercase", fontWeight: "bold" }}>
+              Keluar dari fullscreen mode akan menyelesaikan ujian.
+            </li>
+            <li>Pastikan Anda memiliki koneksi internet yang stabil.</li>
+            <li>Waktu ujian akan dimulai setelah Anda menekan tombol "Mulai Ujian".</li>
+            <li>Setiap soal wajib dijawab sebelum menyelesaikan ujian.</li>
+          </ul>
+          <button
+            onClick={() => {
+              setStart(true);
+            }}
+            className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+            disabled={testQuery.isPending}
+          >
+            {testQuery.isPending ? "Memuat..." : "Mulai Ujian"}
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   const nextQuestion = () => {
     if (!testQuery.data) return;
@@ -195,7 +229,18 @@ export const Component: FC = (): ReactElement => {
         <div className="bg-white p-8 rounded-lg shadow-md text-center">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Ujian Belum Dimulai</h2>
           <p className="text-gray-600 mb-6">Ujian akan dimulai dalam:</p>
-          <div className="text-4xl font-bold text-blue-600">{formatTime(timeUntilStart)}</div>
+          {timeUntilStart > 0 ? (
+            <div className="text-4xl font-bold text-blue-600">{formatTime(timeUntilStart)}</div>
+          ) : (
+            <button
+              onClick={() => {
+                startExam();
+              }}
+              className="w-full mt-4 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Mulai Ujian
+            </button>
+          )}
           <div className="mt-6 text-sm text-gray-500">
             {testQuery.data?.data.test_name && (
               <p className="font-medium">Ujian: {testQuery.data.data.test_name}</p>
