@@ -8,11 +8,12 @@ import { useGetPermissions } from "./_hooks/use-get-permissions";
 import { useDeletePermission } from "./_hooks/use-delete-permission";
 import { Guard } from "@/app/_components/ui/guard";
 import PermissionsEnum from "@/commons/enums/permission";
+import LoadingOverlay from "@/app/_components/ui/loading-overlay";
 
 export default function PermissionsPage() {
   const { params, setParams } = useTableParams();
   const { data, isLoading } = useGetPermissions(params);
-  const { handleDelete } = useDeletePermission();
+  const { handleDelete, isDeleting } = useDeletePermission();
 
   const columns: ColumnDef<TPermissionItem>[] = [
     {
@@ -68,7 +69,8 @@ export default function PermissionsPage() {
   };
 
   return (
-    <div className="p-6">
+    <div className="p-6 relative">
+      {isDeleting && <LoadingOverlay message="Deleting permission..." />}
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-2xl font-bold">Permissions</h1>
         <Link

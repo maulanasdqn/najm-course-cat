@@ -8,11 +8,12 @@ import { useGetRoles } from "./_hooks/use-get-roles";
 import { useDeleteRole } from "./_hooks/use-delete-role";
 import { Guard } from "@/app/_components/ui/guard";
 import PermissionsEnum from "@/commons/enums/permission";
+import LoadingOverlay from "@/app/_components/ui/loading-overlay";
 
 export default function RolesPage() {
   const { params, setParams } = useTableParams();
-  const { data, isLoading } = useGetRoles(params);
-  const { handleDelete } = useDeleteRole();
+  const { data, isLoading: isLoadingData } = useGetRoles(params);
+  const { handleDelete, isDeleting } = useDeleteRole();
 
   const columns: ColumnDef<TRoleItem>[] = [
     {
@@ -68,7 +69,8 @@ export default function RolesPage() {
   };
 
   return (
-    <div className="p-6">
+    <div className="p-6 relative">
+      {isDeleting && <LoadingOverlay message="Deleting role..." />}
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-2xl font-bold">Roles</h1>
         <Link
@@ -81,7 +83,7 @@ export default function RolesPage() {
       <DataTable
         columns={columns}
         data={data?.data ?? []}
-        isLoading={isLoading}
+        isLoading={isLoadingData}
         onSearch={handleSearch}
         onSort={handleSort}
         initialSearch={params.search}

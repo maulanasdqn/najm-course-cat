@@ -14,6 +14,7 @@ import { useMutation } from "@tanstack/react-query";
 import { upload } from "@/api/storage";
 import toast from "react-hot-toast";
 import { InputWrap } from "@/app/_components/ui/inputs/wrap";
+import LoadingOverlay from "@/app/_components/ui/loading-overlay";
 
 const studentTypeOptions = [
   { value: "polri", label: "Polri" },
@@ -79,6 +80,9 @@ export function UserForm(props: UserFormProps) {
 
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      {props.isLoading && (
+        <LoadingOverlay message={props.isEditMode ? "Updating user..." : "Creating user..."} />
+      )}
       <div className="flex flex-col items-center pb-4">
         <div
           className="flex w-[100px] h-[100px] rounded-full bg-gray-100 items-center justify-center"

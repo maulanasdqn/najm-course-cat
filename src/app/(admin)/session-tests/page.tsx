@@ -7,28 +7,12 @@ import { useDeleteSessionTest } from "./_hooks/use-delete-session-test";
 import { ColumnDef } from "@tanstack/react-table";
 import { TSessionTestItem } from "@/api/session-test/type";
 import { Guard } from "@/app/_components/ui/guard";
-import { DeleteConfirmation } from "../_components/delete-confirmation";
-import { createElement } from "react";
-import toast from "react-hot-toast";
+import LoadingOverlay from "@/app/_components/ui/loading-overlay";
 
 export default function SessionTestsPage() {
   const { params, setParams } = useTableParams();
   const { data, isLoading } = useGetSessionTests(params);
-  const { mutate } = useDeleteSessionTest();
-
-  const handleDelete = (id: string) => {
-    toast.custom(
-      (t) =>
-        createElement(DeleteConfirmation, {
-          onConfirm: () => mutate(id),
-          toastId: t.id,
-          message: "Apakah Anda yakin ingin menghapus sesi ini?",
-        }),
-      {
-        duration: Infinity,
-      },
-    );
-  };
+  const { handleDelete, isDeleting } = useDeleteSessionTest();
 
   const columns: ColumnDef<TSessionTestItem>[] = [
     {
@@ -106,7 +90,8 @@ export default function SessionTestsPage() {
   };
 
   return (
-    <div className="p-6">
+    <div className="p-6 relative">
+      {isDeleting && <LoadingOverlay message="Deleting session test..." />}
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-2xl font-bold">Session Tests</h1>
         <Guard permissions={[]}>

@@ -10,6 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEY } from "@/commons/constants/query-key";
 import { getPermissions } from "@/api/permission";
 import { useEffect } from "react";
+import LoadingOverlay from "@/app/_components/ui/loading-overlay";
 
 interface RoleFormProps {
   onSubmit: (data: CreateRoleFormData | UpdateRoleFormData) => void;
@@ -40,6 +41,9 @@ export function RoleForm({ onSubmit, isLoading, isEditMode, defaultValues }: Rol
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      {isLoading && (
+        <LoadingOverlay message={isEditMode ? "Updating role..." : "Creating role..."} />
+      )}
       <div>
         <label htmlFor="name" className="block text-sm font-medium text-gray-700">
           Role Name

@@ -7,7 +7,7 @@ import { TErrorResponse } from "@/commons/types/error";
 export const useActivateUser = () => {
   const queryClient = useQueryClient();
 
-  const { mutate: handleActivate } = useMutation({
+  const { mutate: handleActivate, isPending: isActivating } = useMutation({
     mutationFn: activateUser,
     onSuccess: (res) => {
       toast.success(res.message || "User berhasil diperbarui");
@@ -20,5 +20,5 @@ export const useActivateUser = () => {
     },
   });
 
-  return { handleActivate };
+  return { handleActivate, isActivating };
 };

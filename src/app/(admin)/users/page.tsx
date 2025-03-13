@@ -10,12 +10,13 @@ import { TUserItem } from "../../../api/user/type";
 import { Switch } from "../../_components/ui/inputs/switch";
 import { Guard } from "@/app/_components/ui/guard";
 import PermissionsEnum from "@/commons/enums/permission";
+import LoadingOverlay from "@/app/_components/ui/loading-overlay";
 
 export default function UsersPage() {
   const { params, setParams } = useTableParams();
   const { data, isLoading } = useGetUsers(params);
-  const { handleDelete } = useDeleteUser();
-  const { handleActivate } = useActivateUser();
+  const { handleDelete, isDeleting } = useDeleteUser();
+  const { handleActivate, isActivating } = useActivateUser();
 
   const columns: ColumnDef<TUserItem>[] = [
     {
@@ -40,6 +41,7 @@ export default function UsersPage() {
             <Switch
               checked={user.is_active ?? false}
               onChange={(checked) => handleActivate({ id: user.id, is_active: checked })}
+              disabled={isActivating}
             />
           </Guard>
         );
@@ -79,6 +81,7 @@ export default function UsersPage() {
               <div
                 onClick={() => handleDelete(id)}
                 className="text-red-600 hover:underline cursor-pointer"
+                style={{ opacity: isDeleting ? 0.5 : 1 }}
               >
                 Delete
               </div>
@@ -108,7 +111,9 @@ export default function UsersPage() {
   };
 
   return (
-    <div className="p-6">
+    <div className="p-6 relative">
+      {isDeleting && <LoadingOverlay message="Deleting user..." />}
+      {isActivating && <LoadingOverlay message="Activating user..." />}
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-2xl font-bold">Users</h1>
         <Link
