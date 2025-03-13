@@ -2,8 +2,8 @@ import { TestForm } from "../_components/test-form";
 import { useCreateTest } from "../_hooks/use-create-test";
 
 export default function CreateTestPage() {
-  const { mutate, isLoading } = useCreateTest();
-  
+  const { isLoading } = useCreateTest();
+
   return (
     <div className="p-6">
       <div className="mb-6">
