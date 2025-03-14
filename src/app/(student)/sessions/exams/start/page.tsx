@@ -318,19 +318,19 @@ export const Component: FC = (): ReactElement => {
             </button>
           </aside>
           <main className="flex-1 order-1 p-6 pl-0">
-            <div className="bg-white shadow rounded-lg p-6">
-              <h3 className="text-lg text-gray-800 mb-2">
-                Soal Nomor {currentQuestion + 1} dari {testQuery.data?.data.questions.length} :
+            <div className="bg-white shadow rounded-lg p-6 space-y-6">
+              <h3 className="text-xl text-gray-800 font-bold">
+                Soal Nomor {currentQuestion + 1} dari {testQuery.data?.data.questions.length}
               </h3>
-              <h2 className="text-lg font-semibold mb-4">
+              <h2 className="text-lg font-medium">
                 {testQuery.data?.data.questions[currentQuestion].question}
               </h2>
               {testQuery.data?.data.questions[currentQuestion].image_url && (
-                <div className="mb-10">
+                <div className="mb-8 flex justify-center">
                   <ZoomableImage
                     src={testQuery.data?.data.questions[currentQuestion].image_url}
                     alt="Soal"
-                    className="w-96 h-64"
+                    className="max-w-full max-h-96 object-contain"
                   />
                 </div>
               )}
@@ -364,7 +364,9 @@ export const Component: FC = (): ReactElement => {
                 <button
                   onClick={prevQuestion}
                   disabled={currentQuestion === 0}
-                  className="px-4 py-2 bg-gray-300 text-gray-700 rounded disabled:opacity-50 flex items-center"
+                  className={`px-4 py-2 bg-gray-300 text-gray-700 rounded-lg shadow hover:bg-gray-400 hover:text-white transition disabled:opacity-50 flex items-center ${
+                    currentQuestion !== 0 ? 'hover:cursor-pointer' : 'hover:cursor-not-allowed'
+                  }`}
                 >
                   <span className="mr-2">
                     <ArrowLeftIcon />
@@ -374,7 +376,11 @@ export const Component: FC = (): ReactElement => {
                 <button
                   onClick={nextQuestion}
                   disabled={currentQuestion === (testQuery.data?.data.questions.length || 1) - 1}
-                  className="px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-50 flex items-center"
+                  className={`px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-500 hover:scale-105 transition disabled:opacity-50 flex items-center ${
+                    currentQuestion !== (testQuery.data?.data.questions.length || 1) - 1
+                      ? 'hover:cursor-pointer'
+                      : 'hover:cursor-not-allowed'
+                  }`}
                 >
                   {isSubmitting ? (
                     <span className="flex items-center">
