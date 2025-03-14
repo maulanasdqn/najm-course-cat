@@ -321,26 +321,41 @@ export const Component: FC = (): ReactElement => {
               <h3 className="text-lg text-gray-800 mb-2">
                 Soal Nomor {currentQuestion + 1} dari {testQuery.data?.data.questions.length} :
               </h3>
-              <h2 className="text-lg font-semibold  mb-4">
+              <h2 className="text-lg font-semibold mb-4">
                 {testQuery.data?.data.questions[currentQuestion].question}
               </h2>
+              {testQuery.data?.data.questions[currentQuestion].image_url && (
+                <div className="mb-10">
+                  <ZoomableImage
+                    src={testQuery.data?.data.questions[currentQuestion].image_url}
+                    alt="Soal"
+                    className="w-96 h-64"
+                  />
+                </div>
+              )}
+
               <div className="flex flex-col gap-2">
                 {testQuery.data?.data.questions[currentQuestion].options.map((option, optIndex) => (
-                  <label key={optIndex} className="flex items-center gap-2">
-                    <input
-                      type="radio"
-                      name={`question-${currentQuestion}`}
-                      value={option.id}
-                      onChange={() =>
-                        handleAnswer({
-                          question_id: testQuery.data?.data.questions[currentQuestion].id,
-                          option_id: option.id,
-                        })
-                      }
-                      checked={answers[currentQuestion]?.option_id === option.id}
-                      className="w-4 h-4 text-blue-600 focus:ring-blue-500 focus:ring-2"
-                    />
-                    <span className="text-gray-700">{option.label}</span>
+                  <label key={optIndex} className="flex flex-col gap-2">
+                    <div>
+                      <input
+                        type="radio"
+                        name={`question-${currentQuestion}`}
+                        value={option.id}
+                        onChange={() =>
+                          handleAnswer({
+                            question_id: testQuery.data?.data.questions[currentQuestion].id,
+                            option_id: option.id,
+                          })
+                        }
+                        checked={answers[currentQuestion]?.option_id === option.id}
+                        className="w-4 h-4 text-blue-600 focus:ring-blue-500 focus:ring-2"
+                      />
+                      <span className="ml-2 text-gray-700">{option.label}</span>
+                    </div>
+                    {option.image_url && (
+                      <ZoomableImage src={option.image_url} alt="Soal" className="w-96 h-64" />
+                    )}
                   </label>
                 ))}
               </div>
