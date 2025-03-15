@@ -4,7 +4,6 @@ import { useExam } from "../start/_hooks/use-exam";
 import toast from "react-hot-toast";
 import { useAnswerExamMutation } from "./_hooks/use-answer-exam-mutation";
 import { TExamAnswerRequest } from "@/api/test/type";
-import { useTimer } from "../_hooks/use-timer";
 import { useGetTest } from "./_hooks/use-get-tests-query";
 import { useDidEffect } from "@/app/_hooks/use-did-effect";
 import { ExamStartPrompt } from "./_components/exam-start-prompt";
@@ -14,6 +13,10 @@ import { ExamCountdown } from "./_components/exam-countdown";
 import { ExamQuestion } from "./_components/exam-question";
 import { ExamNavigation } from "./_components/exam-navigation";
 import { ExamStatus } from "./_components/exam-status";
+import { useExamTimer } from "./_hooks/use-exam-timer";
+
+const dateStart = new Date(new Date().getTime() + 1000 * 10);
+const dateEnd = new Date(new Date().getTime() + 1000 * 60);
 
 export const Component: FC = (): ReactElement => {
   const params = useParams<{ examId: string; sessionId: string }>();
@@ -44,59 +47,49 @@ export const Component: FC = (): ReactElement => {
     } finally {
       finishExam();
     }
-  }, [answers]);
+  }, [params, answerExamMutation, navigate]);
 
   const handleFallback = useCallback(() => {
+    return;
     navigate(`/student/sessions/${params.sessionId}/exams`, {
       replace: true,
     });
-  }, [answers]);
+  }, [params, navigate]);
 
+  // Define useExam first to ensure finishExam is available
   const { startExam, finishExam } = useExam({
     onExitFullscreen: handleExitFullscreen,
     onFallback: handleFallback,
   });
 
-  const { timeUntilStart, timeLeft, clearTimer } = useTimer(
-    typeof testQuery.data?.data.start_date === "undefined"
-      ? undefined
-      : testQuery.data.data.start_date,
-    typeof testQuery.data?.data.end_date === "undefined"
-      ? undefined
-      : testQuery.data?.data.end_date,
+  const { timeUntilStart, timeLeft, formatTime, finishExamTimer } = useExamTimer(
+    dateStart.toISOString(),
+    dateEnd.toISOString(),
     params.sessionId!,
   );
 
   const [start, setStart] = useState(false);
 
   useEffect(() => {
-    if (!testQuery.data) return;
-    const dateStart = Math.floor(new Date(testQuery.data.data.start_date).getTime() / 1000);
-    const dateNow = Math.floor(new Date().getTime() / 1000);
-    if (dateStart <= dateNow && start && timeUntilStart <= 0) {
+    if (!testQuery.data || !start) return;
+    if (timeUntilStart === 0) {
       startExam();
     }
-  }, [testQuery.data?.data.start_date, start, timeUntilStart <= 0]);
+  }, [testQuery.data, start, timeUntilStart, startExam]);
 
   useEffect(() => {
     const questionCount = testQuery.data?.data.questions?.length || 0;
     if (questionCount !== answers.length) {
       setAnswers(Array(questionCount).fill(null));
     }
-  }, [testQuery.data?.data.questions?.length, answers.length]);
+  }, [testQuery.data?.data.questions?.length]);
 
   useDidEffect(() => {
-    if (
-      timeLeft === 0 &&
-      timeUntilStart === 0 &&
-      testQuery.data?.data.end_date &&
-      !testQuery.isLoading &&
-      (!answerExamMutation.isSuccess || !answerExamMutation.isError)
-    ) {
-      clearTimer();
+    if (timeLeft === 0 && timeUntilStart === 0 && !testQuery.isLoading) {
       finishExam();
+      finishExamTimer();
     }
-  }, [timeLeft, testQuery.data?.data.end_date, testQuery.isLoading]);
+  }, [timeLeft, timeUntilStart, testQuery.isLoading, finishExam, finishExamTimer]);
 
   const nextQuestion = () => {
     if (!testQuery.data) return;
@@ -128,13 +121,6 @@ export const Component: FC = (): ReactElement => {
       answersRef.current = updatedAnswers;
       return updatedAnswers;
     });
-  };
-
-  const formatTime = (time: number) => {
-    const hours = Math.floor(time / 3600);
-    const minutes = Math.floor((time % 3600) / 60);
-    const seconds = time % 60;
-    return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
   };
 
   const isSubmitting = answerExamMutation.isPending;
