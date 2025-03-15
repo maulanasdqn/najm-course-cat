@@ -322,23 +322,23 @@ export const Component: FC = (): ReactElement => {
               <h3 className="text-xl text-gray-800 font-bold">
                 Soal Nomor {currentQuestion + 1} dari {testQuery.data?.data.questions.length}
               </h3>
-              <h2 className="text-lg font-medium">
+              <h2 className="text-lg font-medium mb-4">
                 {testQuery.data?.data.questions[currentQuestion].question}
               </h2>
-              {testQuery.data?.data.questions[currentQuestion].image_url && (
-                <div className="mb-8 flex justify-center">
+              {testQuery.data?.data.questions[currentQuestion].image_url ? (
+                <div className="mb-8 flex justify-center items-center">
                   <ZoomableImage
-                    src={testQuery.data?.data.questions[currentQuestion].image_url}
-                    alt="Soal"
-                    className="max-w-full max-h-96 object-contain"
+                    src={testQuery.data?.data.questions[currentQuestion].image_url || ""}
+                    alt="Question Image"
+                    className="max-w-full max-h-96 object-contain rounded-md shadow-md"
                   />
                 </div>
-              )}
+              ) : null}
 
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-4">
                 {testQuery.data?.data.questions[currentQuestion].options.map((option, optIndex) => (
-                  <label key={optIndex} className="flex flex-col gap-2">
-                    <div>
+                  <label key={optIndex} className="flex flex-col gap-2 border p-4 rounded-md hover:shadow-md transition cursor-pointer">
+                    <div className="flex items-start">
                       <input
                         type="radio"
                         name={`question-${currentQuestion}`}
@@ -350,22 +350,32 @@ export const Component: FC = (): ReactElement => {
                           })
                         }
                         checked={answers[currentQuestion]?.option_id === option.id}
-                        className="w-4 h-4 text-blue-600 focus:ring-blue-500 focus:ring-2"
+                        className="w-5 h-5 mt-0.5 text-blue-600 focus:ring-blue-500 focus:ring-2"
                       />
-                      <span className="ml-2 text-gray-700">{option.label}</span>
+                      <span className="ml-3 text-gray-700">{option.label}</span>
                     </div>
-                    {option.image_url && (
-                      <ZoomableImage src={option.image_url} alt="Soal" className="w-96 h-64" />
-                    )}
+                    <div className="mt-2 ml-8">
+                      <ZoomableImage
+                        src={
+                          option.image_url ||
+                          "https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fimage&psig=AOvVaw1Ujmd6105jAEMWoxhDa75C&ust=1742091159878000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCJDjx7eBi4wDFQAAAAAdAAAAABAE"
+                        }
+                        alt={option.image_url ? "Option Image" : "Dummy Option Image"}
+                        className="max-w-full max-h-64 object-contain rounded"
+                      />
+                    </div>
                   </label>
                 ))}
               </div>
-              <div className="flex justify-between mt-6">
+              <div className="flex justify-between mt-6 space-x-4">
                 <button
                   onClick={prevQuestion}
                   disabled={currentQuestion === 0}
-                  className={`px-4 py-2 bg-gray-300 text-gray-700 rounded-lg shadow hover:bg-gray-400 hover:text-white transition disabled:opacity-50 flex items-center ${
-                    currentQuestion !== 0 ? 'hover:cursor-pointer' : 'hover:cursor-not-allowed'
+                  aria-label="Kembali ke soal sebelumnya"
+                  className={`px-4 py-2 rounded-lg shadow transition flex items-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 ${
+                    currentQuestion === 0
+                      ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                      : 'bg-gray-300 text-gray-700 hover:bg-gray-400 hover:text-white'
                   }`}
                 >
                   <span className="mr-2">
@@ -376,10 +386,11 @@ export const Component: FC = (): ReactElement => {
                 <button
                   onClick={nextQuestion}
                   disabled={currentQuestion === (testQuery.data?.data.questions.length || 1) - 1}
-                  className={`px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-500 hover:scale-105 transition disabled:opacity-50 flex items-center ${
-                    currentQuestion !== (testQuery.data?.data.questions.length || 1) - 1
-                      ? 'hover:cursor-pointer'
-                      : 'hover:cursor-not-allowed'
+                  aria-label="Lanjut ke soal berikutnya"
+                  className={`px-4 py-2 rounded-lg shadow transition flex items-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400 ${
+                    currentQuestion === (testQuery.data?.data.questions.length || 1) - 1
+                      ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                      : 'bg-blue-600 text-white hover:bg-blue-500 hover:scale-105'
                   }`}
                 >
                   {isSubmitting ? (
