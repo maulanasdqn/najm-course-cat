@@ -354,16 +354,15 @@ export const Component: FC = (): ReactElement => {
                       />
                       <span className="ml-3 text-gray-700">{option.label}</span>
                     </div>
-                    <div className="mt-2 ml-8">
-                      <ZoomableImage
-                        src={
-                          option.image_url ||
-                          "https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fimage&psig=AOvVaw1Ujmd6105jAEMWoxhDa75C&ust=1742091159878000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCJDjx7eBi4wDFQAAAAAdAAAAABAE"
-                        }
-                        alt={option.image_url ? "Option Image" : "Dummy Option Image"}
-                        className="max-w-full max-h-64 object-contain rounded"
-                      />
-                    </div>
+                    {option.image_url && (
+                      <div className="mt-2 ml-8">
+                        <ZoomableImage
+                          src={option.image_url}
+                          alt="Option Image"
+                          className="max-w-full max-h-64 object-contain rounded"
+                        />
+                      </div>
+                    )}
                   </label>
                 ))}
               </div>
