@@ -127,6 +127,7 @@ export const Component: FC = (): ReactElement => {
         }}
         isPending={testQuery.isPending}
         timeUntilStart={timeUntilStart}
+        timeLeft={timeLeft}
         formatTime={formatTime}
       />
     );
