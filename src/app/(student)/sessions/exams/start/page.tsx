@@ -50,7 +50,6 @@ export const Component: FC = (): ReactElement => {
   }, [params, answerExamMutation, navigate]);
 
   const handleFallback = useCallback(() => {
-    return;
     navigate(`/student/sessions/${params.sessionId}/exams`, {
       replace: true,
     });
@@ -71,11 +70,11 @@ export const Component: FC = (): ReactElement => {
   const [start, setStart] = useState(false);
 
   useEffect(() => {
-    if (!testQuery.data || !start) return;
+    if (!testQuery.data?.data.id || !start) return;
     if (timeUntilStart === 0) {
       startExam();
     }
-  }, [testQuery.data, start, timeUntilStart, startExam]);
+  }, [testQuery.data?.data.id, start, timeUntilStart === 0]);
 
   useEffect(() => {
     const questionCount = testQuery.data?.data.questions?.length || 0;
