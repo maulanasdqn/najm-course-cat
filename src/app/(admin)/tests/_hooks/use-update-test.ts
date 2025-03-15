@@ -29,9 +29,9 @@ export const useUpdateTest = (id: string) => {
       toast.error(error.response?.data?.message || error.message);
     },
   });
-  
+
   return {
     mutate: mutation.mutate,
-    isLoading: mutation.isPending
+    isLoading: mutation.isPending,
   };
 };

@@ -9,19 +9,18 @@ export const createTestFormSchema = z.object({
       discussion: z.string().optional(),
       question: z.string().min(1, { message: "Required" }),
       image_url: z.string().optional().nullable(),
+      id: z.string().optional(), // Add id to questions
       options: z.array(
         z.object({
           index: z.number().optional(),
           label: z.string().min(1, { message: "Required" }),
           is_correct: z.boolean().default(false),
           image_url: z.string().optional().nullable(),
+          id: z.string().optional(), // Add id to questions
         }),
       ),
     }),
   ),
 });
 
-export const updateTestFormSchema = createTestFormSchema;
-
 export type CreateTestFormData = z.infer<typeof createTestFormSchema>;
-export type UpdateTestFormData = z.infer<typeof updateTestFormSchema>;
