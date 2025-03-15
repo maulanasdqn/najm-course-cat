@@ -23,4 +23,7 @@ export const createTestFormSchema = z.object({
   ),
 });
 
+export const updateTestFormSchema = createTestFormSchema;
+
 export type CreateTestFormData = z.infer<typeof createTestFormSchema>;
+export type UpdateTestFormData = z.infer<typeof updateTestFormSchema>;
