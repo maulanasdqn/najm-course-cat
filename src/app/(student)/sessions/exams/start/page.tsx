@@ -14,9 +14,6 @@ import { ExamNavigation } from "./_components/exam-navigation";
 import { ExamStatus } from "./_components/exam-status";
 import { useExamTimer } from "./_hooks/use-exam-timer";
 
-const dateStart = new Date(new Date().getTime() + 1000 * 10);
-const dateEnd = new Date(new Date().getTime() + 1000 * 15);
-
 export const Component: FC = (): ReactElement => {
   const params = useParams<{ examId: string; sessionId: string }>();
   const answerExamMutation = useAnswerExamMutation();
@@ -61,8 +58,8 @@ export const Component: FC = (): ReactElement => {
   });
 
   const { timeUntilStart, timeLeft, formatTime } = useExamTimer(
-    dateStart.toISOString(),
-    dateEnd.toISOString(),
+    testQuery.data?.data.start_date,
+    testQuery.data?.data.end_date,
     params.sessionId!,
   );
 
