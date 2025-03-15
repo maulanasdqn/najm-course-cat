@@ -9,14 +9,13 @@ import { useDidEffect } from "@/app/_hooks/use-did-effect";
 import { ExamStartPrompt } from "./_components/exam-start-prompt";
 import { ExamLoading } from "./_components/exam-loading";
 import { ExamError } from "./_components/exam-error";
-import { ExamCountdown } from "./_components/exam-countdown";
 import { ExamQuestion } from "./_components/exam-question";
 import { ExamNavigation } from "./_components/exam-navigation";
 import { ExamStatus } from "./_components/exam-status";
 import { useExamTimer } from "./_hooks/use-exam-timer";
 
 const dateStart = new Date(new Date().getTime() + 1000 * 10);
-const dateEnd = new Date(new Date().getTime() + 1000 * 60);
+const dateEnd = new Date(new Date().getTime() + 1000 * 15);
 
 export const Component: FC = (): ReactElement => {
   const params = useParams<{ examId: string; sessionId: string }>();
@@ -61,20 +60,13 @@ export const Component: FC = (): ReactElement => {
     onFallback: handleFallback,
   });
 
-  const { timeUntilStart, timeLeft, formatTime, finishExamTimer } = useExamTimer(
+  const { timeUntilStart, timeLeft, formatTime } = useExamTimer(
     dateStart.toISOString(),
     dateEnd.toISOString(),
     params.sessionId!,
   );
 
   const [start, setStart] = useState(false);
-
-  useEffect(() => {
-    if (!testQuery.data?.data.id || !start) return;
-    if (timeUntilStart === 0) {
-      startExam();
-    }
-  }, [testQuery.data?.data.id, start, timeUntilStart === 0]);
 
   useEffect(() => {
     const questionCount = testQuery.data?.data.questions?.length || 0;
@@ -84,11 +76,11 @@ export const Component: FC = (): ReactElement => {
   }, [testQuery.data?.data.questions?.length]);
 
   useDidEffect(() => {
-    if (timeLeft === 0 && timeUntilStart === 0 && !testQuery.isLoading) {
+    const allow = timeLeft === 0 && timeUntilStart === 0 && !testQuery.isLoading && start;
+    if (allow) {
       finishExam();
-      finishExamTimer();
     }
-  }, [timeLeft, timeUntilStart, testQuery.isLoading, finishExam, finishExamTimer]);
+  }, [timeLeft === 0 && timeUntilStart === 0 && !testQuery.isLoading && start]);
 
   const nextQuestion = () => {
     if (!testQuery.data) return;
@@ -126,8 +118,18 @@ export const Component: FC = (): ReactElement => {
   const answeredCount = answers.filter((answer) => answer !== null).length;
   const unansweredCount = (testQuery.data?.data.questions.length || 0) - answeredCount;
 
-  if (!start) {
-    return <ExamStartPrompt onStart={() => setStart(true)} isPending={testQuery.isPending} />;
+  if (!start || timeUntilStart > 0) {
+    return (
+      <ExamStartPrompt
+        onStart={() => {
+          startExam();
+          setStart(true);
+        }}
+        isPending={testQuery.isPending}
+        timeUntilStart={timeUntilStart}
+        formatTime={formatTime}
+      />
+    );
   }
 
   if (testQuery.isLoading) {
@@ -136,17 +138,6 @@ export const Component: FC = (): ReactElement => {
 
   if (testQuery.isError) {
     return <ExamError error={testQuery.error} onRetry={() => testQuery.refetch()} />;
-  }
-
-  if (timeUntilStart > 0) {
-    return (
-      <ExamCountdown
-        timeUntilStart={timeUntilStart}
-        testName={testQuery.data?.data.test_name}
-        onStart={startExam}
-        formatTime={formatTime}
-      />
-    );
   }
 
   return (
