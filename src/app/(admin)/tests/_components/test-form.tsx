@@ -16,7 +16,6 @@ import LoadingOverlay from "@/app/_components/ui/loading-overlay";
 type TestFormProps = {
   type: "create" | "update";
   defaultValues?: TTestDetailResponse["data"];
-  isLoading?: boolean;
 };
 
 export const TestForm = ({ type, defaultValues }: TestFormProps) => {
@@ -151,6 +150,13 @@ const Question = ({ index, control }: { index: number; control: Control<CreateTe
         <span className="font-medium">Pertanyaan {index + 1}</span>
       </div>
       <InputText
+        type="hidden"
+        name={`questions.${index}.id`}
+        control={control}
+        label="Pertanyaan"
+        placeholder="Masukan Pertanyaan"
+      />
+      <InputText
         name={`questions.${index}.question`}
         control={control}
         label="Pertanyaan"
@@ -186,6 +192,13 @@ const Question = ({ index, control }: { index: number; control: Control<CreateTe
               className="flex items-start gap-4 p-3 rounded-lg border border-gray-100"
             >
               <div className="flex-1">
+                <InputText
+                  type="hidden"
+                  name={`questions.${index}.options.${fieldIndex}.id`}
+                  control={control}
+                  label="Pilih Opsi"
+                  placeholder="Masukan Opsi"
+                />
                 <InputText
                   name={`questions.${index}.options.${fieldIndex}.label`}
                   control={control}
