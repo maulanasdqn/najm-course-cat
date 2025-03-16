@@ -12,7 +12,6 @@ import {
   Underline as UnderlineIcon,
   List as ListIcon,
   ListOrdered as ListOrderedIcon,
-  Image as ImageIcon,
 } from "lucide-react";
 import "./index.css"; // Import the new CSS file
 
@@ -72,13 +71,6 @@ export const WysiwygEditor = <T extends FieldValues>({
       },
     },
   });
-
-  const handleAddImage = () => {
-    const url = window.prompt("Enter image URL");
-    if (url) {
-      editor?.chain().focus().setImage({ src: url }).run();
-    }
-  };
 
   if (!editor) {
     return <></>;
@@ -145,18 +137,6 @@ export const WysiwygEditor = <T extends FieldValues>({
             type="button"
           >
             <ListOrderedIcon className="w-4 h-4" />
-          </button>
-          <span className="h-4 w-px bg-gray-300 mx-1" />
-          <button
-            className={clsx(
-              "p-1.5 rounded transition-colors",
-              editor.isActive("image") ? "bg-gray-300" : "hover:bg-gray-200",
-            )}
-            onClick={handleAddImage}
-            aria-label="Add Image"
-            type="button"
-          >
-            <ImageIcon className="w-4 h-4" />
           </button>
         </div>
 

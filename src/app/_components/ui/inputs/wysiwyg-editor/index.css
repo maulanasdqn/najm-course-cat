@@ -1,4 +1,8 @@
 /* Styling for WYSIWYG editor lists */
+.wysiwyg-editor .tiptap {
+  min-height: calc(1em * 3 + 48px); /* 3 lines + vertical padding */
+  box-sizing: border-box; /* Prevent padding from expanding the min-height */
+}
 .wysiwyg-editor ul {
   list-style-type: disc;
   padding-left: 1.5rem; /* Add indentation to align with text */
