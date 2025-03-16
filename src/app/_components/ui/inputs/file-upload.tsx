@@ -16,15 +16,12 @@ export const FileUpload = <T extends FieldValues>({
   ...props
 }: FileUploadProps<T>) => {
   const { field } = useController<T>(props);
-  const [file, setFile] = useState<File | null>(null);
-  console.log(file);
   const [isUploading, setIsUploading] = useState(false);
   const [previewUrl, setPreviewUrl] = useState(defaultFile || "");
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
     if (selectedFile) {
-      setFile(selectedFile);
       setPreviewUrl(URL.createObjectURL(selectedFile));
       setIsUploading(true);
       try {
@@ -40,9 +37,9 @@ export const FileUpload = <T extends FieldValues>({
   };
 
   const handleRemove = () => {
-    setFile(null);
     setPreviewUrl("");
     onUpload?.("");
+    field.onChange("");
   };
 
   return (
@@ -66,17 +63,8 @@ export const FileUpload = <T extends FieldValues>({
         </div>
       ) : (
         <div className="flex items-center">
-          <input
-            type="file"
-            onChange={handleFileChange}
-            className="hidden"
-            id={`file-upload-${label}`}
-            accept="image/*"
-          />
-          <label
-            htmlFor={`file-upload-${label}`}
-            className="cursor-pointer rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-medium text-gray-700 hover:bg-gray-50"
-          >
+          <label className="cursor-pointer rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-medium text-gray-700 hover:bg-gray-50">
+            <input type="file" onChange={handleFileChange} className="hidden" accept="image/*" />
             {isUploading ? "Uploading..." : "Upload Image"}
           </label>
         </div>

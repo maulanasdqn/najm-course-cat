@@ -12,6 +12,7 @@ import { FileUpload } from "@/app/_components/ui/inputs/file-upload";
 import { TrashIcon } from "@/app/_components/ui/icons/ic-trash";
 import { Button } from "../../_components/button";
 import LoadingOverlay from "@/app/_components/ui/loading-overlay";
+import { WysiwygEditor } from "@/app/_components/ui/inputs/wysiwyg-editor/index";
 
 type TestFormProps = {
   type: "create" | "update";
@@ -100,6 +101,7 @@ export const TestForm = ({ type, defaultValues }: TestFormProps) => {
               append({
                 question: "",
                 options: [],
+                image_url: "",
               })
             }
           >
@@ -149,19 +151,8 @@ const Question = ({ index, control }: { index: number; control: Control<CreateTe
       <div className="flex items-center gap-2 mb-2">
         <span className="font-medium">Pertanyaan {index + 1}</span>
       </div>
-      <InputText
-        type="hidden"
-        name={`questions.${index}.id`}
-        control={control}
-        label="Pertanyaan"
-        placeholder="Masukan Pertanyaan"
-      />
-      <InputText
-        name={`questions.${index}.question`}
-        control={control}
-        label="Pertanyaan"
-        placeholder="Masukan Pertanyaan"
-      />
+      <InputText type="hidden" name={`questions.${index}.id`} control={control} />
+      <WysiwygEditor name={`questions.${index}.question`} control={control} label="Pertanyaan" />
 
       <InputText
         name={`questions.${index}.discussion`}
@@ -196,8 +187,6 @@ const Question = ({ index, control }: { index: number; control: Control<CreateTe
                   type="hidden"
                   name={`questions.${index}.options.${fieldIndex}.id`}
                   control={control}
-                  label="Pilih Opsi"
-                  placeholder="Masukan Opsi"
                 />
                 <InputText
                   name={`questions.${index}.options.${fieldIndex}.label`}
@@ -239,6 +228,7 @@ const Question = ({ index, control }: { index: number; control: Control<CreateTe
               append({
                 label: "",
                 is_correct: false,
+                image_url: "",
               })
             }
           >
