@@ -1,20 +1,21 @@
 import { z } from "zod";
+import { ZodMessagesId } from "../../../../commons/constants/zod-messages-id";
 
 export const createSessionTestFormSchema = z
   .object({
-    session_name: z.string().min(1, "Name is required"),
-    student_type: z.string().min(1, "Jenis siswa wajib diisi"),
-    category: z.string().min(1, "Kategori wajib diisi"),
-    description: z.string().min(1, "Description is required"),
+    session_name: z.string().min(1, ZodMessagesId.required),
+    student_type: z.string().min(1, ZodMessagesId.student.type),
+    category: z.string().min(1, ZodMessagesId.required),
+    description: z.string().min(1, ZodMessagesId.required),
     is_active: z.boolean().default(false),
     tests: z
       .array(
         z.object({
-          test_id: z.string().min(1, "Id is required"),
-          weight: z.string().min(1, "Weight is required"),
-          multiplier: z.string().min(1, "Multiplier is required"),
-          start_date: z.string().min(1, "Start date is required"),
-          end_date: z.string().min(1, "End date is required"),
+          test_id: z.string().min(1, ZodMessagesId.required),
+          weight: z.string().min(1, ZodMessagesId.required),
+          multiplier: z.string().min(1, ZodMessagesId.required),
+          start_date: z.string().min(1, ZodMessagesId.required),
+          end_date: z.string().min(1, ZodMessagesId.required),
         }),
       )
       .optional(),
@@ -32,7 +33,7 @@ export const createSessionTestFormSchema = z
       if (totalWeight > 100) {
         ctx.addIssue({
           code: "custom",
-          message: "Test weight cannot exceed 100%",
+          message: ZodMessagesId.test.weight,
           path: ["tests", i, "weight"],
         });
       }
@@ -52,7 +53,7 @@ export const createSessionTestFormSchema = z
       if (start1 >= end1) {
         ctx.addIssue({
           code: "custom",
-          message: "Test date ranges cannot overlap",
+          message: ZodMessagesId.test.dateOverlap,
           path: ["tests", i, "start_date"],
         });
         return;
@@ -67,12 +68,12 @@ export const createSessionTestFormSchema = z
         if ((start1 <= end2 && end1 >= start2) || (start2 <= end1 && end2 >= start1)) {
           ctx.addIssue({
             code: "custom",
-            message: "Test date ranges cannot overlap",
+            message: ZodMessagesId.test.dateOverlap,
             path: ["tests", i, "start_date"],
           });
           ctx.addIssue({
             code: "custom",
-            message: "Test date ranges cannot overlap",
+            message: ZodMessagesId.test.dateOverlap,
             path: ["tests", j, "start_date"],
           });
           return;

@@ -1,7 +1,8 @@
 import { z } from "zod";
+import { ZodMessagesId } from "../../../../commons/constants/zod-messages-id";
 
 export const createTestFormSchema = z.object({
-  category: z.string().min(1, { message: "Required" }),
+  category: z.string().min(1, { message: ZodMessagesId.required }),
   session_id: z.string().optional(),
   test_name: z.string(),
   questions: z.array(
@@ -9,13 +10,13 @@ export const createTestFormSchema = z.object({
       index: z.number().optional(),
       discussion: z.string().optional(),
       discussion_image_url: z.string().default(""),
-      question: z.string().min(1, { message: "Required" }),
+      question: z.string().min(1, { message: ZodMessagesId.required }),
       image_url: z.string().default(""),
       id: z.string().optional(),
       options: z.array(
         z.object({
           index: z.number().optional(),
-          label: z.string().min(1, { message: "Required" }),
+          label: z.string().min(1, { message: ZodMessagesId.required }),
           is_correct: z.boolean().default(false),
           image_url: z.string().default(""),
           id: z.string().optional(),
@@ -31,7 +32,7 @@ export const createTestFormSchema = z.object({
         if (option.points === undefined) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
-            message: "Points are required for psikologi category",
+            message: ZodMessagesId.test.points,
             path: ["questions", qIndex, "options", oIndex, "points"],
           });
         }
