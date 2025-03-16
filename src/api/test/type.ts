@@ -32,6 +32,7 @@ export type TTestDetailResponse = TResponseData<{
   next_test_id?: string;
   questions: {
     discussion: string;
+    discussion_image_url: string;
     id: string;
     image_url: string;
     options: {
@@ -87,6 +88,7 @@ export type TTestAnswerDetailResponse = TResponseData<{
   updated_at: string;
   questions: Array<{
     discussion: string;
+    discussion_image_url: string;
     id: string;
     options: Array<{
       id: string;

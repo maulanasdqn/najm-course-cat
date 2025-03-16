@@ -1,5 +1,12 @@
 import { useParams } from "react-router-dom";
 import { useGetTest } from "../_hooks/use-get-test";
+import DOMPurify from "dompurify";
+import "@/app/_components/ui/inputs/wysiwyg-editor/index.css";
+
+// Utility function to safely render HTML content
+const sanitizeHTML = (html: string | undefined) => {
+  return { __html: DOMPurify.sanitize(html || "") };
+};
 
 export default function TestDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -46,14 +53,19 @@ export default function TestDetailPage() {
                 <div key={question.id} className="rounded-lg border border-gray-200 bg-gray-50 p-6">
                   <div className="flex items-start justify-between">
                     <h3 className="text-lg font-medium">
-                      <span className="mr-2 rounded-full bg-blue-100 px-2.5 py-0.5 text-sm font-medium text-blue-800">
-                        {index + 1}
-                      </span>
-                      {question.question}
+                      <div className="flex items-start gap-2">
+                        <span className="mr-2 mt-2 rounded-full bg-blue-100 px-2.5 py-0.5 text-sm font-medium text-blue-800">
+                          {index + 1}
+                        </span>
+                        <span
+                          className="wysiwyg-preview"
+                          dangerouslySetInnerHTML={sanitizeHTML(question.question)}
+                        />
+                      </div>
                       {question.image_url && (
                         <img
                           src={question.image_url}
-                          alt="Question"
+                          alt="Question Image"
                           className="mt-4 max-w-full h-48 object-contain"
                         />
                       )}
@@ -95,6 +107,13 @@ export default function TestDetailPage() {
                     <div className="mt-4 rounded-md border border-blue-200 bg-blue-50 p-3">
                       <h4 className="font-medium text-blue-800">Discussion:</h4>
                       <p className="mt-1 text-sm text-gray-700">{question.discussion}</p>
+                      {question.discussion_image_url && (
+                        <img
+                          src={question.discussion_image_url}
+                          alt="Discussion Image"
+                          className="mt-2 max-w-full h-48 object-contain"
+                        />
+                      )}
                     </div>
                   )}
                 </div>

@@ -102,6 +102,7 @@ export const TestForm = ({ type, defaultValues }: TestFormProps) => {
                 question: "",
                 options: [],
                 image_url: "",
+                discussion_image_url: "",
               })
             }
           >
@@ -152,21 +153,33 @@ const Question = ({ index, control }: { index: number; control: Control<CreateTe
         <span className="font-medium">Pertanyaan {index + 1}</span>
       </div>
       <InputText type="hidden" name={`questions.${index}.id`} control={control} />
-      <WysiwygEditor name={`questions.${index}.question`} control={control} label="Pertanyaan" />
+      <div className="space-y-2 p-4 border border-gray-200 rounded-lg">
+        <WysiwygEditor name={`questions.${index}.question`} control={control} label="Pertanyaan" />
+        <div>
+          <FileUpload
+            label="Gambar Pertanyaan"
+            control={control}
+            name={`questions.${index}.image_url`}
+            defaultFile={control._formValues.questions[index]?.image_url}
+          />
+        </div>
+      </div>
 
-      <InputText
-        name={`questions.${index}.discussion`}
-        control={control}
-        label="Pembahasan"
-        placeholder="Masukan Pembahasan"
-      />
-      <div className="mt-4">
-        <FileUpload
-          label="Question Image"
+      <div className="space-y-2 mt-4 p-4 border border-gray-200 rounded-lg">
+        <InputText
+          name={`questions.${index}.discussion`}
           control={control}
-          name={`questions.${index}.image_url`}
-          defaultFile={control._formValues.questions[index]?.image_url}
+          label="Pembahasan"
+          placeholder="Masukan Pembahasan"
         />
+        <div>
+          <FileUpload
+            label="Gambar Diskusi"
+            control={control}
+            name={`questions.${index}.discussion_image_url`}
+            defaultFile={control._formValues.questions[index]?.discussion_image_url}
+          />
+        </div>
       </div>
 
       <div className="pl-4 border-l-2 border-gray-200">

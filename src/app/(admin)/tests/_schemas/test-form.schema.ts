@@ -7,6 +7,7 @@ export const createTestFormSchema = z.object({
     z.object({
       index: z.number().optional(),
       discussion: z.string().optional(),
+      discussion_image_url: z.string().default(""),
       question: z.string().min(1, { message: "Required" }),
       image_url: z.string().default(""),
       id: z.string().optional(), // Add id to questions

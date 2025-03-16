@@ -2,6 +2,13 @@ import { FC, ReactElement } from "react";
 import { TExamAnswerRequest } from "@/api/test/type";
 import { ArrowRightIcon } from "@/app/_components/ui/icons/ic-arrow-right";
 import { ZoomableImage } from "@/app/_components/ui/zoomable-image";
+import DOMPurify from "dompurify";
+import "@/app/_components/ui/inputs/wysiwyg-editor/index.css";
+
+// Utility function to safely render HTML content
+const sanitizeHTML = (html: string) => {
+  return { __html: DOMPurify.sanitize(html) };
+};
 
 const ArrowLeftIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -49,7 +56,10 @@ export const ExamQuestion: FC<ExamQuestionProps> = ({
         <h3 className="text-xl text-gray-800 font-bold">
           Soal Nomor {currentQuestion + 1} dari {totalQuestions}
         </h3>
-        <h2 className="text-lg font-medium mb-4">{question.question}</h2>
+        <span
+          className="wysiwyg-preview"
+          dangerouslySetInnerHTML={sanitizeHTML(question.question)}
+        />
         {question.image_url ? (
           <div className="mb-8 flex justify-center items-center">
             <ZoomableImage
@@ -95,8 +105,8 @@ export const ExamQuestion: FC<ExamQuestionProps> = ({
             aria-label="Kembali ke soal sebelumnya"
             className={`px-4 py-2 rounded-lg shadow transition flex items-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 ${
               currentQuestion === 0
-                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                : 'bg-gray-300 text-gray-700 hover:bg-gray-400 hover:text-white'
+                ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                : "bg-gray-300 text-gray-700 hover:bg-gray-400 hover:text-white"
             }`}
           >
             <span className="mr-2">
@@ -110,8 +120,8 @@ export const ExamQuestion: FC<ExamQuestionProps> = ({
             aria-label="Lanjut ke soal berikutnya"
             className={`px-4 py-2 rounded-lg shadow transition flex items-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400 ${
               currentQuestion === totalQuestions - 1
-                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                : 'bg-blue-600 text-white hover:bg-blue-500 hover:scale-105'
+                ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                : "bg-blue-600 text-white hover:bg-blue-500 hover:scale-105"
             }`}
           >
             {isSubmitting ? (

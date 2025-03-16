@@ -44,7 +44,7 @@ export const FileUpload = <T extends FieldValues>({
 
   return (
     <div className="space-y-2">
-      <label className="block text-sm font-medium text-gray-700">{label}</label>
+      <label className="text-gray-600 text-xs font-medium">{label}</label>
       {previewUrl ? (
         <div className="relative">
           <img
