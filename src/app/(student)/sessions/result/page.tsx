@@ -1,6 +1,13 @@
 import { FC, ReactElement } from "react";
 import { useParams } from "react-router-dom";
 import { useGetTestAnswer } from "./_hooks/use-get-tests-query";
+import DOMPurify from "dompurify";
+import "@/app/_components/ui/inputs/wysiwyg-editor/index.css";
+
+// Utility function to safely render HTML content
+const sanitizeHTML = (html: string) => {
+  return { __html: DOMPurify.sanitize(html) };
+};
 
 export const Component: FC = (): ReactElement => {
   const params = useParams<{ answerId: string; sessionId: string }>();
@@ -119,7 +126,7 @@ export const Component: FC = (): ReactElement => {
                     <span className="inline-block bg-gray-200 text-gray-700 rounded-full w-8 h-8 text-center leading-8 mr-2">
                       {index + 1}
                     </span>
-                    {question.question}
+                    <span dangerouslySetInnerHTML={sanitizeHTML(question.question)} />
                   </h2>
                   <span
                     className={`px-3 py-1 rounded-full text-sm font-medium ${
@@ -175,9 +182,10 @@ export const Component: FC = (): ReactElement => {
                               </svg>
                             )}
                           </div>
-                          <span className={`text-gray-700 ${isCorrectOption ? "font-medium" : ""}`}>
-                            {option.label}
-                          </span>
+                          <span
+                            className={`text-gray-700 ${isCorrectOption ? "font-medium" : ""}`}
+                            dangerouslySetInnerHTML={sanitizeHTML(option.label)}
+                          />
 
                           {isSelected && !isCorrectOption && (
                             <span className="ml-auto text-red-500">
@@ -222,7 +230,7 @@ export const Component: FC = (): ReactElement => {
                 {!isCorrect && (
                   <div className="mt-4 p-4 bg-blue-50 rounded-lg text-blue-800 ml-10">
                     <p className="font-medium mb-1">Penjelasan:</p>
-                    <p className="text-sm">{question.discussion}</p>
+                    <div className="text-sm wysiwyg-editor" dangerouslySetInnerHTML={sanitizeHTML(question.discussion || "")} />
                   </div>
                 )}
               </div>
