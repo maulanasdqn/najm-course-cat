@@ -1,4 +1,4 @@
-import { Control, useFieldArray, useForm } from "react-hook-form";
+import { Control, FormProvider, useFieldArray, useForm, useFormContext } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@/commons/constants/routes";
@@ -13,6 +13,8 @@ import { TrashIcon } from "@/app/_components/ui/icons/ic-trash";
 import { Button } from "../../_components/button";
 import LoadingOverlay from "@/app/_components/ui/loading-overlay";
 import { WysiwygEditor } from "@/app/_components/ui/inputs/wysiwyg-editor/index";
+import { Select } from "@/app/_components/ui/inputs/select";
+import { categoryOptions } from "../../session-tests/_components/session-test-form/constants";
 
 type TestFormProps = {
   type: "create" | "update";
@@ -26,7 +28,7 @@ export const TestForm = ({ type, defaultValues }: TestFormProps) => {
 
   const isLoading = isCreating || isUpdating;
 
-  const { control, handleSubmit } = useForm<CreateTestFormData>({
+  const { control, handleSubmit, ...methods } = useForm<CreateTestFormData>({
     resolver: zodResolver(createTestFormSchema),
     defaultValues: defaultValues
       ? {
@@ -59,85 +61,95 @@ export const TestForm = ({ type, defaultValues }: TestFormProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 relative">
-      {isLoading && (
-        <LoadingOverlay message={type === "create" ? "Creating test..." : "Updating test..."} />
-      )}
-      <div className="space-y-4">
-        <InputText
-          name="test_name"
-          control={control}
-          label="Nama Ujian"
-          placeholder="Masukan Nama Ujian"
-        />
-      </div>
+    <FormProvider control={control} handleSubmit={handleSubmit} {...methods}>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 relative">
+        {isLoading && (
+          <LoadingOverlay message={type === "create" ? "Creating test..." : "Updating test..."} />
+        )}
+        <div className="space-y-4">
+          <InputText
+            name="test_name"
+            control={control}
+            label="Nama Ujian"
+            placeholder="Masukan Nama Ujian"
+          />
 
-      <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold flex items-center gap-2">Daftar Pertanyaan</h3>
+          <Select
+            name="category"
+            control={control}
+            label="Kategori"
+            placeholder="Pilih Kategori"
+            options={categoryOptions}
+          />
         </div>
 
-        <div className="grid grid-cols-1 gap-4">
-          {fields.map((field, fieldIndex) => (
-            <div key={field.id} className="rounded-lg border border-gray-200 p-4">
-              <div className="flex gap-4">
-                <div className="flex-1">
-                  <Question index={fieldIndex} control={control} />
-                </div>
-                <button
-                  type="button"
-                  onClick={() => remove(fieldIndex)}
-                  className="h-10 w-10 flex items-center justify-center rounded-full bg-red-100 text-red-600 hover:bg-red-200"
-                >
-                  <TrashIcon />
-                </button>
-              </div>
-            </div>
-          ))}
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg font-semibold flex items-center gap-2">Daftar Pertanyaan</h3>
+          </div>
 
-          <div
-            className="flex flex-col items-center justify-center py-8 bg-gray-50 rounded-lg border border-dashed border-gray-300 cursor-pointer hover:bg-gray-100 hover:shadow-md transition-all"
-            onClick={() =>
-              append({
-                question: "",
-                options: [],
-                image_url: "",
-                discussion_image_url: "",
-              })
-            }
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-10 w-10 text-gray-400 mb-2"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+          <div className="grid grid-cols-1 gap-4">
+            {fields.map((field, fieldIndex) => (
+              <div key={field.id} className="rounded-lg border border-gray-200 p-4">
+                <div className="flex gap-4">
+                  <div className="flex-1">
+                    <Question index={fieldIndex} control={control} />
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => remove(fieldIndex)}
+                    className="h-10 w-10 flex items-center justify-center rounded-full bg-red-100 text-red-600 hover:bg-red-200"
+                  >
+                    <TrashIcon />
+                  </button>
+                </div>
+              </div>
+            ))}
+
+            <div
+              className="flex flex-col items-center justify-center py-8 bg-gray-50 rounded-lg border border-dashed border-gray-300 cursor-pointer hover:bg-gray-100 hover:shadow-md transition-all"
+              onClick={() =>
+                append({
+                  question: "",
+                  options: [],
+                  image_url: "",
+                  discussion_image_url: "",
+                })
+              }
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 4v16m8-8H4"
-              />
-            </svg>
-            <p className="text-sm text-gray-500 font-medium">
-              Klik disini untuk menambahkan pertanyaan
-            </p>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-10 w-10 text-gray-400 mb-2"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 4v16m8-8H4"
+                />
+              </svg>
+              <p className="text-sm text-gray-500 font-medium">
+                Klik disini untuk menambahkan pertanyaan
+              </p>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="flex justify-end space-x-4">
-        <Button
-          variant="secondary"
-          type="button"
-          onClick={() => navigate(ROUTES.ADMIN.TESTS.LIST.URL)}
-        >
-          Cancel
-        </Button>
-        <Button type="submit">{type === "create" ? "Create" : "Update"} Test</Button>
-      </div>
-    </form>
+        <div className="flex justify-end space-x-4">
+          <Button
+            variant="secondary"
+            type="button"
+            onClick={() => navigate(ROUTES.ADMIN.TESTS.LIST.URL)}
+          >
+            Cancel
+          </Button>
+          <Button type="submit">{type === "create" ? "Create" : "Update"} Test</Button>
+        </div>
+      </form>
+    </FormProvider>
   );
 };
 
@@ -146,6 +158,10 @@ const Question = ({ index, control }: { index: number; control: Control<CreateTe
     control,
     name: `questions.${index}.options`,
   });
+
+  const { watch } = useFormContext();
+
+  const category = watch("category");
 
   return (
     <div className="space-y-4">
@@ -217,6 +233,16 @@ const Question = ({ index, control }: { index: number; control: Control<CreateTe
                     }
                   />
                 </div>
+                {category === "psikologi" && (
+                  <div className="mt-2">
+                    <InputText
+                      name={`questions.${index}.options.${fieldIndex}.points`}
+                      control={control}
+                      label="Points"
+                      type="number"
+                    />
+                  </div>
+                )}
                 <div className="mt-2">
                   <InputCheckbox
                     name={`questions.${index}.options.${fieldIndex}.is_correct`}
