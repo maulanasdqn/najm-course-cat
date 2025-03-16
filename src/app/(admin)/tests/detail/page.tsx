@@ -58,7 +58,7 @@ export default function TestDetailPage() {
                           {index + 1}
                         </span>
                         <span
-                          className="wysiwyg-editor"
+                          className="wysiwyg-preview"
                           dangerouslySetInnerHTML={sanitizeHTML(question.question)}
                         />
                       </div>

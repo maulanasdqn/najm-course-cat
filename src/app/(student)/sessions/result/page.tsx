@@ -126,7 +126,10 @@ export const Component: FC = (): ReactElement => {
                     <span className="inline-block bg-gray-200 text-gray-700 rounded-full w-8 h-8 text-center leading-8 mr-2">
                       {index + 1}
                     </span>
-                    <span dangerouslySetInnerHTML={sanitizeHTML(question.question)} />
+                    <span
+                      className="wysiwyg-preview"
+                      dangerouslySetInnerHTML={sanitizeHTML(question.question)}
+                    />
                   </h2>
                   <span
                     className={`px-3 py-1 rounded-full text-sm font-medium ${
@@ -230,7 +233,10 @@ export const Component: FC = (): ReactElement => {
                 {!isCorrect && (
                   <div className="mt-4 p-4 bg-blue-50 rounded-lg text-blue-800 ml-10">
                     <p className="font-medium mb-1">Penjelasan:</p>
-                    <div className="text-sm wysiwyg-editor" dangerouslySetInnerHTML={sanitizeHTML(question.discussion || "")} />
+                    <div
+                      className="text-sm wysiwyg-editor"
+                      dangerouslySetInnerHTML={sanitizeHTML(question.discussion || "")}
+                    />
                   </div>
                 )}
               </div>
