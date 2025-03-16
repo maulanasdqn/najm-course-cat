@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useGetTestAnswer } from "./_hooks/use-get-tests-query";
 import DOMPurify from "dompurify";
 import "@/app/_components/ui/inputs/wysiwyg-editor/index.css";
+import { ZoomableImage } from "@/app/_components/ui/zoomable-image";
 
 // Utility function to safely render HTML content
 const sanitizeHTML = (html: string) => {
@@ -233,10 +234,16 @@ export const Component: FC = (): ReactElement => {
                 {!isCorrect && (
                   <div className="mt-4 p-4 bg-blue-50 rounded-lg text-blue-800 ml-10">
                     <p className="font-medium mb-1">Penjelasan:</p>
-                    <div
-                      className="text-sm wysiwyg-editor"
-                      dangerouslySetInnerHTML={sanitizeHTML(question.discussion || "")}
-                    />
+                    <div className="text-sm">{question.discussion}</div>
+                    {question.discussion_image_url && (
+                      <div className="mt-3">
+                        <ZoomableImage
+                          src={question.discussion_image_url}
+                          alt="Explanation illustration"
+                          className="max-w-full rounded-md border border-blue-200 shadow-sm"
+                        />
+                      </div>
+                    )}
                   </div>
                 )}
               </div>

@@ -80,7 +80,12 @@ export const WysiwygEditor = <T extends FieldValues>({
     <div className={`flex flex-col space-y-2 ${className}`}>
       {label && <label className="text-gray-600 text-xs font-medium">{label}</label>}
 
-      <div className="border border-gray-300 focus-within:border-gray-400 rounded-lg overflow-hidden transition-colors">
+      <div
+        className={clsx(
+          "border rounded-lg overflow-hidden transition-colors",
+          error ? "border-red-500" : "border-gray-300 focus-within:border-gray-400",
+        )}
+      >
         <div className="toolbar flex items-center space-x-2 p-1 bg-gray-50 border-b border-gray-200">
           <button
             className={clsx(
@@ -141,8 +146,8 @@ export const WysiwygEditor = <T extends FieldValues>({
         </div>
 
         <EditorContent editor={editor} className="wysiwyg-editor" />
-        {error && <span className="text-red-500 text-xs">{error.message}</span>}
       </div>
+      {error && <span className="text-red-500 text-xs">{error.message}</span>}
     </div>
   );
 };

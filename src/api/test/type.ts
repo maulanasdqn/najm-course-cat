@@ -6,6 +6,7 @@ import {
 
 export type TTestItem = {
   id: string;
+  category: string;
   test_name: string;
   question_count: number;
   created_at: string;
@@ -29,7 +30,7 @@ export type TTestPaginateResponse = TResponsePaginate<TTestItem>;
 export type TTestDetailResponse = TResponseData<{
   created_at: string;
   id: string;
-  next_test_id?: string;
+  category?: string;
   questions: {
     discussion: string;
     discussion_image_url: string;
@@ -37,9 +38,10 @@ export type TTestDetailResponse = TResponseData<{
     image_url: string;
     options: {
       id: string;
-      image_url: string;
       label: string;
+      image_url: string;
       is_correct: boolean;
+      points?: number;
     }[];
     question: string;
   }[];

@@ -37,6 +37,10 @@ export default function TestDetailPage() {
               <p className="mt-1">{test.session_id}</p>
             </div>
             <div>
+              <h2 className="text-sm font-medium text-gray-500">Category</h2>
+              <p className="mt-1">{test.category}</p>
+            </div>
+            <div>
               <h2 className="text-sm font-medium text-gray-500">Created At</h2>
               <p className="mt-1">{new Date(test.created_at).toLocaleString()}</p>
             </div>
@@ -85,6 +89,9 @@ export default function TestDetailPage() {
                         <div className="flex-1">
                           <div className="flex items-center">
                             <span className="mr-2 text-sm">{option.label}</span>
+                            {test.category === "psikologi" && option.points !== undefined && (
+                              <span className="ml-2 text-sm text-gray-600">(Points: {option.points})</span>
+                            )}
                             {option.image_url && (
                               <img
                                 src={option.image_url}
