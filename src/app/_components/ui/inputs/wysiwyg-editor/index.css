@@ -1,0 +1,19 @@
+/* Styling for WYSIWYG editor lists */
+.wysiwyg-editor ul {
+  list-style-type: disc;
+  padding-left: 1.5rem; /* Add indentation to align with text */
+  margin-top: 0.5rem; /* Add spacing above the list */
+  margin-bottom: 0.5rem; /* Add spacing below the list */
+}
+
+.wysiwyg-editor ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem; /* Indentation for numbered lists */
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.wysiwyg-editor ul li,
+.wysiwyg-editor ol li {
+  margin-bottom: 0.25rem; /* Add spacing between list items */
+}
