@@ -8,14 +8,14 @@ export const createTestFormSchema = z.object({
       index: z.number().optional(),
       discussion: z.string().optional(),
       question: z.string().min(1, { message: "Required" }),
-      image_url: z.string().optional().nullable(),
+      image_url: z.string().default(""),
       id: z.string().optional(), // Add id to questions
       options: z.array(
         z.object({
           index: z.number().optional(),
           label: z.string().min(1, { message: "Required" }),
           is_correct: z.boolean().default(false),
-          image_url: z.string().optional().nullable(),
+          image_url: z.string().default(""),
           id: z.string().optional(), // Add id to questions
         }),
       ),

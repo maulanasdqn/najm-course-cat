@@ -101,6 +101,7 @@ export const TestForm = ({ type, defaultValues }: TestFormProps) => {
               append({
                 question: "",
                 options: [],
+                image_url: "",
               })
             }
           >
@@ -227,6 +228,7 @@ const Question = ({ index, control }: { index: number; control: Control<CreateTe
               append({
                 label: "",
                 is_correct: false,
+                image_url: "",
               })
             }
           >
