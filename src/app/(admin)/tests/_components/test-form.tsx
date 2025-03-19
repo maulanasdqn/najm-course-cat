@@ -34,7 +34,14 @@ export const TestForm = ({ type, defaultValues }: TestFormProps) => {
       ? {
           session_id: defaultValues.id,
           test_name: defaultValues.test_name,
-          questions: defaultValues.questions,
+          questions: defaultValues.questions.map((question) => ({
+            ...question,
+            image_url: question.image_url ?? "",
+            options: question.options.map((option) => ({
+              ...option,
+              image_url: option.image_url ?? "",
+            })),
+          })),
         }
       : undefined,
   });
