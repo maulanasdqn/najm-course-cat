@@ -30,7 +30,7 @@ export const createTestFormSchema = z
             is_correct: z.boolean().default(false),
             image_url: z.string().default(""),
             id: z.string().optional(),
-            points: z.number().optional(),
+            points: z.coerce.number().optional(),
           }),
         ),
       }),
