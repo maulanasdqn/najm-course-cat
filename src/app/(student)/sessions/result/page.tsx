@@ -1,256 +1,310 @@
-import { FC, ReactElement } from "react";
-import { useParams } from "react-router-dom";
+import { FC, ReactElement, useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useGetTestAnswer } from "./_hooks/use-get-tests-query";
 import DOMPurify from "dompurify";
 import "@/app/_components/ui/inputs/wysiwyg-editor/index.css";
-import { ZoomableImage } from "@/app/_components/ui/zoomable-image";
+import { Tabs } from "@/app/_components/ui/tabs";
 
 // Utility function to safely render HTML content
-const sanitizeHTML = (html: string) => {
-  return { __html: DOMPurify.sanitize(html) };
+const sanitizeHTML = (html: string | undefined) => {
+  return { __html: DOMPurify.sanitize(html || "") };
+};
+
+// Define types to prevent type issues
+interface Option {
+  id: string;
+  label: string;
+  is_correct: boolean;
+  is_selected: boolean;
+}
+
+interface Question {
+  id: string;
+  question: string;
+  options: Option[];
+  discussion?: string;
+}
+
+// Type for the refetch function
+type RefetchFunction = () => void;
+
+// Reusable components to reduce duplication
+const LoadingState: FC = (): ReactElement => (
+  <div className="flex-1 flex flex-col items-center justify-center w-full bg-gray-100 p-6">
+    <div className="bg-white p-8 rounded-lg shadow-md text-center w-full max-w-md">
+      <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-6"></div>
+      <h2 className="text-2xl font-bold text-gray-800 mb-4">Memuat Hasil Ujian...</h2>
+      <p className="text-gray-600">Mohon tunggu sebentar</p>
+    </div>
+  </div>
+);
+
+interface ErrorStateProps {
+  refetch: RefetchFunction;
+}
+
+const ErrorState: FC<ErrorStateProps> = ({ refetch }): ReactElement => (
+  <div className="flex-1 flex flex-col items-center justify-center w-full bg-gray-100 p-6">
+    <div className="bg-white p-8 rounded-lg shadow-md text-center w-full max-w-md">
+      <div className="text-red-500 text-6xl mb-6">⚠️</div>
+      <h2 className="text-2xl font-bold text-gray-800 mb-4">Gagal Memuat Hasil Ujian</h2>
+      <p className="text-gray-600 mb-6">Terjadi kesalahan saat memuat hasil ujian.</p>
+      <button
+        onClick={refetch}
+        className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+      >
+        Coba Lagi
+      </button>
+    </div>
+  </div>
+);
+
+interface ScoreCardProps {
+  label: string;
+  value: number | string;
+  color: string;
+}
+
+const ScoreCard: FC<ScoreCardProps> = ({ label, value, color }): ReactElement => (
+  <div className="bg-white p-5 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+    <h3 className="text-lg font-medium text-gray-700 mb-2">{label}</h3>
+    <p className={`text-3xl font-bold ${color}`}>{value}</p>
+  </div>
+);
+
+interface QuestionDetailProps {
+  question: Question;
+  index: number;
+}
+
+const QuestionDetail: FC<QuestionDetailProps> = ({ question, index }): ReactElement => {
+  const correctOption = question.options.find((opt) => opt.is_correct);
+  const selectedOption = question.options.find((opt) => opt.is_selected);
+  const isCorrect = correctOption && selectedOption && correctOption.id === selectedOption.id;
+
+  return (
+    <div
+      className={`border rounded-lg p-5 ${
+        isCorrect ? "border-green-200 bg-green-50" : "border-red-200 bg-red-50"
+      } shadow-sm hover:shadow-md transition-shadow`}
+    >
+      <div className="flex justify-between items-start mb-4">
+        <h4 className="text-lg font-medium text-gray-800 flex items-center">
+          <span className="bg-gray-200 text-gray-700 w-8 h-8 rounded-full flex items-center justify-center mr-3">
+            {index + 1}
+          </span>
+          Soal {index + 1}
+        </h4>
+        <span
+          className={`px-4 py-1 rounded-full text-sm font-medium ${
+            isCorrect ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
+          }`}
+        >
+          {isCorrect ? "Benar" : "Salah"}
+        </span>
+      </div>
+      <p className="text-gray-700 mb-5 text-base">
+        <span
+          className="wysiwyg-preview"
+          dangerouslySetInnerHTML={sanitizeHTML(question.question)}
+        />
+      </p>
+
+      <div className="space-y-3">
+        {question.options.map((option) => (
+          <div
+            key={option.id}
+            className={`p-4 rounded-md ${
+              option.is_selected && option.is_correct
+                ? "bg-green-100 border border-green-300"
+                : option.is_selected && !option.is_correct
+                  ? "bg-red-100 border border-red-300"
+                  : option.is_correct
+                    ? "bg-green-50 border border-green-200"
+                    : "bg-white border border-gray-200"
+            } transition-colors`}
+          >
+            <div className="flex items-start">
+              <div
+                className={`w-6 h-6 rounded-full flex items-center justify-center mt-0.5 mr-3 ${
+                  option.is_selected
+                    ? option.is_correct
+                      ? "bg-green-500 text-white"
+                      : "bg-red-500 text-white"
+                    : option.is_correct
+                      ? "bg-green-500 text-white"
+                      : "bg-gray-200"
+                }`}
+              >
+                {option.is_selected ? "✓" : option.is_correct ? "✓" : ""}
+              </div>
+              <span
+                className={`text-base ${
+                  option.is_selected || option.is_correct ? "font-medium" : ""
+                }`}
+              >
+                {option.label}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {question.discussion && (
+        <div className="mt-5 p-4 bg-blue-50 border border-blue-100 rounded-md">
+          <h5 className="text-md font-medium text-blue-800 mb-2">Pembahasan:</h5>
+          <p className="text-blue-700 text-base">{question.discussion}</p>
+        </div>
+      )}
+    </div>
+  );
 };
 
 export const Component: FC = (): ReactElement => {
-  const params = useParams<{ answerId: string; sessionId: string }>();
-  const testQuery = useGetTestAnswer(params.answerId!);
+  const [searchParams] = useSearchParams();
+  const answerIds = searchParams.get("answerIds")?.split(",") || [];
+  const [activeTab, setActiveTab] = useState<React.Key>(answerIds[0] || "");
 
-  // Calculate correct answers and score
+  useEffect(() => {
+    if (answerIds.length > 0 && !activeTab) {
+      setActiveTab(answerIds[0]);
+    }
+  }, [answerIds, activeTab]);
+
+  // Cast activeTab to string to ensure it's a valid parameter for the query
+  const testAnswerQuery = useGetTestAnswer(activeTab as string);
+
+  if (testAnswerQuery.isLoading) {
+    return <LoadingState />;
+  }
+
+  if (testAnswerQuery.isError) {
+    return <ErrorState refetch={testAnswerQuery.refetch} />;
+  }
+
+  // Check if data exists to prevent type errors
+  if (!testAnswerQuery.data) {
+    return <ErrorState refetch={testAnswerQuery.refetch} />;
+  }
+
+  // Calculate results
+  const totalQuestions = testAnswerQuery.data.data.questions.length || 0;
   const correctAnswers =
-    testQuery.data?.data.questions.reduce((acc, question) => {
-      const selectedOption = question.options.find((option) => option.is_selected);
-      return selectedOption?.is_correct ? acc + 1 : acc;
+    testAnswerQuery.data.data.questions.reduce((acc, question) => {
+      const correctOption = question.options.find((opt) => opt.is_correct);
+      const selectedOption = question.options.find((opt) => opt.is_selected);
+      return correctOption && selectedOption && correctOption.id === selectedOption.id
+        ? acc + 1
+        : acc;
     }, 0) || 0;
+  const scorePercentage = Math.round((correctAnswers / totalQuestions) * 100);
+  const incorrectAnswers = totalQuestions - correctAnswers;
 
-  const totalQuestions = testQuery.data?.data.questions.length || 0;
-  const scorePercentage = totalQuestions > 0 ? (correctAnswers / totalQuestions) * 100 : 0;
-  const finalScore = Math.round(scorePercentage);
+  // Determine score color based on percentage
+  const getScoreColor = (percentage: number): string => {
+    if (percentage >= 80) return "text-green-600";
+    if (percentage >= 60) return "text-blue-600";
+    if (percentage >= 40) return "text-yellow-600";
+    return "text-red-600";
+  };
+
+  const tabItems = answerIds.map((id, index) => ({
+    key: id,
+    label: `Test ${index + 1}`,
+    children: (
+      <div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <ScoreCard label="Total Soal" value={totalQuestions} color="text-blue-600" />
+          <ScoreCard label="Jawaban Benar" value={correctAnswers} color="text-green-600" />
+          <ScoreCard label="Jawaban Salah" value={incorrectAnswers} color="text-red-600" />
+          <ScoreCard
+            label="Skor"
+            value={`${scorePercentage}%`}
+            color={getScoreColor(scorePercentage)}
+          />
+        </div>
+
+        <div className="space-y-6">
+          <h3 className="text-xl font-semibold text-gray-800 px-1 pb-2 border-b border-gray-200">
+            Detail Jawaban
+          </h3>
+          {testAnswerQuery.data.data.questions.map((question, index) => (
+            <QuestionDetail key={question.id} question={question} index={index} />
+          ))}
+        </div>
+      </div>
+    ),
+  }));
 
   return (
-    <div className="flex flex-col items-center justify-center w-full bg-gray-100 min-h-screen">
-      <section className="flex flex-1 w-full max-w-7xl">
-        <main className="flex-1 flex flex-col gap-4 p-6">
-          {/* Enhanced Result Card */}
-          <div className="bg-white shadow-lg rounded-xl p-8 border border-gray-200">
-            <div className="flex flex-col md:flex-row justify-center items-center mb-6">
-              <h2 className="text-center text-2xl font-bold text-gray-800 mb-4 md:mb-0">
-                Hasil Ujian
-              </h2>
+    <div className="flex flex-col items-center justify-center w-full bg-gray-100 p-4 md:p-6">
+      <section className="flex flex-col w-full max-w-7xl">
+        <div className="mb-6 w-full">
+          <div className="bg-white shadow rounded-lg p-6 mb-6">
+            <div className="mb-6">
+              <h2 className="text-3xl font-bold text-gray-800 mb-2">Hasil Ujian</h2>
+              <p className="text-gray-600">Berikut adalah hasil ujian Anda:</p>
             </div>
 
-            {/* Score visualization */}
-            <div className="flex flex-col md:flex-row gap-8 items-center justify-center">
-              {/* Score details */}
-              <div className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-gray-500 text-sm mb-1">Jawaban yang Benar</p>
-                    <div className="flex items-center">
-                      <span className="text-2xl font-bold text-green-600">{correctAnswers}</span>
-                      <span className="text-gray-500 ml-1">/ {totalQuestions}</span>
+            {answerIds.length > 1 ? (
+              <>
+                <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-5 rounded-lg shadow-sm border border-blue-100 mb-6">
+                  <h3 className="text-lg font-medium text-gray-800 mb-1">Skor Total</h3>
+                  <div className="flex items-center">
+                    <p className={`text-4xl font-bold ${getScoreColor(scorePercentage)} mr-3`}>
+                      {scorePercentage}%
+                    </p>
+                    <div className="bg-gray-200 h-2 flex-1 rounded-full overflow-hidden">
+                      <div
+                        className={`h-full rounded-full ${
+                          scorePercentage >= 80
+                            ? "bg-green-500"
+                            : scorePercentage >= 60
+                              ? "bg-blue-500"
+                              : scorePercentage >= 40
+                                ? "bg-yellow-500"
+                                : "bg-red-500"
+                        }`}
+                        style={{ width: `${scorePercentage}%` }}
+                      ></div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Circular progress indicator */}
-              <div className="relative w-32 h-32">
-                <svg className="w-full h-full" viewBox="0 0 100 100">
-                  {/* Background circle */}
-                  <circle cx="50" cy="50" r="45" fill="none" stroke="#e6e6e6" strokeWidth="8" />
-                  {/* Progress circle - the stroke-dasharray and stroke-dashoffset create the partial circle effect */}
-                  <circle
-                    cx="50"
-                    cy="50"
-                    r="45"
-                    fill="none"
-                    stroke={
-                      scorePercentage >= 60
-                        ? "#4ade80"
-                        : scorePercentage >= 40
-                          ? "#facc15"
-                          : "#ef4444"
-                    }
-                    strokeWidth="8"
-                    strokeLinecap="round"
-                    strokeDasharray="283"
-                    strokeDashoffset={283 - (283 * scorePercentage) / 100}
-                    transform="rotate(-90 50 50)"
+                <Tabs
+                  activeTab={activeTab}
+                  onTabChange={(tab) => setActiveTab(tab)}
+                  items={tabItems}
+                />
+              </>
+            ) : (
+              <div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                  <ScoreCard label="Total Soal" value={totalQuestions} color="text-blue-600" />
+                  <ScoreCard label="Jawaban Benar" value={correctAnswers} color="text-green-600" />
+                  <ScoreCard label="Jawaban Salah" value={incorrectAnswers} color="text-red-600" />
+                  <ScoreCard
+                    label="Skor"
+                    value={`${scorePercentage}%`}
+                    color={getScoreColor(scorePercentage)}
                   />
-                  {/* Text in the middle */}
-                  <text
-                    x="50"
-                    y="50"
-                    dominantBaseline="middle"
-                    textAnchor="middle"
-                    fontSize="24"
-                    fontWeight="bold"
-                    fill={
-                      scorePercentage >= 60
-                        ? "#16a34a"
-                        : scorePercentage >= 40
-                          ? "#ca8a04"
-                          : "#dc2626"
-                    }
-                  >
-                    {finalScore}
-                  </text>
-                  <text
-                    x="50"
-                    y="65"
-                    dominantBaseline="middle"
-                    textAnchor="middle"
-                    fontSize="12"
-                    fill="#6b7280"
-                  >
-                    Skor Akhir
-                  </text>
-                </svg>
+                </div>
+
+                <div className="space-y-6">
+                  <h3 className="text-xl font-semibold text-gray-800 px-1 pb-2 border-b border-gray-200">
+                    Detail Jawaban
+                  </h3>
+                  {testAnswerQuery.data.data.questions.map((question, index) => (
+                    <QuestionDetail key={question.id} question={question} index={index} />
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
-
-          {/* Questions Review Section */}
-          <h3 className="text-xl font-semibold text-gray-800 mt-4 mb-2">Ulasan Pertanyaan</h3>
-
-          {testQuery.data?.data.questions.map((question, index) => {
-            const selectedOption = question.options.find((option) => option.is_selected);
-            const isCorrect = selectedOption?.is_correct;
-
-            return (
-              <div
-                key={index}
-                className="bg-white shadow rounded-lg p-6 border-l-4 mb-4 transition-all hover:shadow-md"
-                style={{ borderLeftColor: isCorrect ? "#4ade80" : "#f87171" }}
-              >
-                <div className="flex justify-between items-start mb-4">
-                  <h2 className="text-lg font-semibold text-gray-800">
-                    <span className="inline-block bg-gray-200 text-gray-700 rounded-full w-8 h-8 text-center leading-8 mr-2">
-                      {index + 1}
-                    </span>
-                    <span
-                      className="wysiwyg-preview"
-                      dangerouslySetInnerHTML={sanitizeHTML(question.question)}
-                    />
-                  </h2>
-                  <span
-                    className={`px-3 py-1 rounded-full text-sm font-medium ${
-                      isCorrect ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
-                    }`}
-                  >
-                    {isCorrect ? "Correct" : "Incorrect"}
-                  </span>
-                </div>
-
-                <div className="flex flex-col gap-3 ml-10">
-                  {question.options.map((option, optIndex) => {
-                    const isSelected = option.is_selected;
-                    const isCorrectOption = option.is_correct;
-
-                    let optionClass = "border rounded-lg p-3 transition-all";
-                    if (isSelected && isCorrectOption) {
-                      optionClass += " bg-green-50 border-green-300"; // Correct answer selected
-                    } else if (isSelected && !isCorrectOption) {
-                      optionClass += " bg-red-50 border-red-300"; // Wrong answer selected
-                    } else if (!isSelected && isCorrectOption) {
-                      optionClass += " bg-green-50 border-green-300"; // Correct answer not selected
-                    } else {
-                      optionClass += " border-gray-200 hover:bg-gray-50"; // Neutral state
-                    }
-
-                    return (
-                      <div key={optIndex} className={optionClass}>
-                        <label className="flex items-center gap-3 cursor-default">
-                          <div
-                            className={`flex items-center justify-center w-6 h-6 rounded-full border ${
-                              isSelected
-                                ? isCorrectOption
-                                  ? "border-green-500 bg-green-500" // Correct answer selected
-                                  : "border-red-500 bg-red-500" // Wrong answer selected
-                                : isCorrectOption
-                                  ? "border-green-500 bg-green-500" // Correct answer not selected
-                                  : "border-gray-300" // Neutral state
-                            }`}
-                          >
-                            {(isSelected || isCorrectOption) && (
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-4 w-4 text-white"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                              >
-                                <path
-                                  fillRule="evenodd"
-                                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                  clipRule="evenodd"
-                                />
-                              </svg>
-                            )}
-                          </div>
-                          <span
-                            className={`text-gray-700 ${isCorrectOption ? "font-medium" : ""}`}
-                            dangerouslySetInnerHTML={sanitizeHTML(option.label)}
-                          />
-
-                          {isSelected && !isCorrectOption && (
-                            <span className="ml-auto text-red-500">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-5 w-5"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                              >
-                                <path
-                                  fillRule="evenodd"
-                                  d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                                  clipRule="evenodd"
-                                />
-                              </svg>
-                            </span>
-                          )}
-
-                          {isCorrectOption && !isSelected && (
-                            <span className="ml-auto text-green-500">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-5 w-5"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                              >
-                                <path
-                                  fillRule="evenodd"
-                                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                  clipRule="evenodd"
-                                />
-                              </svg>
-                            </span>
-                          )}
-                        </label>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                {/* Explanation - would come from the API in a real implementation */}
-                {!isCorrect && (
-                  <div className="mt-4 p-4 bg-blue-50 rounded-lg text-blue-800 ml-10">
-                    <p className="font-medium mb-1">Penjelasan:</p>
-                    <div className="text-sm">{question.discussion}</div>
-                    {question.discussion_image_url && (
-                      <div className="mt-3">
-                        <ZoomableImage
-                          src={question.discussion_image_url}
-                          alt="Explanation illustration"
-                          className="max-w-full rounded-md border border-blue-200 shadow-sm"
-                        />
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </main>
+        </div>
       </section>
     </div>
   );
 };
+
+export default Component;
