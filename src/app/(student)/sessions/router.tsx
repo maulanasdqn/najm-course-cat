@@ -12,7 +12,11 @@ export const SessionsRouter = [
     lazy: () => import("./exams/start/page"),
   },
   {
-    path: ":sessionId/result/:answerId",
+    path: ":sessionId/result",
     lazy: () => import("./result/page"),
+  },
+  {
+    path: ":sessionId/exams/start",
+    lazy: () => import("./start/page"),
   },
 ];
