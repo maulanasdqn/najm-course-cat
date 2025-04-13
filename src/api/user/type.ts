@@ -1,9 +1,5 @@
 import { TResponseData, TResponsePaginate } from "@/commons/types/response";
 import { TRoleItem } from "../role/type";
-import {
-  CreateUserFormData,
-  UpdateUserFormData,
-} from "@/app/(admin)/users/_schemas/user-form.schema";
 
 export type TUserItem = {
   avatar: string;
@@ -22,8 +18,28 @@ export type TUserItem = {
   is_profile_completed: boolean;
 };
 
-export type TUserCreateRequest = CreateUserFormData;
-export type TUserUpdateRequest = UpdateUserFormData;
+export type TUserCreateRequest = {
+  fullname: string;
+  email: string;
+  phone_number: string;
+  role_id: string;
+  student_type: string;
+  password: string;
+  avatar?: string;
+  referral_code?: string;
+  referred_by?: string;
+};
+export type TUserUpdateRequest = {
+  fullname: string;
+  email: string;
+  phone_number: string;
+  role_id: string;
+  student_type: string;
+  avatar?: string;
+  referral_code?: string;
+  referred_by?: string;
+  password?: string;
+};
 export type TUserMeUpdateRequest = {
   avatar: string;
   birthdate: string;

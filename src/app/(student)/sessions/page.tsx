@@ -1,6 +1,6 @@
 import { FC, ReactElement } from "react";
-import { useGetSessionTests } from "@/app/(admin)/session-tests/_hooks/use-get-session-tests";
 import { Link } from "react-router-dom";
+import { useGetSessionTests } from "./_hooks/use-get-session-tests";
 
 export const Component: FC = (): ReactElement => {
   const { data, isLoading } = useGetSessionTests({});

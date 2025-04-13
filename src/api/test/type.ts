@@ -1,8 +1,4 @@
 import { TResponseData, TResponsePaginate } from "@/commons/types/response";
-import {
-  CreateTestFormData,
-  UpdateTestFormData,
-} from "@/app/(admin)/tests/_schemas/test-form.schema";
 
 export type TTestItem = {
   id: string;
@@ -13,8 +9,48 @@ export type TTestItem = {
   updated_at: string;
 };
 
-export type TTestCreateRequest = CreateTestFormData;
-export type TTestUpdateRequest = UpdateTestFormData;
+export type TTestCreateRequest = {
+  questions: {
+    question: string;
+    image_url: string;
+    options: {
+      label: string;
+      image_url: string;
+      is_correct: boolean;
+      id?: string;
+      index?: number;
+      points?: number;
+    }[];
+    discussion_image_url: string;
+    id?: string;
+    index?: number;
+    discussion?: string;
+  }[];
+  category: string;
+  test_name: string;
+  session_id?: string;
+};
+export type TTestUpdateRequest = {
+  questions: {
+    question: string;
+    image_url: string;
+    options: {
+      label: string;
+      image_url: string;
+      is_correct: boolean;
+      id?: string;
+      index?: number;
+      points?: number;
+    }[];
+    discussion_image_url: string;
+    id?: string;
+    index?: number;
+    discussion?: string;
+  }[];
+  category: string;
+  test_name: string;
+  session_id?: string;
+};
 
 export type TGetTestsParams = {
   page?: number;

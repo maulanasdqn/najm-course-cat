@@ -1,25 +1,5 @@
 import AdminLayout from "./layout";
 import AdminDashboard from "./dashboard/page";
-import UsersPage from "./users/page";
-import CreateUserPage from "./users/create/page";
-import EditUserPage from "./users/update/page";
-import UserDetailPage from "./users/detail/page";
-import RolesPage from "./roles/page";
-import CreateRolePage from "./roles/create/page";
-import EditRolePage from "./roles/edit/page";
-import PermissionsPage from "./permissions/page";
-import CreatePermissionPage from "./permissions/create/page";
-import EditPermissionPage from "./permissions/update/page";
-import SessionTestsPage from "./session-tests/page";
-import CreateSessionTestPage from "./session-tests/create/page";
-import UpdateSessionTestPage from "./session-tests/update/page";
-import SessionTestDetailPage from "./session-tests/detail/page";
-import TestsPage from "./tests/page";
-import CreateTestPage from "./tests/create/page";
-import UpdateTestPage from "./tests/update/page";
-import TestDetailPage from "./tests/detail/page";
-import { permissionLoader } from "@/utils/permission";
-import PermissionsEnum from "@/commons/enums/permission";
 
 export const AdminRouter = [
   {
@@ -28,93 +8,6 @@ export const AdminRouter = [
       {
         path: "dashboard",
         element: <AdminDashboard />,
-      },
-      {
-        path: "session-tests",
-        element: <SessionTestsPage />,
-      },
-      {
-        path: "session-tests/create",
-        element: <CreateSessionTestPage />,
-      },
-      {
-        path: "session-tests/:id/detail",
-        element: <SessionTestDetailPage />,
-      },
-      {
-        path: "session-tests/:id/update",
-        element: <UpdateSessionTestPage />,
-      },
-      {
-        path: "tests",
-        element: <TestsPage />,
-      },
-      {
-        path: "tests/create",
-        element: <CreateTestPage />,
-      },
-      {
-        path: "tests/:id/detail",
-        element: <TestDetailPage />,
-      },
-      {
-        path: "tests/:id/update",
-        element: <UpdateTestPage />,
-      },
-      {
-        path: "iam",
-        children: [
-          {
-            path: "users",
-            loader: permissionLoader([PermissionsEnum.ReadListUsers]),
-            element: <UsersPage />,
-          },
-          {
-            path: "users/create",
-            loader: permissionLoader([PermissionsEnum.CreateUsers]),
-            element: <CreateUserPage />,
-          },
-          {
-            path: "users/:id/detail",
-            loader: permissionLoader([PermissionsEnum.ReadDetailUsers]),
-            element: <UserDetailPage />,
-          },
-          {
-            path: "users/:id/update",
-            loader: permissionLoader([PermissionsEnum.UpdateUsers]),
-            element: <EditUserPage />,
-          },
-          {
-            path: "roles",
-            loader: permissionLoader([PermissionsEnum.ReadListRoles]),
-            element: <RolesPage />,
-          },
-          {
-            path: "roles/create",
-            loader: permissionLoader([PermissionsEnum.CreateRoles]),
-            element: <CreateRolePage />,
-          },
-          {
-            path: "roles/:id/update",
-            loader: permissionLoader([PermissionsEnum.UpdateRoles]),
-            element: <EditRolePage />,
-          },
-          {
-            path: "permissions",
-            loader: permissionLoader([PermissionsEnum.ReadListPermissions]),
-            element: <PermissionsPage />,
-          },
-          {
-            path: "permissions/create",
-            loader: permissionLoader([PermissionsEnum.CreatePermissions]),
-            element: <CreatePermissionPage />,
-          },
-          {
-            path: "permissions/:id/update",
-            loader: permissionLoader([PermissionsEnum.UpdatePermissions]),
-            element: <EditPermissionPage />,
-          },
-        ],
       },
     ],
   },

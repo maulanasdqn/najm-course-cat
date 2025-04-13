@@ -1,8 +1,4 @@
 import { TResponseData, TResponsePaginate } from "@/commons/types/response";
-import {
-  CreateSessionTestFormData,
-  UpdateSessionTestFormData,
-} from "@/app/(admin)/session-tests/_schemas/session-test-form.schema";
 
 export type TSessionTestItem = {
   id: string;
@@ -25,8 +21,38 @@ export type TSessionTestItem = {
   updated_at: string;
 };
 
-export type TSessionTestCreateRequest = CreateSessionTestFormData;
-export type TSessionTestUpdateRequest = UpdateSessionTestFormData;
+export type TSessionTestCreateRequest = {
+  session_name: string;
+  student_type: string;
+  category: string;
+  description: string;
+  is_active: boolean;
+  tests?:
+    | {
+        test_id: string;
+        weight: string;
+        multiplier: string;
+        start_date: string;
+        end_date: string;
+      }[]
+    | undefined;
+};
+export type TSessionTestUpdateRequest = {
+  is_active: boolean;
+  session_name: string;
+  student_type: string;
+  category: string;
+  description: string;
+  tests?:
+    | {
+        test_id: string;
+        weight: string;
+        multiplier: string;
+        start_date: string;
+        end_date: string;
+      }[]
+    | undefined;
+};
 
 export type TGetSessionTestsParams = {
   page?: number;
