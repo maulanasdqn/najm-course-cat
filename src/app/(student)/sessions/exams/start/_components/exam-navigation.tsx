@@ -1,8 +1,8 @@
 import { FC, ReactElement } from "react";
-import { TExamAnswerRequest } from "@/api/test/type";
+import { TExamAnswerRequest, TTestDetailResponse } from "@/api/test/type";
 
 interface ExamNavigationProps {
-  questions: any[];
+  questions: TTestDetailResponse["data"]["questions"];
   currentQuestion: number;
   answers: TExamAnswerRequest["questions"];
   onGoToQuestion: (index: number) => void;

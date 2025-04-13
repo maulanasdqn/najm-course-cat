@@ -1,5 +1,5 @@
 import { FC, ReactElement } from "react";
-import { TExamAnswerRequest } from "@/api/test/type";
+import { TExamAnswerRequest, TTestDetailResponse } from "@/api/test/type";
 import { ArrowRightIcon } from "@/app/_components/ui/icons/ic-arrow-right";
 import { ZoomableImage } from "@/app/_components/ui/zoomable-image";
 import DOMPurify from "dompurify";
@@ -30,7 +30,7 @@ const ArrowLeftIcon = () => (
 );
 
 interface ExamQuestionProps {
-  question: any;
+  question?: TTestDetailResponse["data"]["questions"][number];
   currentQuestion: number;
   totalQuestions: number;
   onAnswer: (answer: TExamAnswerRequest["questions"][number]) => void;
@@ -58,9 +58,9 @@ export const ExamQuestion: FC<ExamQuestionProps> = ({
         </h3>
         <span
           className="wysiwyg-preview"
-          dangerouslySetInnerHTML={sanitizeHTML(question.question)}
+          dangerouslySetInnerHTML={question ? sanitizeHTML(question.question) : undefined}
         />
-        {question.image_url ? (
+        {question?.image_url ? (
           <div className="mb-8 flex justify-center items-center">
             <ZoomableImage
               src={question.image_url || ""}
@@ -70,7 +70,7 @@ export const ExamQuestion: FC<ExamQuestionProps> = ({
           </div>
         ) : null}
         <div className="flex flex-col gap-4">
-          {question.options.map((option: any, optIndex: number) => (
+          {question?.options.map((option, optIndex: number) => (
             <label
               key={optIndex}
               className="flex flex-col gap-2 border p-4 rounded-md hover:shadow-md transition cursor-pointer"
