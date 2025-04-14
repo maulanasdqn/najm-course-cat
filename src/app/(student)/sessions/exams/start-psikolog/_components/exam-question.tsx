@@ -70,7 +70,7 @@ export const ExamQuestion: FC<ExamQuestionProps> = ({
           </div>
         ) : null}
         <div className="flex flex-col gap-4">
-          {question?.options.map((option, optIndex: number) => (
+          {question?.options.map((option, optIndex) => (
             <label
               key={optIndex}
               className="flex flex-col gap-2 border p-4 rounded-md hover:shadow-md transition cursor-pointer"

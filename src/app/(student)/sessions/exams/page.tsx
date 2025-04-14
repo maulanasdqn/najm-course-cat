@@ -1,10 +1,9 @@
 import { FC, ReactElement } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useGetSessionTest } from "../_hooks/use-get-session-test";
 
 export const Component: FC = (): ReactElement => {
   const params = useParams<{ sessionId: string }>();
-  const navigate = useNavigate();
   const { data, isLoading } = useGetSessionTest(params.sessionId!);
 
   if (isLoading) {
@@ -25,13 +24,6 @@ export const Component: FC = (): ReactElement => {
 
   const isPsikologSession = data.data.student_type === "psikolog";
 
-  const handleStartAllExams = () => {
-    // Navigate to the first test
-    if (data.data.tests.length > 0) {
-      navigate(`/student/sessions/${params.sessionId}/exams/start`);
-    }
-  };
-
   return (
     <div className="flex flex-col items-center justify-center w-full bg-gray-100">
       <section className="flex flex-1 w-full max-w-7xl">
@@ -39,9 +31,8 @@ export const Component: FC = (): ReactElement => {
           {/* Session type label */}
           <div className="mb-4">
             <span
-              className={`px-3 py-1 text-sm rounded-full ${
-                isPsikologSession ? "bg-purple-100 text-purple-800" : "bg-blue-100 text-blue-800"
-              }`}
+              className={`px-3 py-1 text-sm rounded-full ${isPsikologSession ? "bg-purple-100 text-purple-800" : "bg-blue-100 text-blue-800"
+                }`}
             >
               {data.data.student_type.charAt(0).toUpperCase() + data.data.student_type.slice(1)}
             </span>
@@ -62,12 +53,12 @@ export const Component: FC = (): ReactElement => {
               </div>
 
               <div className="flex justify-center mt-6">
-                <button
-                  onClick={handleStartAllExams}
+                <Link
+                  to={`/student/sessions/${params.sessionId}/exams/test-psikolog`}
                   className="px-6 py-3 bg-purple-600 text-white font-medium rounded-lg shadow-md hover:bg-purple-700 transition"
                 >
                   Mulai Test
-                </button>
+                </Link>
               </div>
             </>
           )}
@@ -81,7 +72,7 @@ export const Component: FC = (): ReactElement => {
                 >
                   <h3 className="text-lg font-bold text-gray-800">{test.test_name}</h3>
                   <Link
-                    to={`/student/sessions/${params.sessionId}/exams/${test.id}/start`}
+                    to={`/student/sessions/${params.sessionId}/exams/test-akademik/${test.id}`}
                     className="text-sm text-blue-600 font-bold hover:underline"
                   >
                     Kerjakan Tes →
