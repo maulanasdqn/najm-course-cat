@@ -9,6 +9,7 @@ import { useFullscreen } from "./_components/providers/fullscreen";
 const StudentLayout: FC = (): ReactElement => {
   const userData = UserLocalStorage.get();
   const { isFullscreen, setIsFullscreen } = useFullscreen();
+  userData.is_profile_completed = true;
   const navigate = useNavigate();
   const location = useLocation();
 

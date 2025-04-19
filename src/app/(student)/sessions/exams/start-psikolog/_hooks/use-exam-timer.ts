@@ -32,8 +32,8 @@ export const useExamTimer = (
 
   useEffect(() => {
     if (!startDate || !endDate) {
-      setTimeUntilStart(-1);
-      setTimeLeft(-1);
+      setTimeUntilStart(0);
+      setTimeLeft(0);
       return;
     }
 

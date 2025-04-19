@@ -30,10 +30,7 @@ export const Component: FC = (): ReactElement => {
         <main className="col-span-2 w-full p-6">
           {/* Session type label */}
           <div className="mb-4">
-            <span
-              className={`px-3 py-1 text-sm rounded-full ${isPsikologSession ? "bg-purple-100 text-purple-800" : "bg-blue-100 text-blue-800"
-                }`}
-            >
+            <span className={`px-3 py-1 text-sm rounded-full bg-blue-100 text-blue-800`}>
               {data.data.student_type.charAt(0).toUpperCase() + data.data.student_type.slice(1)}
             </span>
           </div>
@@ -42,25 +39,22 @@ export const Component: FC = (): ReactElement => {
           <h2 className="text-xl font-bold mb-4">{data.data.session_name}</h2>
 
           {isPsikologSession && (
-            <>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                {data.data.tests.map((test) => (
-                  <div key={test.id} className="border bg-white rounded-lg p-4 opacity-70">
-                    <h3 className="text-lg font-bold text-gray-800">{test.test_name}</h3>
-                    <p className="text-sm text-gray-500">{test.question_count} Pertanyaan</p>
-                  </div>
-                ))}
-              </div>
-
-              <div className="flex justify-center mt-6">
-                <Link
-                  to={`/student/sessions/${params.sessionId}/exams/test-psikolog`}
-                  className="px-6 py-3 bg-purple-600 text-white font-medium rounded-lg shadow-md hover:bg-purple-700 transition"
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {data.data.tests.map((test) => (
+                <div
+                  key={test.id}
+                  className="border bg-white rounded-lg p-4 hover:shadow-md transition"
                 >
-                  Mulai Test
-                </Link>
-              </div>
-            </>
+                  <h3 className="text-lg font-bold text-gray-800">{test.test_name}</h3>
+                  <Link
+                    to={`/student/sessions/${params.sessionId}/exams/test-psikolog/${test.id}`}
+                    className="text-sm text-blue-600 font-bold hover:underline"
+                  >
+                    Kerjakan Tes →
+                  </Link>
+                </div>
+              ))}
+            </div>
           )}
 
           {!isPsikologSession && (

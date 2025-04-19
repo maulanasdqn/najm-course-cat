@@ -63,6 +63,8 @@ export const Component: FC = (): ReactElement => {
     params.sessionId!,
   );
 
+  console.log(testQuery.data?.data.start_date, testQuery.data?.data.end_date);
+
   const [start, setStart] = useState(false);
 
   useEffect(() => {
