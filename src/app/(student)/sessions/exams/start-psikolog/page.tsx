@@ -1,5 +1,5 @@
 import { FC, ReactElement, useState, useEffect, useRef, useCallback } from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useExam } from "./_hooks/use-exam";
 import toast from "react-hot-toast";
 import { useAnswerExamMutation } from "./_hooks/use-answer-exam-mutation";
@@ -19,8 +19,7 @@ export const Component: FC = (): ReactElement => {
   const answerExamMutation = useAnswerExamMutation();
   const testQuery = useGetTest(params.examId!);
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const currentQuestion = parseInt(searchParams.get("page") || "1", 10) - 1;
+  const [currentQuestion, setCurrentQuestion] = useState<number>(0);
   const [answers, setAnswers] = useState<TExamAnswerRequest["questions"]>([]);
   const answersRef = useRef<TExamAnswerRequest["questions"]>([]);
 
@@ -82,24 +81,18 @@ export const Component: FC = (): ReactElement => {
   const nextQuestion = () => {
     if (!testQuery.data) return;
     if (currentQuestion < testQuery.data.data.questions.length - 1) {
-      navigate(
-        `/student/sessions/${params.sessionId}/exams/${params.examId}/start?page=${currentQuestion + 2}`,
-      );
+      setCurrentQuestion(currentQuestion + 1);
     }
   };
 
   const prevQuestion = () => {
     if (currentQuestion > 0) {
-      navigate(
-        `/student/sessions/${params.sessionId}/exams/${params.examId}/start?page=${currentQuestion}`,
-      );
+      setCurrentQuestion(currentQuestion - 1);
     }
   };
 
   const goToQuestion = (index: number) => {
-    navigate(
-      `/student/sessions/${params.sessionId}/exams/${params.examId}/start?page=${index + 1}`,
-    );
+    setCurrentQuestion(index);
   };
 
   const handleAnswer = (answer: TExamAnswerRequest["questions"][number]) => {

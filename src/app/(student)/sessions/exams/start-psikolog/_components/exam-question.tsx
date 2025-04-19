@@ -98,46 +98,28 @@ export const ExamQuestion: FC<ExamQuestionProps> = ({
             </label>
           ))}
         </div>
-        <div className="flex justify-between mt-6 space-x-4">
-          <button
-            onClick={onPrev}
-            disabled={currentQuestion === 0}
-            aria-label="Kembali ke soal sebelumnya"
-            className={`px-4 py-2 rounded-lg shadow transition flex items-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 ${
-              currentQuestion === 0
-                ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                : "bg-gray-300 text-gray-700 hover:bg-gray-400 hover:text-white"
-            }`}
-          >
-            <span className="mr-2">
-              <ArrowLeftIcon />
-            </span>
-            Kembali
-          </button>
-          <button
-            onClick={onNext}
-            disabled={currentQuestion === totalQuestions - 1}
-            aria-label="Lanjut ke soal berikutnya"
-            className={`px-4 py-2 rounded-lg shadow transition flex items-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400 ${
-              currentQuestion === totalQuestions - 1
-                ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                : "bg-blue-600 text-white hover:bg-blue-500 hover:scale-105"
-            }`}
-          >
-            {isSubmitting ? (
-              <span className="flex items-center">
-                <span className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full mr-2"></span>
-                Menyimpan...
-              </span>
-            ) : (
-              <>
-                Simpan dan Lanjutkan
-                <span className="ml-2">
-                  <ArrowRightIcon />
+        <div className="flex justify-end mt-6">
+          {currentQuestion < totalQuestions - 1 && (
+            <button
+              onClick={onNext}
+              aria-label="Lanjut ke soal berikutnya"
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow transition flex items-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400 hover:bg-blue-500 hover:scale-105"
+            >
+              {isSubmitting ? (
+                <span className="flex items-center">
+                  <span className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full mr-2"></span>
+                  Menyimpan...
                 </span>
-              </>
-            )}
-          </button>
+              ) : (
+                <>
+                  Simpan dan Lanjutkan
+                  <span className="ml-2">
+                    <ArrowRightIcon />
+                  </span>
+                </>
+              )}
+            </button>
+          )}
         </div>
       </div>
     </main>

@@ -25,7 +25,7 @@ export const ExamNavigation: FC<ExamNavigationProps> = ({
         {questions.map((_, index) => (
           <button
             key={index}
-            onClick={() => onGoToQuestion(index)}
+            disabled
             className={`w-10 h-10 rounded-md ${
               currentQuestion === index
                 ? "bg-blue-500 text-white"
