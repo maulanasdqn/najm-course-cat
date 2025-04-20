@@ -13,6 +13,7 @@ import { ExamQuestion } from "./_components/exam-question";
 import { ExamNavigation } from "./_components/exam-navigation";
 import { ExamStatus } from "./_components/exam-status";
 import { useExamTimer } from "./_hooks/use-exam-timer";
+import { useTimer } from "@/app/_hooks/use-timer";
 
 export const Component: FC = (): ReactElement => {
   const params = useParams<{ examId: string; sessionId: string }>();
@@ -20,6 +21,7 @@ export const Component: FC = (): ReactElement => {
   const testQuery = useGetTest(params.examId!);
   const navigate = useNavigate();
   const [currentQuestion, setCurrentQuestion] = useState<number>(0);
+  const currentQuestionRef = useRef<number>(0);
   const [answers, setAnswers] = useState<TExamAnswerRequest["questions"]>([]);
   const answersRef = useRef<TExamAnswerRequest["questions"]>([]);
 
@@ -62,6 +64,19 @@ export const Component: FC = (): ReactElement => {
     params.sessionId!,
   );
 
+  const timer = useTimer(60, {
+    onComplete: ({ reset, start }) => {
+      const totalQuestions = testQuery.data?.data.questions.length ?? 1;
+      if (currentQuestion < totalQuestions - 1) {
+        setCurrentQuestion((prev) => prev + 1);
+        reset();
+        start();
+      } else {
+        finishExam();
+      }
+    },
+  });
+
   const [start, setStart] = useState(false);
 
   useEffect(() => {
@@ -82,17 +97,20 @@ export const Component: FC = (): ReactElement => {
     if (!testQuery.data) return;
     if (currentQuestion < testQuery.data.data.questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
+      currentQuestionRef.current = currentQuestion + 1;
     }
   };
 
   const prevQuestion = () => {
     if (currentQuestion > 0) {
       setCurrentQuestion(currentQuestion - 1);
+      currentQuestionRef.current = currentQuestion - 1;
     }
   };
 
   const goToQuestion = (index: number) => {
     setCurrentQuestion(index);
+    currentQuestionRef.current = index;
   };
 
   const handleAnswer = (answer: TExamAnswerRequest["questions"][number]) => {
@@ -114,6 +132,7 @@ export const Component: FC = (): ReactElement => {
         onStart={() => {
           startExam();
           setStart(true);
+          timer.start();
         }}
         isPending={testQuery.isPending}
         timeUntilStart={timeUntilStart}
@@ -137,7 +156,7 @@ export const Component: FC = (): ReactElement => {
         testName={testQuery.data?.data.test_name}
         answeredCount={answeredCount}
         unansweredCount={unansweredCount}
-        timeLeft={timeLeft}
+        timeLeft={timer.remainingTime}
         timeUntilStart={timeUntilStart}
         isLoading={testQuery.isLoading}
         formatTime={formatTime}
