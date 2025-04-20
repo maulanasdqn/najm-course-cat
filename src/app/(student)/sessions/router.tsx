@@ -12,10 +12,13 @@ export const SessionsRouter = [
     path: ":sessionId/exams/test-akademik/:examId",
     lazy: () => import("./exams/start-akademik/page"),
   },
-  // Exam for psikologi, it is separated since it has multiple test and don't need spesific examId
   {
-    path: ":sessionId/exams/test-psikolog",
+    path: ":sessionId/exams/test-psikolog/:examId",
     lazy: () => import("./exams/start-psikolog/page"),
+  },
+  {
+    path: ":sessionId/exams/test-kecermatan/:examId",
+    lazy: () => import("./exams/start-kecermatan/page"),
   },
   {
     path: ":sessionId/exams/result",
