@@ -17,6 +17,10 @@ export const SessionsRouter = [
     lazy: () => import("./exams/start-psikolog/page"),
   },
   {
+    path: ":sessionId/exams/test-kecermatan/:examId",
+    lazy: () => import("./exams/start-kecermatan/page"),
+  },
+  {
     path: ":sessionId/exams/result",
     lazy: () => import("./exams/result/page"),
   },

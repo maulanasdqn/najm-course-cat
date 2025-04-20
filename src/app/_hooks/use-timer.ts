@@ -98,8 +98,6 @@ export const useTimer = (seconds: number, options?: TimerOptions): TimerControls
 
   // Start the timer
   const start = useCallback(() => {
-    if (isRunning || remainingTime <= 0) return;
-
     setIsRunning(true);
     timerRef.current = setInterval(() => {
       if (remainingTimeRef.current <= 1) {
