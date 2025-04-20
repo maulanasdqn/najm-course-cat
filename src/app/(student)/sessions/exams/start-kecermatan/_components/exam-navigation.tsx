@@ -14,7 +14,6 @@ export const ExamNavigation: FC<ExamNavigationProps> = ({
   questions,
   currentQuestion,
   answers,
-  onGoToQuestion,
   onFinish,
   isSubmitting,
 }): ReactElement => {
