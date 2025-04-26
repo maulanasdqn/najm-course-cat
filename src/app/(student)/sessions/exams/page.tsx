@@ -51,7 +51,7 @@ export const Component: FC = (): ReactElement => {
                   key={test.id}
                   className="border bg-white rounded-lg p-4 hover:shadow-md transition"
                 >
-                  <h3 className="text-lg font-bold text-gray-800">{test.test_name}</h3>
+                  <h3 className="text-lg font-bold text-gray-800">{test.name}</h3>
                   <Link
                     to={`/student/sessions/${params.sessionId}/exams/test-psikolog/${test.id}`}
                     className="text-sm text-blue-600 font-bold hover:underline"
@@ -70,7 +70,7 @@ export const Component: FC = (): ReactElement => {
                   key={test.id}
                   className="border bg-white rounded-lg p-4 hover:shadow-md transition"
                 >
-                  <h3 className="text-lg font-bold text-gray-800">{test.test_name}</h3>
+                  <h3 className="text-lg font-bold text-gray-800">{test.name}</h3>
                   <Link
                     to={`/student/sessions/${params.sessionId}/exams/test-kecermatan/${test.id}`}
                     className="text-sm text-blue-600 font-bold hover:underline"
@@ -89,7 +89,7 @@ export const Component: FC = (): ReactElement => {
                   key={test.id}
                   className="border bg-white rounded-lg p-4 hover:shadow-md transition"
                 >
-                  <h3 className="text-lg font-bold text-gray-800">{test.test_name}</h3>
+                  <h3 className="text-lg font-bold text-gray-800">{test.name}</h3>
                   <Link
                     to={`/student/sessions/${params.sessionId}/exams/test-akademik/${test.id}`}
                     className="text-sm text-blue-600 font-bold hover:underline"

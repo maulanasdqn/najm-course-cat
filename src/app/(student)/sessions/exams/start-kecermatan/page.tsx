@@ -155,7 +155,7 @@ export const Component: FC = (): ReactElement => {
   return (
     <div className="flex flex-col items-center justify-center w-full bg-gray-100">
       <ExamStatus
-        testName={testQuery.data?.data.test_name}
+        testName={testQuery.data?.data.name}
         answeredCount={answeredCount}
         unansweredCount={unansweredCount}
         timeLeft={timer.remainingTime}
