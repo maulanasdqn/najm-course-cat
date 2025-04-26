@@ -29,7 +29,7 @@ export const Component: FC = (): ReactElement => {
                 key={session.id}
                 className="flex flex-col border bg-white rounded-lg p-4 hover:shadow-md transition"
               >
-                <h3 className="text-lg font-bold text-gray-800">{session.session_name}</h3>
+                <h3 className="text-lg font-bold text-gray-800">{session.name}</h3>
                 <p className="text-sm text-gray-600 mb-2 flex-1">{session.description}</p>
                 <Link
                   to={`/student/sessions/${session.id}/exams`}
