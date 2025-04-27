@@ -1,8 +1,8 @@
 import { FC, ReactElement } from "react";
-import { TExamAnswerRequest, TTestDetailResponse } from "@/api/test/type";
+import { TExamAnswerRequest, TQuestionItem } from "@/api/test/type";
 
 interface ExamNavigationProps {
-  questions: TTestDetailResponse["data"]["questions"];
+  questions: TQuestionItem[];
   currentQuestion: number;
   answers: TExamAnswerRequest["questions"];
   onGoToQuestion: (index: number) => void;
@@ -21,7 +21,7 @@ export const ExamNavigation: FC<ExamNavigationProps> = ({
     <aside className="w-1/4 order-2 bg-white mt-6 p-4 rounded-lg shadow-md h-fit">
       <h3 className="text-lg font-semibold text-gray-800 mb-4">Navigasi Soal</h3>
       <div className="grid grid-cols-5 gap-2">
-        {questions.map((_, index) => (
+        {questions?.map((_, index) => (
           <button
             key={index}
             disabled

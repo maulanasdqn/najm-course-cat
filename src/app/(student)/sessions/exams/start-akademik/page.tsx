@@ -4,7 +4,6 @@ import { useExam } from "./_hooks/use-exam";
 import toast from "react-hot-toast";
 import { useAnswerExamMutation } from "./_hooks/use-answer-exam-mutation";
 import { TExamAnswerRequest } from "@/api/test/type";
-import { useGetTest } from "./_hooks/use-get-tests-query";
 import { useDidEffect } from "@/app/_hooks/use-did-effect";
 import { ExamStartPrompt } from "./_components/exam-start-prompt";
 import { ExamLoading } from "./_components/exam-loading";
@@ -13,11 +12,22 @@ import { ExamQuestion } from "./_components/exam-question";
 import { ExamNavigation } from "./_components/exam-navigation";
 import { ExamStatus } from "./_components/exam-status";
 import { useExamTimer } from "./_hooks/use-exam-timer";
+import { useGetSessionTest } from "../../_hooks/use-get-session-test";
 
 export const Component: FC = (): ReactElement => {
   const params = useParams<{ examId: string; sessionId: string }>();
   const answerExamMutation = useAnswerExamMutation();
-  const testQuery = useGetTest(params.examId!);
+
+  const {
+    data: sessionData,
+    isLoading: isSessionLoading,
+    isError: isSessionError,
+    error: sessionError,
+    refetch: refetchSession,
+  } = useGetSessionTest(params.sessionId!);
+
+  const test = sessionData?.data?.tests.find(({ test }) => test?.id?.includes(params.examId!));
+
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const currentQuestion = parseInt(searchParams.get("page") || "1", 10) - 1;
@@ -58,32 +68,30 @@ export const Component: FC = (): ReactElement => {
   });
 
   const { timeUntilStart, timeLeft, formatTime } = useExamTimer(
-    testQuery.data?.data.start_date,
-    testQuery.data?.data.end_date,
+    test?.start_date,
+    test?.end_date,
     params.sessionId!,
   );
-
-  console.log(testQuery.data?.data.start_date, testQuery.data?.data.end_date);
 
   const [start, setStart] = useState(false);
 
   useEffect(() => {
-    const questionCount = testQuery.data?.data.questions?.length || 0;
+    const questionCount = test?.test?.questions?.length || 0;
     if (questionCount !== answers.length) {
       setAnswers(Array(questionCount).fill(null));
     }
-  }, [testQuery.data?.data.questions?.length]);
+  }, [test?.test?.questions?.length]);
 
   useDidEffect(() => {
-    const allow = timeLeft === 0 && timeUntilStart === 0 && !testQuery.isLoading && start;
+    const allow = timeLeft === 0 && timeUntilStart === 0 && !isSessionLoading && start;
     if (allow) {
       finishExam();
     }
-  }, [timeLeft === 0 && timeUntilStart === 0 && !testQuery.isLoading && start]);
+  }, [timeLeft === 0 && timeUntilStart === 0 && !isSessionLoading && start]);
 
   const nextQuestion = () => {
-    if (!testQuery.data) return;
-    if (currentQuestion < testQuery.data.data.questions.length - 1) {
+    if (!test) return;
+    if (currentQuestion < (test?.test?.questions?.length || 0) - 1) {
       navigate(
         `/student/sessions/${params.sessionId}/exams/${params.examId}/start?page=${currentQuestion + 2}`,
       );
@@ -115,7 +123,7 @@ export const Component: FC = (): ReactElement => {
 
   const isSubmitting = answerExamMutation.isPending;
   const answeredCount = answers.filter((answer) => answer !== null).length;
-  const unansweredCount = (testQuery.data?.data.questions.length || 0) - answeredCount;
+  const unansweredCount = (test?.test?.questions?.length || 0) - answeredCount;
 
   if (!start || timeUntilStart > 0) {
     return (
@@ -124,7 +132,7 @@ export const Component: FC = (): ReactElement => {
           startExam();
           setStart(true);
         }}
-        isPending={testQuery.isPending}
+        isPending={isSessionLoading}
         timeUntilStart={timeUntilStart}
         timeLeft={timeLeft}
         formatTime={formatTime}
@@ -132,28 +140,28 @@ export const Component: FC = (): ReactElement => {
     );
   }
 
-  if (testQuery.isLoading) {
+  if (isSessionLoading) {
     return <ExamLoading />;
   }
 
-  if (testQuery.isError) {
-    return <ExamError error={testQuery.error} onRetry={() => testQuery.refetch()} />;
+  if (isSessionError) {
+    return <ExamError error={sessionError} onRetry={() => refetchSession()} />;
   }
 
   return (
     <div className="flex flex-col items-center justify-center w-full bg-gray-100">
       <ExamStatus
-        testName={testQuery.data?.data.test_name}
+        testName={test?.test?.name}
         answeredCount={answeredCount}
         unansweredCount={unansweredCount}
         timeLeft={timeLeft}
         timeUntilStart={timeUntilStart}
-        isLoading={testQuery.isLoading}
+        isLoading={isSessionLoading}
         formatTime={formatTime}
       />
       <section className="flex flex-1 w-full max-w-7xl">
         <ExamNavigation
-          questions={testQuery.data?.data.questions || []}
+          questions={test?.test?.questions || []}
           currentQuestion={currentQuestion}
           answers={answers}
           onGoToQuestion={goToQuestion}
@@ -161,9 +169,9 @@ export const Component: FC = (): ReactElement => {
           isSubmitting={isSubmitting}
         />
         <ExamQuestion
-          question={testQuery.data?.data.questions[currentQuestion]}
+          question={test?.test?.questions?.[currentQuestion]}
           currentQuestion={currentQuestion}
-          totalQuestions={testQuery.data?.data.questions.length || 0}
+          totalQuestions={test?.test?.questions?.length || 0}
           onAnswer={handleAnswer}
           selectedAnswer={answers[currentQuestion]}
           onPrev={prevQuestion}
