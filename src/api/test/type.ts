@@ -1,10 +1,25 @@
 import { TResponseData, TResponsePaginate } from "@/commons/types/response";
 
+export type TQuestionItem = {
+  id: string;
+  question: string;
+  question_image_url: string;
+  discussion_image_url: string;
+  discussion?: string;
+  options?: {
+    id: string;
+    label: string;
+    is_correct: boolean;
+    image_url?: string | null; // Optional field
+  }[];
+};
+
 // Test Item
 export type TTestItem = {
   id: string;
   name: string;
   question_count: number;
+  questions?: TQuestionItem[];
   created_at: string;
   updated_at: string;
 };

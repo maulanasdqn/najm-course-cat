@@ -1,4 +1,5 @@
 import { TResponseData, TResponsePaginate } from "@/commons/types/response";
+import { TTestItem } from "../test/type";
 
 // Session Detail Item
 export type TSessionItem = {
@@ -10,6 +11,14 @@ export type TSessionItem = {
   tests_count: number;
   is_active: boolean;
   is_deleted: boolean;
+  tests: {
+    test_id: string;
+    weight: number;
+    multiplier: number;
+    test?: TTestItem;
+    start_date: string;
+    end_date: string;
+  }[];
   created_at: string;
   updated_at: string;
 };
