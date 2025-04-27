@@ -1,10 +1,11 @@
 import { FC, ReactElement } from "react";
-import { TExamAnswerRequest, TQuestionItem } from "@/api/test/type";
+import { TQuestionItem } from "@/api/test/type";
+import { TExamAnswerRequest } from "@/api/answer/type";
 
 interface ExamNavigationProps {
   questions: TQuestionItem[];
   currentQuestion: number;
-  answers: TExamAnswerRequest["questions"];
+  answers: TExamAnswerRequest["answers"];
   onGoToQuestion: (index: number) => void;
   onFinish: () => void;
   isSubmitting: boolean;

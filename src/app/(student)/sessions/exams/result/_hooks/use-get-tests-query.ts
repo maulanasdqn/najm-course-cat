@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { getTestAnswer } from "@/api/test";
 import { QUERY_KEY } from "@/commons/constants/query-key";
+import { getTestAnswer } from "@/api/answer";
 
 export const useGetTestAnswer = (id?: string) => {
   return useQuery({

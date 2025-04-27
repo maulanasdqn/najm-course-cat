@@ -1,9 +1,10 @@
 import { FC, ReactElement } from "react";
-import { TExamAnswerRequest, TQuestionItem } from "@/api/test/type";
+import { TQuestionItem } from "@/api/test/type";
 import { ArrowRightIcon } from "@/app/_components/ui/icons/ic-arrow-right";
 import { ZoomableImage } from "@/app/_components/ui/zoomable-image";
 import DOMPurify from "dompurify";
 import "@/app/_components/ui/inputs/wysiwyg-editor/index.css";
+import { TExamAnswerRequest } from "@/api/answer/type";
 
 // Utility function to safely render HTML content
 const sanitizeHTML = (html: string) => {
@@ -14,8 +15,8 @@ interface ExamQuestionProps {
   question?: TQuestionItem;
   currentQuestion: number;
   totalQuestions: number;
-  onAnswer: (answer: TExamAnswerRequest["questions"][number]) => void;
-  selectedAnswer: TExamAnswerRequest["questions"][number] | null;
+  onAnswer: (answer: TExamAnswerRequest["answers"][number]) => void;
+  selectedAnswer: TExamAnswerRequest["answers"][number] | null;
   onPrev: () => void;
   onNext: () => void;
   isSubmitting: boolean;

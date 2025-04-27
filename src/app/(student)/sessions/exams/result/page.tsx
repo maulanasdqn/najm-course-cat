@@ -4,6 +4,7 @@ import { useGetTestAnswer } from "./_hooks/use-get-tests-query";
 import DOMPurify from "dompurify";
 import "@/app/_components/ui/inputs/wysiwyg-editor/index.css";
 import { Tabs } from "@/app/_components/ui/tabs";
+import { ZoomableImage } from "@/app/_components/ui/zoomable-image";
 
 // Utility function to safely render HTML content
 const sanitizeHTML = (html: string | undefined) => {
@@ -15,14 +16,17 @@ interface Option {
   id: string;
   label: string;
   is_correct: boolean;
-  is_selected: boolean;
+  is_user_selected: boolean;
+  image_url: string;
 }
 
 interface Question {
   id: string;
   question: string;
+  question_image_url: string;
   options: Option[];
   discussion?: string;
+  discussion_image_url?: string;
 }
 
 // Type for the refetch function
@@ -79,7 +83,7 @@ interface QuestionDetailProps {
 
 const QuestionDetail: FC<QuestionDetailProps> = ({ question, index }): ReactElement => {
   const correctOption = question.options.find((opt) => opt.is_correct);
-  const selectedOption = question.options.find((opt) => opt.is_selected);
+  const selectedOption = question.options.find((opt) => opt.is_user_selected);
   const isCorrect = correctOption && selectedOption && correctOption.id === selectedOption.id;
 
   return (
@@ -108,6 +112,16 @@ const QuestionDetail: FC<QuestionDetailProps> = ({ question, index }): ReactElem
           className="wysiwyg-preview"
           dangerouslySetInnerHTML={sanitizeHTML(question.question)}
         />
+
+        {question?.question_image_url ? (
+          <div className="mb-8 flex justify-center items-center">
+            <ZoomableImage
+              src={question.question_image_url || ""}
+              alt="Question Image"
+              className="max-w-full max-h-96 object-contain rounded-md shadow-md"
+            />
+          </div>
+        ) : null}
       </p>
 
       <div className="space-y-3">
@@ -115,9 +129,9 @@ const QuestionDetail: FC<QuestionDetailProps> = ({ question, index }): ReactElem
           <div
             key={option.id}
             className={`p-4 rounded-md ${
-              option.is_selected && option.is_correct
+              option.is_user_selected && option.is_correct
                 ? "bg-green-100 border border-green-300"
-                : option.is_selected && !option.is_correct
+                : option.is_user_selected && !option.is_correct
                   ? "bg-red-100 border border-red-300"
                   : option.is_correct
                     ? "bg-green-50 border border-green-200"
@@ -127,7 +141,7 @@ const QuestionDetail: FC<QuestionDetailProps> = ({ question, index }): ReactElem
             <div className="flex items-start">
               <div
                 className={`w-6 h-6 rounded-full flex items-center justify-center mt-0.5 mr-3 ${
-                  option.is_selected
+                  option.is_user_selected
                     ? option.is_correct
                       ? "bg-green-500 text-white"
                       : "bg-red-500 text-white"
@@ -136,14 +150,24 @@ const QuestionDetail: FC<QuestionDetailProps> = ({ question, index }): ReactElem
                       : "bg-gray-200"
                 }`}
               >
-                {option.is_selected ? "✓" : option.is_correct ? "✓" : ""}
+                {option.is_user_selected ? "✓" : option.is_correct ? "✓" : ""}
               </div>
               <span
                 className={`text-base ${
-                  option.is_selected || option.is_correct ? "font-medium" : ""
+                  option.is_user_selected || option.is_correct ? "font-medium" : ""
                 }`}
               >
                 {option.label}
+
+                {option.image_url && (
+                  <div className="mt-2">
+                    <ZoomableImage
+                      src={option.image_url}
+                      alt="Option Image"
+                      className="max-w-full max-h-64 object-contain rounded"
+                    />
+                  </div>
+                )}
               </span>
             </div>
           </div>
@@ -154,6 +178,16 @@ const QuestionDetail: FC<QuestionDetailProps> = ({ question, index }): ReactElem
         <div className="mt-5 p-4 bg-blue-50 border border-blue-100 rounded-md">
           <h5 className="text-md font-medium text-blue-800 mb-2">Pembahasan:</h5>
           <p className="text-blue-700 text-base">{question.discussion}</p>
+
+          {question?.discussion_image_url ? (
+            <div className="mb-8 flex justify-center items-center">
+              <ZoomableImage
+                src={question.question_image_url || ""}
+                alt="Question Image"
+                className="max-w-full max-h-96 object-contain rounded-md shadow-md"
+              />
+            </div>
+          ) : null}
         </div>
       )}
     </div>
@@ -192,7 +226,7 @@ export const Component: FC = (): ReactElement => {
   const correctAnswers =
     testAnswerQuery.data.data.questions.reduce((acc, question) => {
       const correctOption = question.options.find((opt) => opt.is_correct);
-      const selectedOption = question.options.find((opt) => opt.is_selected);
+      const selectedOption = question.options.find((opt) => opt.is_user_selected);
       return correctOption && selectedOption && correctOption.id === selectedOption.id
         ? acc + 1
         : acc;
@@ -219,8 +253,8 @@ export const Component: FC = (): ReactElement => {
           <ScoreCard label="Jawaban Salah" value={incorrectAnswers} color="text-red-600" />
           <ScoreCard
             label="Skor"
-            value={`${scorePercentage}%`}
-            color={getScoreColor(scorePercentage)}
+            value={`${testAnswerQuery.data.data?.score || scorePercentage}%`}
+            color={getScoreColor(testAnswerQuery.data.data?.score || scorePercentage)}
           />
         </div>
 
