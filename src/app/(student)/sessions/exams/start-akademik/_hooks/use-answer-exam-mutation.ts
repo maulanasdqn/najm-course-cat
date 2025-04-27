@@ -1,5 +1,5 @@
-import { answerExam } from "@/api/test";
-import { TExamAnswerRequest } from "@/api/test/type";
+import { answerExam } from "@/api/answer";
+import { TExamAnswerRequest } from "@/api/answer/type";
 import { useMutation } from "@tanstack/react-query";
 
 export const useAnswerExamMutation = () => {

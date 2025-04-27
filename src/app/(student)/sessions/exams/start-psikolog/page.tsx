@@ -3,7 +3,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useExam } from "./_hooks/use-exam";
 import toast from "react-hot-toast";
 import { useAnswerExamMutation } from "./_hooks/use-answer-exam-mutation";
-import { TExamAnswerRequest } from "@/api/test/type";
 import { useDidEffect } from "@/app/_hooks/use-did-effect";
 import { ExamStartPrompt } from "./_components/exam-start-prompt";
 import { ExamLoading } from "./_components/exam-loading";
@@ -14,6 +13,8 @@ import { ExamStatus } from "./_components/exam-status";
 import { useExamTimer } from "./_hooks/use-exam-timer";
 import { useTimer } from "@/app/_hooks/use-timer";
 import { useGetSessionTest } from "../../_hooks/use-get-session-test";
+import { TExamAnswerRequest } from "@/api/answer/type";
+import { UserLocalStorage } from "@/libs/cookies";
 
 export const Component: FC = (): ReactElement => {
   const params = useParams<{ examId: string; sessionId: string }>();
@@ -31,14 +32,16 @@ export const Component: FC = (): ReactElement => {
   const navigate = useNavigate();
   const [currentQuestion, setCurrentQuestion] = useState<number>(0);
   const currentQuestionRef = useRef<number>(0);
-  const [answers, setAnswers] = useState<TExamAnswerRequest["questions"]>([]);
-  const answersRef = useRef<TExamAnswerRequest["questions"]>([]);
+  const [answers, setAnswers] = useState<TExamAnswerRequest["answers"]>([]);
+  const answersRef = useRef<TExamAnswerRequest["answers"]>([]);
 
   const handleExitFullscreen = useCallback(async () => {
+    const userData = UserLocalStorage.get();
     try {
       const res = await answerExamMutation.mutateAsync({
         test_id: params.examId!,
-        questions: answersRef.current.filter((answer) => answer !== null),
+        user_id: userData?.id,
+        answers: answersRef.current.filter((answer) => answer !== null),
       });
       toast.success("Ujian telah selesai. Jawaban Anda telah disimpan.");
       navigate(`/student/sessions/${params.sessionId}/exams/result?answerIds=${res.data.id}`, {
@@ -124,7 +127,7 @@ export const Component: FC = (): ReactElement => {
     currentQuestionRef.current = index;
   };
 
-  const handleAnswer = (answer: TExamAnswerRequest["questions"][number]) => {
+  const handleAnswer = (answer: TExamAnswerRequest["answers"][number]) => {
     setAnswers((prevAnswers) => {
       const updatedAnswers = [...prevAnswers];
       updatedAnswers[currentQuestion] = answer;
