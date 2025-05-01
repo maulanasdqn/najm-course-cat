@@ -23,8 +23,8 @@ export const Component: FC = (): ReactElement => {
     );
   }
 
-  const isPsikologSession = sessionData?.data?.student_type === "psikolog";
-  const isKecermatanSession = sessionData?.data?.student_type === "kecermatan";
+  const isPsikologSession = sessionData?.data?.category === "psikolog";
+  const isAkademik = sessionData?.data?.category === "akademik";
 
   return (
     <div className="flex flex-col items-center justify-center w-full bg-gray-100">
@@ -33,9 +33,9 @@ export const Component: FC = (): ReactElement => {
           {/* Session type label */}
           <div className="mb-4">
             <span className={`px-3 py-1 text-sm rounded-full bg-blue-100 text-blue-800`}>
-              {sessionData?.data?.student_type
-                ? sessionData.data.student_type.charAt(0).toUpperCase() +
-                  sessionData.data.student_type.slice(1)
+              {sessionData?.data?.category
+                ? sessionData.data.category.charAt(0).toUpperCase() +
+                  sessionData.data.category.slice(1)
                 : ""}
             </span>
           </div>
@@ -62,26 +62,7 @@ export const Component: FC = (): ReactElement => {
             </div>
           )}
 
-          {isKecermatanSession && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {sessionData.data.tests.map(({ test }) => (
-                <div
-                  key={extractUuid(test?.id || "")}
-                  className="border bg-white rounded-lg p-4 hover:shadow-md transition"
-                >
-                  <h3 className="text-lg font-bold text-gray-800">{test?.name || ""}</h3>
-                  <Link
-                    to={`/student/sessions/${params.sessionId}/exams/test-kecermatan/${extractUuid(test?.id || "")}`}
-                    className="text-sm text-blue-600 font-bold hover:underline"
-                  >
-                    Kerjakan Tes →
-                  </Link>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {!isPsikologSession && !isKecermatanSession && (
+          {isAkademik && (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {sessionData.data.tests.map(({ test }) => (
                 <div

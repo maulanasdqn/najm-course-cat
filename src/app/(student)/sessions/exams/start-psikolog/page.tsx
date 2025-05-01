@@ -171,7 +171,7 @@ export const Component: FC = (): ReactElement => {
         testName={test?.test?.name}
         answeredCount={answeredCount}
         unansweredCount={unansweredCount}
-        timeLeft={timer.remainingTime}
+        timeLeft={timeLeft}
         timeUntilStart={timeUntilStart}
         isLoading={isSessionLoading}
         formatTime={formatTime}
