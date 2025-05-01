@@ -41,6 +41,7 @@ export const Component: FC = (): ReactElement => {
       const res = await answerExamMutation.mutateAsync({
         test_id: params.examId!,
         user_id: userData?.id,
+        session_id: params.sessionId!,
         answers: answersRef.current.filter((answer) => answer !== null),
       });
       toast.success("Ujian telah selesai. Jawaban Anda telah disimpan.");
@@ -170,7 +171,7 @@ export const Component: FC = (): ReactElement => {
         testName={test?.test?.name}
         answeredCount={answeredCount}
         unansweredCount={unansweredCount}
-        timeLeft={timer.remainingTime}
+        timeLeft={timeLeft}
         timeUntilStart={timeUntilStart}
         isLoading={isSessionLoading}
         formatTime={formatTime}

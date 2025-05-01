@@ -231,7 +231,6 @@ export const Component: FC = (): ReactElement => {
         ? acc + 1
         : acc;
     }, 0) || 0;
-  const scorePercentage = Math.round((correctAnswers / totalQuestions) * 100);
   const incorrectAnswers = totalQuestions - correctAnswers;
 
   // Determine score color based on percentage
@@ -253,8 +252,8 @@ export const Component: FC = (): ReactElement => {
           <ScoreCard label="Jawaban Salah" value={incorrectAnswers} color="text-red-600" />
           <ScoreCard
             label="Skor"
-            value={`${testAnswerQuery.data.data?.score || scorePercentage}%`}
-            color={getScoreColor(testAnswerQuery.data.data?.score || scorePercentage)}
+            value={`${testAnswerQuery.data.data?.score}`}
+            color={getScoreColor(testAnswerQuery.data.data?.score)}
           />
         </div>
 
@@ -285,21 +284,23 @@ export const Component: FC = (): ReactElement => {
                 <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-5 rounded-lg shadow-sm border border-blue-100 mb-6">
                   <h3 className="text-lg font-medium text-gray-800 mb-1">Skor Total</h3>
                   <div className="flex items-center">
-                    <p className={`text-4xl font-bold ${getScoreColor(scorePercentage)} mr-3`}>
-                      {scorePercentage}%
+                    <p
+                      className={`text-4xl font-bold ${getScoreColor(testAnswerQuery.data.data?.score)} mr-3`}
+                    >
+                      {testAnswerQuery.data.data?.score}
                     </p>
                     <div className="bg-gray-200 h-2 flex-1 rounded-full overflow-hidden">
                       <div
                         className={`h-full rounded-full ${
-                          scorePercentage >= 80
+                          testAnswerQuery.data.data?.score >= 80
                             ? "bg-green-500"
-                            : scorePercentage >= 60
+                            : testAnswerQuery.data.data?.score >= 60
                               ? "bg-blue-500"
-                              : scorePercentage >= 40
+                              : testAnswerQuery.data.data?.score >= 40
                                 ? "bg-yellow-500"
                                 : "bg-red-500"
                         }`}
-                        style={{ width: `${scorePercentage}%` }}
+                        style={{ width: `${testAnswerQuery.data.data?.score}` }}
                       ></div>
                     </div>
                   </div>
@@ -319,8 +320,8 @@ export const Component: FC = (): ReactElement => {
                   <ScoreCard label="Jawaban Salah" value={incorrectAnswers} color="text-red-600" />
                   <ScoreCard
                     label="Skor"
-                    value={`${scorePercentage}%`}
-                    color={getScoreColor(scorePercentage)}
+                    value={`${testAnswerQuery.data.data?.score}`}
+                    color={getScoreColor(testAnswerQuery.data.data?.score)}
                   />
                 </div>
 
