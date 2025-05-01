@@ -41,6 +41,7 @@ export const Component: FC = (): ReactElement => {
       const res = await answerExamMutation.mutateAsync({
         test_id: params.examId!,
         user_id: userData?.id,
+        session_id: params.sessionId!,
         answers: answersRef.current.filter((answer) => answer !== null),
       });
       toast.success("Ujian telah selesai. Jawaban Anda telah disimpan.");
@@ -96,7 +97,7 @@ export const Component: FC = (): ReactElement => {
     if (!test) return;
     if (currentQuestion < (test?.test?.questions?.length || 0) - 1) {
       navigate(
-        `/student/sessions/${params.sessionId}/exams/${params.examId}/start?page=${currentQuestion + 2}`,
+        `/student/sessions/${params.sessionId}/exams/test-akademik/${params.examId}?page=${currentQuestion + 2}`,
       );
     }
   };
@@ -104,14 +105,14 @@ export const Component: FC = (): ReactElement => {
   const prevQuestion = () => {
     if (currentQuestion > 0) {
       navigate(
-        `/student/sessions/${params.sessionId}/exams/${params.examId}/start?page=${currentQuestion}`,
+        `/student/sessions/${params.sessionId}/exams/test-akademik/${params.examId}?page=${currentQuestion}`,
       );
     }
   };
 
   const goToQuestion = (index: number) => {
     navigate(
-      `/student/sessions/${params.sessionId}/exams/${params.examId}/start?page=${index + 1}`,
+      `/student/sessions/${params.sessionId}/exams/test-akademik/${params.examId}?page=${index + 1}`,
     );
   };
 

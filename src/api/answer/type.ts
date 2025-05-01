@@ -3,6 +3,7 @@ import { TResponseData } from "@/commons/types/response";
 export type TExamAnswerRequest = {
   test_id: string;
   user_id: string;
+  session_id: string;
   answers: Array<{
     question_id: string;
     option_id: string;
