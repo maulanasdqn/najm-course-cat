@@ -252,7 +252,7 @@ export const Component: FC = (): ReactElement => {
           <ScoreCard label="Jawaban Salah" value={incorrectAnswers} color="text-red-600" />
           <ScoreCard
             label="Skor"
-            value={`${testAnswerQuery.data.data?.score}%`}
+            value={`${testAnswerQuery.data.data?.score}`}
             color={getScoreColor(testAnswerQuery.data.data?.score)}
           />
         </div>
@@ -287,7 +287,7 @@ export const Component: FC = (): ReactElement => {
                     <p
                       className={`text-4xl font-bold ${getScoreColor(testAnswerQuery.data.data?.score)} mr-3`}
                     >
-                      {testAnswerQuery.data.data?.score}%
+                      {testAnswerQuery.data.data?.score}
                     </p>
                     <div className="bg-gray-200 h-2 flex-1 rounded-full overflow-hidden">
                       <div
@@ -300,7 +300,7 @@ export const Component: FC = (): ReactElement => {
                                 ? "bg-yellow-500"
                                 : "bg-red-500"
                         }`}
-                        style={{ width: `${testAnswerQuery.data.data?.score}%` }}
+                        style={{ width: `${testAnswerQuery.data.data?.score}` }}
                       ></div>
                     </div>
                   </div>
@@ -320,7 +320,7 @@ export const Component: FC = (): ReactElement => {
                   <ScoreCard label="Jawaban Salah" value={incorrectAnswers} color="text-red-600" />
                   <ScoreCard
                     label="Skor"
-                    value={`${testAnswerQuery.data.data?.score}%`}
+                    value={`${testAnswerQuery.data.data?.score}`}
                     color={getScoreColor(testAnswerQuery.data.data?.score)}
                   />
                 </div>

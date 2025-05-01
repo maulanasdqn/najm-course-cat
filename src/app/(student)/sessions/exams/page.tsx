@@ -23,8 +23,8 @@ export const Component: FC = (): ReactElement => {
     );
   }
 
-  const isPsikologSession = sessionData?.data?.category === "psikolog";
-  const isAkademik = sessionData?.data?.category === "akademik";
+  const isPsikologSession = sessionData?.data?.category.toLowerCase() === "psikolog";
+  const isAkademik = sessionData?.data?.category.toLowerCase() === "akademik";
 
   return (
     <div className="flex flex-col items-center justify-center w-full bg-gray-100">
