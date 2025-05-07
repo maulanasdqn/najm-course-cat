@@ -9,10 +9,10 @@ import { POST_REGISTER_MUTATION_KEY } from "./_hooks/use-post-register";
 import { IcEye } from "@/app/_components/ui/icons/ic-eye";
 
 const studentTypeOption = [
-  { value: "polri", label: "Polri" },
-  { value: "tni", label: "TNI" },
-  { value: "cpns", label: "CPNS" },
-  { value: "kedinasan", label: "Kedinasan" },
+  { value: "POLRI", label: "Polri" },
+  { value: "TNI", label: "TNI" },
+  { value: "CPNIS", label: "CPNS" },
+  { value: "KEDINASAN", label: "Kedinasan" },
 ];
 
 export const Component: FC = (): ReactElement => {
